@@ -159,19 +159,21 @@ ${debateText}`;
     }),
   });
 
-  if (!res.ok) {
-    const errorText = await res.text();
-    let parsedError = errorText;
-    try {
-      const jsonErr = JSON.parse(errorText);
-      parsedError = jsonErr.error?.message || jsonErr.message || errorText;
-    } catch {
-      // keep parsedError
-    }
-    throw new Error(`AI Gateway Error (${res.status}): ${parsedError}`);
+  const rawText = await res.text();
+  let data: { choices?: Array<{ message?: { content?: string } }>; error?: { message?: string } };
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error(
+      `AI Gateway returned a non-JSON response (${res.status}). Gateway output: ${rawText.slice(0, 250)}`
+    );
   }
 
-  const data = await res.json();
+  if (!res.ok) {
+    const msg = data.error?.message || `AI Gateway HTTP ${res.status}`;
+    throw new Error(`AI Gateway Error: ${msg}`);
+  }
+
   const rawContent = data.choices?.[0]?.message?.content;
 
   if (!rawContent) {
