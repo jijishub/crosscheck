@@ -20,7 +20,7 @@ Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (oppo
 
 The idea originated from a Reddit discussion regarding Philippine GDP growth:
 - **Participant A (Melon / Baseline Optimist):** Emphasized historical macroeconomic growth trends (2010–2019 averaging 6.0–6.5%), consumer spending resilience, and steady remittances exceeding $35B.
-- **Participant B (OpenYon / Structural Risk Analyst):** Emphasized 2023 growth slowing to 5.6%, policy interest rates at 6.50% constraining borrowing, and debt-to-GDP surpassing 60% post-pandemic.
+- **Participant B (Yon / Structural Risk Analyst):** Emphasized 2023 growth slowing to 5.6%, policy interest rates at 6.50% constraining borrowing, and debt-to-GDP surpassing 60% post-pandemic.
 
 Neither participant was purely wrong—they were examining different dimensions of economic reality (historical momentum vs. forward-looking structural risk). This platform breaks down debates like this with live search validation and beginner-accessible concept translations.
 
@@ -63,7 +63,7 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
 ### 6. Visual Novel Assets & Backdrops (`public/characters/` & `public/scenes_and_overlays/`)
-- **Active Sprites**: Integrated high-res character sprites for Debater A (Melon - Confident, Objection, Thinking), Debater B (OpenYon - Composed, Objection, Shocked), and Jury Foreperson (Welcoming, Evidence Ledger).
+- **Active Sprites**: Integrated high-res character sprites for Debater A (Melon - Confident, Objection, Thinking), Debater B (Yon - Composed, Objection, Shocked), and Jury Foreperson (Welcoming, Evidence Ledger).
 - **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
 - **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.
 - **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, and `TAKE THAT!` with screen-shake feedback.

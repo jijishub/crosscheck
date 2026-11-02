@@ -118,7 +118,7 @@ export function DebateInputSection({
           onClick={() => handleLoadPreset(PHILIPPINE_GDP_PRESET)}
           className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors flex items-center gap-1.5"
         >
-          <span>🇵🇭 Philippine GDP Forecast (Melon vs OpenYon)</span>
+          <span>🇵🇭 Philippine GDP Forecast (Melon vs Yon)</span>
         </button>
         <button
           type="button"

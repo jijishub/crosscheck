@@ -6,7 +6,7 @@ export const PHILIPPINE_GDP_PRESET = {
   rawText: `User Melon:
 Look at the historical pattern from 2010 to 2019. The Philippines consistently maintained 6.0% to 6.5% annual GDP growth driven by demographic dividend, strong private consumption (household spending), and steady remittances from Overseas Filipino Workers (OFWs) exceeding $35B annually. Even with inflation shocks, consumer resilience remains our structural buffer. The government's 6.0%-7.0% target for 2024-2025 is an achievable baseline, not pure optimism.
 
-User OpenYon:
+User Yon:
 Historical patterns don't protect us from present structural headwinds. In 2023, growth slowed to 5.6%, falling short of the state's 6.0%-7.5% target. High borrowing costs from the BSP keeping policy rates at 6.50% are squeezing commercial loans and private investment. Furthermore, our debt-to-GDP ratio has climbed above 60% post-pandemic, drastically narrowing fiscal space for infrastructure spending. Remittances can't carry everything if consumer purchasing power is being eroded by persistent food and utility inflation. Calling 6.5%+ an easy baseline ignores these slowdown risks.`,
 };
 
