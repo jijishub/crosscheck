@@ -69,7 +69,7 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
 - **Styling:** Tailwind CSS + Lucide React Icons
 - **Audio Engine:** Custom Web Audio API synthesizer
-- **AI Engine:** Google Gemini API (`gemini-2.5-flash`) with Google Search Grounding (`googleSearch` tool)
+- **AI Engine:** AI Gateway (`https://api.jizellecasia.site/v1/chat/completions`) powering model `luna` (OpenAI-compatible) with optional Google Gemini fallback
 - **Package Manager:** `pnpm` / `npm`
 
 ---
@@ -83,16 +83,17 @@ pnpm install
 npm install
 \`\`\`
 
-### 2. Configure Gemini API Key
-Create a `.env.local` file:
-\`\`\`bash
-cp .env.example .env.local
-\`\`\`
-Add your Gemini API key:
+### 2. Configure AI Gateway / Keys
+Create or check `.env.local`:
 \`\`\`env
-GEMINI_API_KEY=your_gemini_api_key_here
+AI_GATEWAY_URL=https://api.jizellecasia.site/v1/chat/completions
+AI_GATEWAY_KEY=your_gateway_key_here
+AI_MODEL=luna
+
+# Optional Gemini Fallback
+GEMINI_API_KEY=
 \`\`\`
-*(Alternatively, enter your API key directly in the Court Docket header in the app).*
+*(Alternatively, enter or override your gateway key directly in the Court Docket header in the app).*
 
 ### 3. Run the Development Server
 \`\`\`bash

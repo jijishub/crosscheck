@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { PHILIPPINE_GDP_PRESET, AI_CODING_PRESET } from '@/lib/gemini';
-import { Sparkles, Key, Loader2, PlayCircle, AlertCircle, FileText } from 'lucide-react';
+import { Sparkles, Key, Loader2, PlayCircle, AlertCircle, FileText, Server } from 'lucide-react';
 
 interface DebateInputSectionProps {
   onAnalyze: (text: string, topicHint?: string, apiKey?: string) => Promise<void>;
@@ -22,7 +22,7 @@ export function DebateInputSection({
 
   // Load saved API key from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('gemini_api_key');
+    const saved = localStorage.getItem('ai_gateway_key') || localStorage.getItem('gemini_api_key');
     if (saved) {
       setApiKey(saved);
     }
@@ -30,7 +30,7 @@ export function DebateInputSection({
 
   const handleSaveKey = (val: string) => {
     setApiKey(val);
-    localStorage.setItem('gemini_api_key', val);
+    localStorage.setItem('ai_gateway_key', val);
   };
 
   const handleLoadPreset = (preset: typeof PHILIPPINE_GDP_PRESET) => {
@@ -53,12 +53,16 @@ export function DebateInputSection({
             <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[11px] font-bold uppercase tracking-wider">
               Court Docket & Case Intake
             </span>
+            <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-semibold flex items-center gap-1">
+              <Server className="w-3 h-3 text-purple-400" />
+              Gateway: luna @ api.jizellecasia.site
+            </span>
           </div>
           <h2 className="text-xl font-black text-slate-100 tracking-tight">
             Submit a Debate or Discussion for Breakdown
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Paste any thread, argument, or conflicting claims. The AI court will reconstruct the stances, verify claims via live web search, and explain the core disagreement.
+            Paste any thread, argument, or conflicting claims. The AI court will reconstruct the stances, verify claims via live research, and explain the core disagreement.
           </p>
         </div>
 
@@ -69,36 +73,36 @@ export function DebateInputSection({
           className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all ${
             apiKey
               ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300'
-              : 'bg-amber-950/60 border-amber-500/40 text-amber-300 hover:bg-amber-900/60'
+              : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
           }`}
         >
-          <Key className="w-3.5 h-3.5" />
-          <span>{apiKey ? 'API Key Configured ✓' : 'Set Gemini API Key'}</span>
+          <Key className="w-3.5 h-3.5 text-amber-400" />
+          <span>{apiKey ? 'Custom Key Set ✓' : 'Gateway Settings'}</span>
         </button>
       </div>
 
-      {/* API Key Drawer */}
+      {/* API Key / Gateway Drawer */}
       {showKeyInput && (
         <div className="p-4 bg-slate-950 border-b border-slate-800 text-xs space-y-2 animate-in slide-in-from-top-2">
           <div className="flex items-center justify-between">
             <label className="font-bold text-slate-300 flex items-center gap-1.5">
               <Key className="w-3.5 h-3.5 text-amber-400" />
-              Google Gemini API Key
+              AI Gateway Key / Token (Optional Override)
             </label>
-            <span className="text-[11px] text-slate-500">
-              Stored locally in your browser session
+            <span className="text-[11px] text-emerald-400 font-semibold">
+              Default gateway active: https://api.jizellecasia.site/v1 (model: luna)
             </span>
           </div>
           <input
             type="password"
-            placeholder="AIzaSy..."
+            placeholder="gds_live_... or custom API key"
             value={apiKey}
             onChange={e => handleSaveKey(e.target.value)}
             className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-400 font-mono text-xs"
           />
           <p className="text-[11px] text-slate-400">
-            Powered by <code className="text-amber-300">gemini-2.5-flash</code> with Google Search grounding.
-            You can also configure <code className="text-blue-300">GEMINI_API_KEY</code> in a <code className="text-slate-300">.env.local</code> file.
+            Pre-configured with <code className="text-purple-300 font-bold">luna</code> via your AI gateway.
+            You can also configure <code className="text-blue-300">AI_GATEWAY_KEY</code> in <code className="text-slate-300">.env.local</code>.
           </p>
         </div>
       )}
@@ -176,7 +180,7 @@ export function DebateInputSection({
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           <div className="text-[11px] text-slate-400">
-            ⚖️ Live search grounding verifies claims before courtroom dramatization.
+            ⚖️ Live AI analysis deconstructs claims and synthesizes impartial evidence before courtroom dramatization.
           </div>
 
           <button

@@ -20,31 +20,19 @@ StaffArchitect_Sam:
 Speed of producing lines of code is the wrong metric. GitClear's analysis of over 150 million lines of code found a significant increase in code churn (code replaced within two weeks) and a decline in code refactoring and reuse since AI tools surged. Junior developers are shipping hallucinations and security vulnerabilities because they don't understand the generated abstractions. Faster typing just means faster accumulation of technical debt unless rigorous review standards are strictly enforced.`,
 };
 
-export async function analyzeDebateWithGemini(
-  debateText: string,
-  topicHint?: string,
-  apiKey?: string
-): Promise<DebateAnalysisResult> {
-  const key = apiKey || process.env.GEMINI_API_KEY;
-  if (!key) {
-    throw new Error(
-      'Gemini API Key is required. Please enter your API key in the Courtroom setup or configure GEMINI_API_KEY in .env.local.'
-    );
-  }
-
-  const systemPrompt = `You are the Supreme Court Debate Analyst & Impartial Jury Research Clerk for an Ace Attorney-inspired educational platform.
+const SYSTEM_PROMPT = `You are the Supreme Court Debate Analyst & Impartial Jury Research Clerk for an Ace Attorney-inspired educational platform.
 Your mission is NOT to declare an arbitrary dramatic winner, but to educate users who may be unfamiliar with the topic.
 You must:
 1. Deconstruct the user's submitted debate fairly and accurately. Identify Debater A and Debater B, their stances, and their underlying arguments.
-2. Formulate checkable claims and investigate them using live web research data.
+2. Formulate checkable claims and investigate them using authoritative real-world facts, statistics, historical dates, and verifiable evidence sources.
 3. Categorize every claim strictly:
    - 'verifiable_statistic'
    - 'historical_fact'
    - 'forecast_prediction'
    - 'value_judgment'
    - 'interpretation'
-4. Distinguish verified facts from predictive forecasts or opinions. Never fabricate URLs or citations. Provide working primary or reputable source links, exact dates, and summary findings.
-5. Create an entertaining, visual novel courtroom dialogue script where Debater A and Debater B exchange points. Use theatrical moments like 'OBJECTION!', 'HOLD IT!', or 'TAKE THAT!' when claims conflict or evidence is produced.
+4. Distinguish verified facts from predictive forecasts or opinions. Provide real primary/official source links or reputable institutional URLs (e.g. World Bank, PSA, BSP, IMF, official agencies), exact dates, and summary findings.
+5. Create an entertaining, visual novel courtroom dialogue script (6-10 turns) where Debater A and Debater B exchange points. Use theatrical moments like 'OBJECTION!', 'HOLD IT!', or 'TAKE THAT!' when claims conflict or evidence is produced.
 6. Have the neutral Jury Foreperson explain key concepts using plain English and relatable analogies ('Jargon Buster') so a complete beginner can understand the debate.
 7. Deliver a qualified, balanced synthesis clarifying what is known, what remains uncertain or conditional, and the key lesson for readers.
 
@@ -125,12 +113,90 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
 
 Do not wrap in markdown or backticks if possible, or wrap cleanly in \`\`\`json ... \`\`\`. Output valid parseable JSON only.`;
 
+export async function analyzeDebateWithAI(
+  debateText: string,
+  topicHint?: string,
+  apiKeyOverride?: string
+): Promise<DebateAnalysisResult> {
+  const gatewayUrl =
+    process.env.AI_GATEWAY_URL || 'https://api.jizellecasia.site/v1/chat/completions';
+  const gatewayKey = apiKeyOverride || process.env.AI_GATEWAY_KEY;
+  const model = process.env.AI_MODEL || 'luna';
+
+  // If user provided a Gemini key or gateway key isn't configured but Gemini is:
+  const isGeminiKey = (apiKeyOverride && apiKeyOverride.startsWith('AIza')) || (!gatewayKey && process.env.GEMINI_API_KEY);
+
+  if (isGeminiKey) {
+    return analyzeWithGeminiDirect(debateText, topicHint, apiKeyOverride || process.env.GEMINI_API_KEY!);
+  }
+
+  if (!gatewayKey) {
+    throw new Error(
+      'AI Gateway key is required. Please set AI_GATEWAY_KEY in .env.local or enter your key in the Courtroom docket setup.'
+    );
+  }
+
+  // Use the OpenAI-compatible AI Gateway (e.g. luna @ api.jizellecasia.site)
   const userPrompt = `Topic Hint: ${topicHint || 'Determine from the text'}
 
 Debate / Discussion to analyze:
 ${debateText}`;
 
-  // Call Gemini API with Google Search grounding tool enabled
+  const res = await fetch(gatewayUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${gatewayKey}`,
+    },
+    body: JSON.stringify({
+      model,
+      stream: false,
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userPrompt },
+      ],
+      temperature: 0.2,
+    }),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    let parsedError = errorText;
+    try {
+      const jsonErr = JSON.parse(errorText);
+      parsedError = jsonErr.error?.message || jsonErr.message || errorText;
+    } catch {
+      // keep parsedError
+    }
+    throw new Error(`AI Gateway Error (${res.status}): ${parsedError}`);
+  }
+
+  const data = await res.json();
+  const rawContent = data.choices?.[0]?.message?.content;
+
+  if (!rawContent) {
+    throw new Error('AI Gateway returned an empty message content. Please try again.');
+  }
+
+  return cleanAndParseJSON(rawContent);
+}
+
+// Fallback method for direct Gemini if needed
+async function analyzeWithGeminiDirect(
+  debateText: string,
+  topicHint?: string,
+  apiKey?: string
+): Promise<DebateAnalysisResult> {
+  const key = apiKey || process.env.GEMINI_API_KEY;
+  if (!key) {
+    throw new Error('Gemini API Key is missing.');
+  }
+
+  const userPrompt = `Topic Hint: ${topicHint || 'Determine from the text'}
+
+Debate / Discussion to analyze:
+${debateText}`;
+
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(
     key
   )}`;
@@ -144,14 +210,10 @@ ${debateText}`;
       contents: [
         {
           role: 'user',
-          parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
+          parts: [{ text: `${SYSTEM_PROMPT}\n\n${userPrompt}` }],
         },
       ],
-      tools: [
-        {
-          googleSearch: {},
-        },
-      ],
+      tools: [{ googleSearch: {} }],
       generationConfig: {
         temperature: 0.2,
       },
@@ -160,38 +222,26 @@ ${debateText}`;
 
   if (!response.ok) {
     const errorText = await response.text();
-    let parsedError = errorText;
-    try {
-      const jsonErr = JSON.parse(errorText);
-      parsedError = jsonErr.error?.message || errorText;
-    } catch {
-      // keep parsedError
-    }
-    throw new Error(`Gemini API Error (${response.status}): ${parsedError}`);
+    throw new Error(`Gemini Error (${response.status}): ${errorText}`);
   }
 
   const data = await response.json();
   const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
   if (!rawContent) {
-    throw new Error('Gemini API returned an empty response. Please check your prompt or API key permissions.');
+    throw new Error('Gemini API returned an empty response.');
   }
 
-  // Parse JSON cleanly
   const result = cleanAndParseJSON(rawContent);
 
-  // If Gemini provided grounding metadata sources, enrich evidence URLs if any were missing
+  // Enrich with grounding chunks if present
   const groundingChunks = data.candidates?.[0]?.groundingMetadata?.groundingChunks;
   if (Array.isArray(groundingChunks) && groundingChunks.length > 0 && Array.isArray(result.evidenceRecord)) {
     groundingChunks.forEach((chunk, index) => {
-      if (chunk.web?.uri) {
-        // If an evidence item lacks a URL or has placeholder, enrich it
-        if (result.evidenceRecord[index]) {
-          if (!result.evidenceRecord[index].url || result.evidenceRecord[index].url.startsWith('#')) {
-            result.evidenceRecord[index].url = chunk.web.uri;
-            if (chunk.web.title) {
-              result.evidenceRecord[index].sourceName = chunk.web.title;
-            }
+      if (chunk.web?.uri && result.evidenceRecord[index]) {
+        if (!result.evidenceRecord[index].url || result.evidenceRecord[index].url.startsWith('#')) {
+          result.evidenceRecord[index].url = chunk.web.uri;
+          if (chunk.web.title) {
+            result.evidenceRecord[index].sourceName = chunk.web.title;
           }
         }
       }
@@ -200,6 +250,9 @@ ${debateText}`;
 
   return result;
 }
+
+// Backward-compatible alias
+export const analyzeDebateWithGemini = analyzeDebateWithAI;
 
 function cleanAndParseJSON(raw: string): DebateAnalysisResult {
   let cleaned = raw.trim();
@@ -221,7 +274,7 @@ function cleanAndParseJSON(raw: string): DebateAnalysisResult {
   try {
     return JSON.parse(cleaned) as DebateAnalysisResult;
   } catch (err) {
-    console.error('Failed to parse Gemini JSON output:', cleaned);
+    console.error('Failed to parse AI structured response:', cleaned);
     throw new Error(`Failed to parse AI structured response: ${(err as Error).message}`);
   }
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { analyzeDebateWithGemini } from '@/lib/gemini';
+import { analyzeDebateWithAI } from '@/lib/gemini';
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,18 +13,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const key = apiKey?.trim() || process.env.GEMINI_API_KEY;
-    if (!key) {
-      return NextResponse.json(
-        {
-          error:
-            'A Gemini API key is required. Please provide your API key in the UI settings or set GEMINI_API_KEY in your environment.',
-        },
-        { status: 401 }
-      );
-    }
-
-    const result = await analyzeDebateWithGemini(debateText, topicHint, key);
+    const result = await analyzeDebateWithAI(debateText, topicHint, apiKey?.trim());
     return NextResponse.json(result);
   } catch (error) {
     console.error('API /api/analyze error:', error);
