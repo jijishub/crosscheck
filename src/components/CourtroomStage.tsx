@@ -153,6 +153,16 @@ export function CourtroomStage({
         isShaking ? 'animate-court-shake ring-4 ring-rose-500/50' : ''
       }`}
     >
+      {/* Courtroom Backdrop Image with Soft Gradient Overlay */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30 select-none">
+        <img
+          src="/scenes_and_overlays/Backdrop_01_Main_Courtroom.png"
+          alt="Courtroom Backdrop"
+          className="w-full h-full object-cover object-center filter blur-[1px]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/75" />
+      </div>
+
       {/* Dramatic Callout Stinger Overlay */}
       <CalloutStingerBanner callout={activeCallout} />
 

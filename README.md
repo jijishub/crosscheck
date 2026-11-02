@@ -62,11 +62,12 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **The Evidence Ledger:** Groups all claims by status (Verified Facts, Contradicted Claims, and Future Forecasts / Conditional Scenarios).
 - **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
-### 6. AI Asset Prompts & Visual Direction (`asset_prompts.txt`)
-- Single reference file with ready-to-run prompts for Midjourney / DALL-E / Gemini Imagen.
-- Aesthetic: Ace Attorney-inspired courtroom drama with soft pastel, cute anime visual novel flair.
-- Characters: Mixed female/male cast (Female Defense Advocate "Melon", Male Prosecutor "OpenYon", Female Jury Foreperson/Judge).
-- Backdrops & UI: Main courtroom dual-podium stage, cozy library jury chamber, and comic callout stingers.
+### 6. Visual Novel Assets & Backdrops (`public/characters/` & `public/scenes_and_overlays/`)
+- **Active Sprites**: Integrated high-res character sprites for Debater A (Melon - Confident, Objection, Thinking), Debater B (OpenYon - Composed, Objection, Shocked), and Jury Foreperson (Welcoming, Evidence Ledger).
+- **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
+- **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.
+- **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, and `TAKE THAT!` with screen-shake feedback.
+- **Prompts**: All generation briefs preserved in [asset_prompts.txt](asset_prompts.txt).
 
 ---
 

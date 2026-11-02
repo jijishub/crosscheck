@@ -27,10 +27,20 @@ export function JuryBoard({
   );
 
   return (
-    <div className="w-full bg-slate-900 border-2 border-purple-500/40 rounded-2xl shadow-2xl overflow-hidden mt-6">
-      {/* Top Header Banner */}
-      <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 px-6 py-5 border-b border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
+    <div className="w-full bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden mt-6">
+      {/* Top Header Banner with Deliberation Backdrop */}
+      <div className="relative bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 px-6 py-5 border-b border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
+        {/* Subtle Deliberation Chamber Background */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none select-none">
+          <img
+            src="/scenes_and_overlays/Backdrop_02_Jury_Chamber.png"
+            alt="Jury Chamber"
+            className="w-full h-full object-cover object-center filter blur-[1px]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-950/85 via-slate-950/80 to-indigo-950/85" />
+        </div>
+
+        <div className="relative z-10 flex items-center gap-4">
           <JuryForepersonPortrait emotion="synthesis" />
           <div>
             <div className="flex items-center gap-2">
@@ -48,7 +58,7 @@ export function JuryBoard({
         </div>
 
         {/* Tab Buttons */}
-        <div className="flex bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs">
+        <div className="relative z-10 flex bg-slate-950/85 p-1 rounded-xl border border-slate-800 text-xs backdrop-blur-sm">
           <button
             onClick={() => setActiveTab('synthesis')}
             className={`px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
