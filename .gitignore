@@ -1,5 +1,6 @@
 feedback.txt
 llm.txt
+asset_prompts.txt
 
 # dependencies
 /node_modules

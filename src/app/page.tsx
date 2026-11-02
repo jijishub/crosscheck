@@ -13,6 +13,7 @@ export default function CourtroomApp() {
   const [debateResult, setDebateResult] = useState<DebateAnalysisResult | null>(PHILIPPINE_REDDIT_SEED_RESULT);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showInputSection, setShowInputSection] = useState(false);
 
   // Court Record Modal state
   const [isCourtRecordOpen, setIsCourtRecordOpen] = useState(false);
@@ -85,14 +86,16 @@ export default function CourtroomApp() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-black text-base sm:text-lg tracking-tight text-slate-100 flex items-center gap-2">
-                  Courtroom Breakdown
+                  <span className="bg-gradient-to-r from-pink-400 via-rose-300 to-amber-300 bg-clip-text text-transparent font-black tracking-tight">
+                    CrossCheck!
+                  </span>
                 </h1>
                 <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
-                  🌸 Ace Attorney Learner
+                  🌸 Ace Attorney Explainer
                 </span>
               </div>
               <p className="text-[11px] text-pink-200/60">
-                Impartial debate deconstruction, live fact-checking, and beginner concept explainer
+                Playable debate court, live fact-checking, and beginner concept explainer
               </p>
             </div>
           </div>
@@ -123,14 +126,55 @@ export default function CourtroomApp() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-8 space-y-10">
-        {/* Input Form Section */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 space-y-8">
+        {/* Input Form Section (Collapsible when a trial is active) */}
         <section>
-          <DebateInputSection
-            onAnalyze={handleAnalyze}
-            isLoading={isLoading}
-            error={error}
-          />
+          {debateResult && !showInputSection ? (
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs shadow-lg backdrop-blur-md">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 font-bold uppercase text-[10px]">
+                  Current Trial
+                </span>
+                <span className="text-slate-200 font-semibold truncate text-xs sm:text-sm">
+                  {debateResult.topic}
+                </span>
+              </div>
+              <button
+                onClick={() => setShowInputSection(true)}
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-pink-300 border border-pink-500/30 font-bold text-xs flex items-center gap-1.5 transition-all shrink-0"
+              >
+                <span>➕ Submit New Discussion</span>
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {debateResult && (
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setShowInputSection(false)}
+                    className="text-xs text-slate-400 hover:text-slate-200 font-medium px-2 py-1"
+                  >
+                    ✕ Close Input Drawer
+                  </button>
+                </div>
+              )}
+              <DebateInputSection
+                onAnalyze={async (t, h, k) => {
+                  await handleAnalyze(t, h, k);
+                  setShowInputSection(false);
+                }}
+                onDirectLoadCase={(res) => {
+                  setDebateResult(res);
+                  setShowInputSection(false);
+                  setTimeout(() => {
+                    courtroomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 100);
+                }}
+                isLoading={isLoading}
+                error={error}
+              />
+            </div>
+          )}
         </section>
 
         {/* Courtroom Visual Novel Experience */}

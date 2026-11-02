@@ -1,4 +1,4 @@
-# Courtroom Breakdown ⚖️🔍
+# CrossCheck! ⚖️🔍
 
 > **An Ace Attorney-inspired AI debate breakdown and learning platform.**  
 > Transforming online debates, comment threads, and complex disagreements into entertaining, beginner-friendly courtroom dramas with live fact-checking, verifiable sources, and intuitive concept explainers.
@@ -12,13 +12,13 @@ When people argue online (whether on Reddit, X/Twitter, or public forums), discu
 2. **De-mystifying jargon and concepts** using plain English and relatable analogies.
 3. **Establishing what credible evidence proves** versus what is projection, opinion, or conditional forecasting.
 
-Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (opposing debater podiums, dynamic expression changes, "OBJECTION!" / "HOLD IT!" stingers, an interactive Court Record dossier, and an impartial Jury explanation board), this platform recreates those learning moments across economics, technology, public policy, and science.
+Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (opposing debater podiums, dynamic expression changes, "OBJECTION!" / "HOLD IT!" stingers, an interactive Court Record dossier, and an impartial Jury explanation board), CrossCheck! recreates those learning moments across economics, technology, public policy, and science.
 
 ---
 
 ## 💡 Motivating Case Study
 
-The idea originated from a Reddit discussion regarding Philippine GDP growth:
+The idea originated from an authentic Reddit discussion regarding Philippine GDP growth:
 - **Participant A (Melon / Baseline Optimist):** Emphasized historical macroeconomic growth trends (2010–2019 averaging 6.0–6.5%), consumer spending resilience, and steady remittances exceeding $35B.
 - **Participant B (Yon / Structural Risk Analyst):** Emphasized 2023 growth slowing to 5.6%, policy interest rates at 6.50% constraining borrowing, and debt-to-GDP surpassing 60% post-pandemic.
 
@@ -29,18 +29,21 @@ Neither participant was purely wrong—they were examining different dimensions 
 ## 🚀 Implemented Features (Agile P0)
 
 ### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`)
-- **Flexible Discussion Input:** Paste raw Reddit threads, tweet arguments, or forum exchanges.
+- **Dual Tab Intake System:**
+  - **Tab 1: Plaintext Discussion:** Paste any raw Reddit comments, tweet threads, or dialogue transcripts.
+  - **Tab 2: JSON Argument Context:** Direct JSON intake for raw comment threads (e.g. `philippines_reddit_debate_comments.json`) or full case schemas with live validation, formatting, and instant trial preview.
 - **Quick Test Presets:**
-  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs OpenYon)*
+  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs Yon)*
   - 💻 *AI Coding Assistants: Velocity Multiplier vs Architecture Debt (Alex vs Sam)*
-- **API Key Management:** Easily configure your Gemini API Key in the UI (stored securely in local browser session) or via `.env.local`.
+- **API Key & Gateway Management:** Pre-configured with OpenAI-compatible gateway (`luna` at `https://api.jizellecasia.site/v1/chat/completions`) or custom override keys.
 
 ### 2. The Courtroom Stage (`src/components/CourtroomStage.tsx`)
-- **Split Debater Visual Novel View:** Defense on the left, Prosecution on the right with dynamic expression states (`neutral`, `confident`, `thinking`, `intense`, `surprised`).
-- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, and auto-play mode.
+- **Visual Novel Duel View:** Defense (Melon) on the left, Prosecution (Yon) on the right, standing at polished mahogany courtroom benches with active speaker spotlight.
+- **Cinna Mascot Companion (`src/components/CinnaNarrator.tsx`):** Sits cutely right on the dialogue box banner, reacting with dynamic expressions (`Bailiff/Order`, `Cheerful`, `Pondering`, `Shocked!`) to guide beginners through complex points.
+- **Character Profiles & Cast Dossier (`src/components/CharacterProfilesModal.tsx`):** Inspect full personality traits, catchphrases, speech styles, and bios for Melon, Yon, Cinna, and the Jury Foreperson.
+- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, auto-play mode, and transcript log.
 - **Dramatic Callout Banners:** Animated comic-burst stingers for `"OBJECTION!"`, `"HOLD IT!"`, and `"TAKE THAT!"` paired with synthesized Web Audio sound effects.
-- **Real-Time Claim Highlight Overlay:** Highlights exactly what factual claim or prediction is under examination during each turn.
-- **Dialogue Transcript History:** Review previous turns at any time during the trial.
+- **Sleek Single-Line Dispute Ribbon:** Highlights the exact claim under examination or newly presented evidence without blocking characters.
 
 ### 3. Web Audio SFX Synthesizer (`src/lib/audio.ts`)
 - Zero external audio file dependencies. Built with browser Web Audio API:

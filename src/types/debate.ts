@@ -70,6 +70,10 @@ export interface DebaterProfile {
   archetypeTitle: string; // e.g. "Baseline Growth Optimist" or "Structural Risk Realist"
   coreStance: string;
   accentColor: string;
+  personalityTraits?: string[]; // e.g. ["Energetic", "Uses food analogies", "Optimistic"]
+  catchphrase?: string; // e.g. "Look at the underlying momentum!"
+  speechStyle?: string; // e.g. "Warm, enthusiastic, relatable metaphors"
+  bio?: string;
 }
 
 export interface JurySynthesis {

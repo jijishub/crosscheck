@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Courtroom Breakdown — Ace Attorney AI Debate Learning Platform",
+  title: "CrossCheck! ⚖️ — Playable AI Debate Courtroom & Fact-Checking Explainer",
   description:
-    "An Ace Attorney-inspired AI debate breakdown and learning platform. Transform polarizing discussions into entertaining courtroom dramas with live fact-checking, verifiable sources, and beginner concept explainers.",
+    "CrossCheck! is an Ace Attorney-inspired AI debate breakdown and learning platform. Transform polarizing discussions into entertaining courtroom dramas with live fact-checking, verifiable sources, and beginner concept explainers.",
 };
 
 export default function RootLayout({

@@ -59,10 +59,22 @@ StaffArchitect_Sam:
 Speed of producing lines of code is the wrong metric. GitClear's analysis of over 150 million lines of code found a significant increase in code churn (code replaced within two weeks) and a decline in code refactoring and reuse since AI tools surged. Junior developers are shipping hallucinations and security vulnerabilities because they don't understand the generated abstractions. Faster typing just means faster accumulation of technical debt unless rigorous review standards are strictly enforced.`,
 };
 
-const SYSTEM_PROMPT = `You are the Supreme Court Debate Analyst & Impartial Jury Research Clerk for an Ace Attorney-inspired educational platform.
-Your mission is NOT to declare an arbitrary dramatic winner, but to educate users who may be unfamiliar with the topic.
+const SYSTEM_PROMPT = `You are the Supreme Court Debate Analyst & Impartial Jury Research Clerk for CrossCheck!, an Ace Attorney-inspired educational debate platform.
+Your mission is NOT to declare an arbitrary dramatic winner, but to educate users who may be unfamiliar with the topic through entertaining, character-driven courtroom drama.
+
+CHARACTER PERSONALITY MANDATE:
+- Debater A (Defense, usually 'Melon'):
+  - Personality: Energetic, charmingly optimistic, passionate champion of forward-looking potential.
+  - Speech style: Uses relatable everyday metaphors (e.g. cooking, running a marathon, gardening, vehicle engines) so beginners immediately get the point.
+  - Never cynical or malicious; always defends the glass-half-full baseline with enthusiastic theatricality.
+- Debater B (Prosecution, usually 'Yon'):
+  - Personality: Cool, composed, razor-sharp analytical realist. Allergic to blind hype and unexamined buzzwords.
+  - Speech style: Clinical precision mixed with dry wit. Taps pen on desk, pushes up glasses with an anime glint, and insists on stress-testing downside footnotes.
+- The Jury Foreperson:
+  - Warm, dignified, teacher-like academic judge who synthesizes both sides, explains jargon with simple analogies, and refuses to pick a shallow binary winner.
+
 You must:
-1. Deconstruct the user's submitted debate fairly and accurately. Identify Debater A and Debater B, their stances, and their underlying arguments.
+1. Deconstruct the user's submitted debate fairly and accurately. Identify Debater A and Debater B, their stances, their distinct personalities, and their underlying arguments.
 2. Formulate checkable claims and investigate them using authoritative real-world facts, statistics, historical dates, and verifiable evidence sources.
 3. Categorize every claim strictly:
    - 'verifiable_statistic'
@@ -71,7 +83,7 @@ You must:
    - 'value_judgment'
    - 'interpretation'
 4. Distinguish verified facts from predictive forecasts or opinions. Provide real primary/official source links or reputable institutional URLs (e.g. World Bank, PSA, BSP, IMF, official agencies), exact dates, and summary findings.
-5. Create an entertaining, visual novel courtroom dialogue script (6-10 turns) where Debater A and Debater B exchange points. Use theatrical moments like 'OBJECTION!', 'HOLD IT!', or 'TAKE THAT!' when claims conflict or evidence is produced.
+5. Create an entertaining, visual novel courtroom dialogue script (6-10 turns) where Debater A and Debater B exchange points with distinctive character voices. Use theatrical moments like 'OBJECTION!', 'HOLD IT!', or 'TAKE THAT!' when claims conflict or evidence is produced.
 6. Have the neutral Jury Foreperson explain key concepts using plain English and relatable analogies ('Jargon Buster') so a complete beginner can understand the debate.
 7. Deliver a qualified, balanced synthesis clarifying what is known, what remains uncertain or conditional, and the key lesson for readers.
 
@@ -85,7 +97,11 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
     "role": "defense",
     "archetypeTitle": string,
     "coreStance": string,
-    "accentColor": "#2563eb"
+    "accentColor": "#2563eb",
+    "personalityTraits": [string, string, string],
+    "catchphrase": string,
+    "speechStyle": string,
+    "bio": string
   },
   "debaterB": {
     "id": "debater_b",
@@ -93,7 +109,11 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
     "role": "prosecution",
     "archetypeTitle": string,
     "coreStance": string,
-    "accentColor": "#e11d48"
+    "accentColor": "#e11d48",
+    "personalityTraits": [string, string, string],
+    "catchphrase": string,
+    "speechStyle": string,
+    "bio": string
   },
   "claims": [
     {
@@ -148,6 +168,7 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
     "educationalTakeaway": string,
     "balancedVerdict": string
   }
+}
 }
 
 Do not wrap in markdown or backticks if possible, or wrap cleanly in \`\`\`json ... \`\`\`. Output valid parseable JSON only.`;
@@ -330,6 +351,10 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
     archetypeTitle: 'Baseline Convergence Advocate',
     coreStance: 'Historical 6% growth trends, record export levels ($91.1B), and convergence theory justify a strong baseline forecast over a 10-year horizon.',
     accentColor: '#2563eb',
+    personalityTraits: ['Energetic', 'Analogy Master', 'Forward-Looking', 'Charming Optimist'],
+    catchphrase: 'Look at the underlying engine, not just the temporary potholes on the road!',
+    speechStyle: 'Warm, conversational, and energetic. Loves comparing macroeconomic trends to everyday momentum like training athletes.',
+    bio: 'Defense counsel who champions long-term growth and demographic potential. Believes doomposting blinds people to documented progress.',
   },
   debaterB: {
     id: 'debater_b',
@@ -338,6 +363,10 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
     archetypeTitle: 'Structural Exposure Analyst',
     coreStance: 'A headline baseline forecast ignores documented downside risks: energy dependency, capital-flow sensitivity, political uncertainty, and FDI deficits.',
     accentColor: '#e11d48',
+    personalityTraits: ['Surgical Precision', 'Dry Wit', 'Stress-Tester', 'Unflappable'],
+    catchphrase: 'A headline baseline without the downside footnotes is just an expensive hallucination.',
+    speechStyle: 'Cool, clinical, analytical. Delivers sharp reality checks with a trademark glint of his round glasses.',
+    bio: 'Prosecution counsel and disciplined macroeconomic realist. Insists that real economic resilience requires acknowledging structural deficits before celebrating.',
   },
   claims: [
     {
@@ -483,7 +512,7 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
       id: 'turn_4',
       speakerId: 'debater_a',
       speakerName: 'Melon',
-      text: 'You are completely ignoring basic economic convergence theory! When an economy is in a developmental catch-up phase, high percentage growth is the natural baseline over a decade horizon!',
+      text: 'You are completely ignoring basic economic convergence theory! When an economy is in a developmental catch-up phase, high percentage growth is the natural baseline over a decade horizon! It is like an athlete hitting their stride!',
       emotion: 'confident',
       callout: 'OBJECTION!',
       activeClaimId: 'claim_5',
@@ -491,9 +520,27 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
     },
     {
       id: 'turn_5',
+      speakerId: 'debater_b',
+      speakerName: 'Yon',
+      text: 'An athlete running into an energy shock and capital flight will still pull a hamstring. A baseline is a simulation under calm weather; real policy requires planning for the storm!',
+      emotion: 'intense',
+      callout: 'HOLD IT!',
+      activeClaimId: 'claim_1',
+      presentedEvidenceId: 'ev_1',
+    },
+    {
+      id: 'turn_6',
+      speakerId: 'debater_a',
+      speakerName: 'Melon',
+      text: 'Of course storms happen! But recognizing risks does not mean pretending the baseline engine does not exist. Both the long-term trend and the warnings are in the very same report!',
+      emotion: 'thinking',
+      activeClaimId: 'claim_2',
+    },
+    {
+      id: 'turn_7',
       speakerId: 'jury',
       speakerName: 'Jury Foreperson',
-      text: 'Order in the court! Both advocates are actually citing real dimensions of economic forecasting. The defense is highlighting baseline convergence potential, while the prosecution is spotlighting downside scenario fragility.',
+      text: 'Order in the court! Both advocates are actually citing real dimensions of economic forecasting. Melon is championing baseline convergence momentum, while Yon is spotlighting downside scenario fragility. Let us examine the evidence ledger!',
       emotion: 'synthesis',
       callout: 'POINT OF ORDER',
     },
@@ -537,3 +584,46 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
       'Neither debater was wrong. Melon demonstrated that the historical momentum, export records, and economic convergence provide a credible foundation for the 5.8% baseline. Yon rightly pointed out that headline baselines often obscure documented downside vulnerabilities that could derail those projections if structural reforms and energy buffers are ignored.',
   },
 };
+
+export const PHILIPPINE_REDDIT_JSON_SAMPLE = JSON.stringify(
+  {
+    source: 'r/Philippines Reddit Discussion',
+    subreddit: 'r/Philippines',
+    topic: 'Philippines projected to be second fastest-growing economy in SE Asia until 2035',
+    participants: ['Melon (MELONPANNNNN)', 'Yon (OpenYonQ_)'],
+    comments: [
+      {
+        id: 1,
+        author: 'Yon',
+        text: 'the Philippine economy is projected to grow at an average annual rate of 5.8% from 2026 to 2035 under the baseline scenario. BASELINE SCENARIO. Despite its relatively strong baseline forecast, the Philippines is also among the Southeast Asian economies facing the greatest downside exposure, according to the report.',
+      },
+      {
+        id: 2,
+        author: 'Melon',
+        text: 'Only a Filipino will see good news and focus on the bad.',
+      },
+      {
+        id: 3,
+        author: 'Yon',
+        text: "its contextualizing the headline. one's gotta be a fool to think we'd be 2nd in ASEAN considering worldwide conditions. We don't get investments like Malaysia or industrialize like Cambodia.",
+      },
+      {
+        id: 4,
+        author: 'Melon',
+        text: 'An average growth of 6% since 2016 which only slowed to 4% due to the Iran War. Exports even got an all-time high this year at $91.1B. That is a trend, not a fluke.',
+      },
+      {
+        id: 5,
+        author: 'Yon',
+        text: "didn't you read? that's not the economic reality now, external shocks slashed trends. And exports carried by semiconductors—our neighbors are investing heavy on their own semicon too.",
+      },
+      {
+        id: 6,
+        author: 'Melon',
+        text: 'High percentage growth naturally happens when an economy is catching up. That is basic convergence theory. Global shocks hit everyone, but long-term structural potential remains.',
+      },
+    ],
+  },
+  null,
+  2
+);

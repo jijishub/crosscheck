@@ -22,17 +22,6 @@ export function DebaterPortrait({
   const isA = side === 'debater_a';
   const [imgError, setImgError] = useState(false);
 
-  // Cute feminine-accented pastel courtroom theme
-  const primaryBg = isA
-    ? 'from-sky-950/90 via-slate-900/90 to-rose-950/40'
-    : 'from-purple-950/90 via-slate-900/90 to-pink-950/40';
-
-  const borderRing = isActive
-    ? isA
-      ? 'ring-4 ring-sky-400 shadow-2xl shadow-sky-500/40 scale-105'
-      : 'ring-4 ring-rose-400 shadow-2xl shadow-rose-500/40 scale-105'
-    : 'border border-slate-700/60 opacity-80 scale-95';
-
   // Determine sprite path based on character and emotion
   let spriteSrc = '';
   if (isA) {
@@ -54,41 +43,55 @@ export function DebaterPortrait({
   }
 
   return (
-    <div className={`relative flex flex-col items-center transition-all duration-300 ${isActive ? 'z-20' : 'z-10'}`}>
-      {/* Speaker Tag Pill */}
-      <div
-        className={`mb-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-md ${
-          isActive
-            ? isA
-              ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-sky-500/40 ring-2 ring-white/40'
-              : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-500/40 ring-2 ring-white/40'
-            : 'bg-slate-800/90 text-slate-400 border border-slate-700'
-        }`}
-      >
-        <span>{isA ? '⚖️ Defense' : '⚔️ Prosecution'}</span>
-        <span>•</span>
-        <span>{name}</span>
-      </div>
-
-      {/* Subtitle / Archetype */}
-      <div className="text-[11px] text-pink-200/90 font-medium mb-1.5 text-center max-w-[200px] truncate">
-        {title}
-      </div>
-
-      {/* Character Frame */}
-      <div className={`w-52 h-68 sm:w-64 sm:h-80 rounded-3xl bg-gradient-to-b ${primaryBg} ${borderRing} overflow-hidden relative flex items-center justify-center p-1.5 backdrop-blur-md transition-all`}>
-        {/* Soft arched ambient backdrop inside frame */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none flex flex-col items-center justify-center">
-          <div className="w-36 h-52 border-2 border-pink-300/40 rounded-t-full bg-gradient-to-b from-pink-500/20 via-sky-500/10 to-transparent" />
+    <div
+      className={`relative flex flex-col items-center justify-end w-full max-w-[280px] sm:max-w-[340px] transition-all duration-300 select-none ${
+        isActive ? 'z-20 scale-100 opacity-100' : 'z-10 scale-95 opacity-60 hover:opacity-80'
+      }`}
+    >
+      {/* Speaker Floating Nametag */}
+      <div className="mb-2 flex flex-col items-center transition-all">
+        <div
+          className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-lg border backdrop-blur-md transition-all ${
+            isActive
+              ? isA
+                ? 'bg-sky-950/90 text-sky-200 border-sky-400 ring-2 ring-sky-400/40 shadow-sky-500/30'
+                : 'bg-rose-950/90 text-rose-200 border-rose-400 ring-2 ring-rose-400/40 shadow-rose-500/30'
+              : 'bg-slate-900/80 text-slate-400 border-slate-700/60'
+          }`}
+        >
+          <span>{isA ? '⚖️ Defense' : '⚔️ Prosecution'}</span>
+          <span>•</span>
+          <span>{name}</span>
         </div>
+        <span className="text-[10px] text-slate-400 font-medium tracking-tight mt-0.5 truncate max-w-[180px]">
+          {title}
+        </span>
+      </div>
 
-        {/* High-Res AI Generated Sprite with SVG Fallback */}
+      {/* Main Character Sprite Area */}
+      <div className="relative w-full h-[280px] sm:h-[360px] md:h-[400px] flex items-end justify-center overflow-visible">
+        {/* Active Character Glow Aura */}
+        {isActive && (
+          <div
+            className={`absolute bottom-6 w-48 h-48 rounded-full blur-2xl opacity-40 pointer-events-none ${
+              isA ? 'bg-sky-400' : 'bg-rose-400'
+            }`}
+          />
+        )}
+
+        {/* High-Res AI Generated Sprite */}
         {!imgError ? (
           <img
             src={spriteSrc}
             alt={`${name} - ${emotion}`}
             onError={() => setImgError(true)}
-            className="w-full h-full object-contain filter drop-shadow-lg select-none transition-transform duration-300 hover:scale-102"
+            className={`w-full h-full object-contain object-bottom filter transition-all duration-300 ${
+              isActive
+                ? isA
+                  ? 'drop-shadow-[0_10px_20px_rgba(56,189,248,0.35)]'
+                  : 'drop-shadow-[0_10px_20px_rgba(244,63,94,0.35)]'
+                : 'drop-shadow-md grayscale-[25%]'
+            }`}
           />
         ) : isA ? (
           <DebaterAFemaleSVG emotion={emotion} isActive={isActive} />
@@ -96,11 +99,26 @@ export function DebaterPortrait({
           <DebaterBMaleSVG emotion={emotion} isActive={isActive} />
         )}
 
-        {/* Emotion Indicator Badge with cute pastel pill */}
-        <div className="absolute bottom-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold bg-slate-950/85 backdrop-blur-md text-pink-300 border border-pink-500/40 flex items-center gap-1 shadow-md">
+        {/* Emotion Indicator Pill */}
+        <div
+          className={`absolute bottom-3 ${
+            isA ? 'left-2' : 'right-2'
+          } px-2 py-0.5 rounded-full text-[9px] uppercase font-bold bg-slate-950/85 backdrop-blur-md border flex items-center gap-1 shadow-md ${
+            isActive
+              ? isA
+                ? 'text-sky-300 border-sky-400/50'
+                : 'text-rose-300 border-rose-400/50'
+              : 'text-slate-400 border-slate-700'
+          }`}
+        >
           <span>{emotion === 'intense' ? '⚡' : emotion === 'thinking' ? '💭' : emotion === 'confident' ? '✨' : '🌸'}</span>
           <span>{emotion}</span>
         </div>
+      </div>
+
+      {/* Grounding Wooden Courtroom Bench */}
+      <div className="w-full h-5 sm:h-6 rounded-t-lg bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 border-t-2 border-amber-600/70 shadow-lg shadow-black/80 relative flex items-center justify-center">
+        <div className="w-16 h-1 bg-amber-500/40 rounded-full" />
       </div>
     </div>
   );
