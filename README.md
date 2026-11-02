@@ -66,7 +66,8 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
 ### 6. Visual Novel Assets & Backdrops (`public/characters/`, `public/scenes_and_overlays/`, `public/Cinna_*.png`)
-- **Active Sprites**: Integrated high-res character sprites for Debater A (Melon - Confident, Objection, Thinking), Debater B (Yon - Composed, Objection, Shocked), and Jury Foreperson (Welcoming, Evidence Ledger).
+- **Active Sprites**: Integrated high-res character sprites in `public/characters/` for Debater A (Melon), Debater B (Yon), and Jury Foreperson.
+- **Brand Assets**: Custom `crosscheck logo.png` banner integrated into navigation, and `crosscheck favicon.png` / `icon.png` wired into Next.js App Router metadata.
 - **Cinna Mascot Narrator**: Integrated `CinnaNarrator` (`public/Cinna_1.png` - `Cinna_4.png`) as a cute courtroom bailiff/commentator who reacts to intense turns, objections, and explains core claims to beginners.
 - **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
 - **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.

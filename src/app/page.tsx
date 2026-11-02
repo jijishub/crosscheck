@@ -80,21 +80,18 @@ export default function CourtroomApp() {
       <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-pink-500/20 px-4 sm:px-8 py-3.5">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-pink-500/25 text-white font-black text-xl">
-              ⚖️
-            </div>
-            <div>
+            <img
+              src="/crosscheck logo.png"
+              alt="CrossCheck!"
+              className="h-8 sm:h-10 w-auto object-contain filter drop-shadow-md select-none"
+            />
+            <div className="hidden md:block">
               <div className="flex items-center gap-2">
-                <h1 className="font-black text-base sm:text-lg tracking-tight text-slate-100 flex items-center gap-2">
-                  <span className="bg-gradient-to-r from-pink-400 via-rose-300 to-amber-300 bg-clip-text text-transparent font-black tracking-tight">
-                    CrossCheck!
-                  </span>
-                </h1>
-                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
                   🌸 Ace Attorney Explainer
                 </span>
               </div>
-              <p className="text-[11px] text-pink-200/60">
+              <p className="text-[11px] text-pink-200/60 mt-0.5">
                 Playable debate court, live fact-checking, and beginner concept explainer
               </p>
             </div>
