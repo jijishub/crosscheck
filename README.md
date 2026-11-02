@@ -62,11 +62,13 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **The Evidence Ledger:** Groups all claims by status (Verified Facts, Contradicted Claims, and Future Forecasts / Conditional Scenarios).
 - **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
-### 6. Visual Novel Assets & Backdrops (`public/characters/` & `public/scenes_and_overlays/`)
+### 6. Visual Novel Assets & Backdrops (`public/characters/`, `public/scenes_and_overlays/`, `public/Cinna_*.png`)
 - **Active Sprites**: Integrated high-res character sprites for Debater A (Melon - Confident, Objection, Thinking), Debater B (Yon - Composed, Objection, Shocked), and Jury Foreperson (Welcoming, Evidence Ledger).
+- **Cinna Mascot Narrator**: Integrated `CinnaNarrator` (`public/Cinna_1.png` - `Cinna_4.png`) as a cute courtroom bailiff/commentator who reacts to intense turns, objections, and explains core claims to beginners.
 - **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
 - **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.
 - **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, and `TAKE THAT!` with screen-shake feedback.
+- **Seeded Authentic Debate**: Pre-seeded with authentic Philippine GDP discussion comments from `philippines_reddit_debate_comments.json` (5.8% baseline forecast vs OECD downside exposure).
 - **Prompts**: All generation briefs preserved in [asset_prompts.txt](asset_prompts.txt).
 
 ---
@@ -83,12 +85,16 @@ Neither participant was purely wrong—they were examining different dimensions 
 
 ## ⚡ Quick Start
 
-### 1. Install Dependencies
-\`\`\`bash
-pnpm install
+### 1. Install Dependencies & Run Dev Server
+```bash
+# If pnpm is already recognized in your terminal:
+pnpm dev
+
+# If pnpm command is not yet in your terminal session PATH:
+npx pnpm dev
 # or
-npm install
-\`\`\`
+npm run dev
+```
 
 ### 2. Configure AI Gateway / Keys
 Create or check `.env.local`:

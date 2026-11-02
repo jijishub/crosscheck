@@ -15,8 +15,8 @@ export function DebateInputSection({
   isLoading,
   error,
 }: DebateInputSectionProps) {
-  const [debateText, setDebateText] = useState('');
-  const [topicHint, setTopicHint] = useState('');
+  const [debateText, setDebateText] = useState(PHILIPPINE_GDP_PRESET.rawText);
+  const [topicHint, setTopicHint] = useState(PHILIPPINE_GDP_PRESET.title);
   const [apiKey, setApiKey] = useState('');
   const [showKeyInput, setShowKeyInput] = useState(false);
 

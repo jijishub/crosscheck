@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { DebateAnalysisResult } from '@/types/debate';
+import { PHILIPPINE_REDDIT_SEED_RESULT } from '@/lib/gemini';
 import { DebateInputSection } from '@/components/DebateInputSection';
 import { CourtroomStage } from '@/components/CourtroomStage';
 import { JuryBoard } from '@/components/JuryBoard';
@@ -9,7 +10,7 @@ import { CourtRecordModal } from '@/components/CourtRecord';
 import { Scale, RefreshCw, Sparkles, FolderOpen, BookOpen } from 'lucide-react';
 
 export default function CourtroomApp() {
-  const [debateResult, setDebateResult] = useState<DebateAnalysisResult | null>(null);
+  const [debateResult, setDebateResult] = useState<DebateAnalysisResult | null>(PHILIPPINE_REDDIT_SEED_RESULT);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

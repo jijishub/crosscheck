@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DebateAnalysisResult, DialogueTurn, CalloutType } from '@/types/debate';
 import { DebaterPortrait, CalloutStingerBanner } from './CourtroomCharacters';
+import { CinnaNarrator } from './CinnaNarrator';
 import { courtAudio } from '@/lib/audio';
 import { Play, Pause, SkipForward, SkipBack, History, BookOpen, Volume2, VolumeX, FolderOpen } from 'lucide-react';
 
@@ -300,6 +301,16 @@ export function CourtroomStage({
           </div>
         </div>
       )}
+
+      {/* Cinna Mascot Narrator Commentary */}
+      <div className="px-4 sm:px-8 mb-2 flex justify-end">
+        <CinnaNarrator
+          emotion={currentTurn?.emotion}
+          callout={currentTurn?.callout}
+          speakerName={currentTurn?.speakerName}
+          activeClaimText={activeClaim?.text}
+        />
+      </div>
 
       {/* Bottom Visual Novel Dialogue Box */}
       <div className="p-4 sm:p-6 bg-slate-950 border-t-2 border-slate-800">
