@@ -22,6 +22,7 @@ export function CourtroomStage({
   const [isTyping, setIsTyping] = useState(false);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const [activeCallout, setActiveCallout] = useState<CalloutType>(null);
+  const [isShaking, setIsShaking] = useState(false);
   const [isMuted, setIsMuted] = useState(courtAudio.getMuted());
   const [showHistory, setShowHistory] = useState(false);
 
@@ -40,6 +41,9 @@ export function CourtroomStage({
     // Trigger callout animation and sound if present
     if (currentTurn.callout) {
       setActiveCallout(currentTurn.callout);
+      setIsShaking(true);
+      const shakeTimer = setTimeout(() => setIsShaking(false), 400);
+
       if (currentTurn.callout === 'OBJECTION!') {
         courtAudio.playObjectionStinger();
       } else if (currentTurn.callout === 'HOLD IT!') {
@@ -52,9 +56,13 @@ export function CourtroomStage({
       const calloutTimer = setTimeout(() => {
         setActiveCallout(null);
       }, 1200);
-      return () => clearTimeout(calloutTimer);
+      return () => {
+        clearTimeout(calloutTimer);
+        clearTimeout(shakeTimer);
+      };
     } else {
       setActiveCallout(null);
+      setIsShaking(false);
     }
 
     setDisplayedText('');
@@ -140,7 +148,11 @@ export function CourtroomStage({
   const isJurySpeaking = currentTurn?.speakerId === 'jury';
 
   return (
-    <div className="relative w-full rounded-2xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-2 border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between min-h-[580px] sm:min-h-[640px]">
+    <div
+      className={`relative w-full rounded-3xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-2 border-pink-500/30 shadow-2xl overflow-hidden flex flex-col justify-between min-h-[580px] sm:min-h-[640px] transition-transform ${
+        isShaking ? 'animate-court-shake ring-4 ring-rose-500/50' : ''
+      }`}
+    >
       {/* Dramatic Callout Stinger Overlay */}
       <CalloutStingerBanner callout={activeCallout} />
 

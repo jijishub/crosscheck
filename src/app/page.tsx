@@ -73,12 +73,12 @@ export default function CourtroomApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col justify-between selection:bg-pink-400 selection:text-slate-950">
       {/* Top Courtroom Navigation Header */}
-      <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-8 py-3.5">
+      <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-pink-500/20 px-4 sm:px-8 py-3.5">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-pink-500/25 text-white font-black text-xl">
               ⚖️
             </div>
             <div>
@@ -86,11 +86,11 @@ export default function CourtroomApp() {
                 <h1 className="font-black text-base sm:text-lg tracking-tight text-slate-100 flex items-center gap-2">
                   Courtroom Breakdown
                 </h1>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
-                  Ace Attorney AI Learner
+                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
+                  🌸 Ace Attorney Learner
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-pink-200/60">
                 Impartial debate deconstruction, live fact-checking, and beginner concept explainer
               </p>
             </div>
