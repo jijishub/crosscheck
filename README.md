@@ -1,97 +1,112 @@
-# Courtroom Breakdown (Working Title) ⚖️🔍
+# Courtroom Breakdown ⚖️🔍
 
 > **An Ace Attorney-inspired AI debate breakdown and learning platform.**  
-> Turning online debates and complex disagreements into entertaining, beginner-friendly courtroom dramas with live fact-checking, clear concept explanations, and traceable citations.
+> Transforming online debates, comment threads, and complex disagreements into entertaining, beginner-friendly courtroom dramas with live fact-checking, verifiable sources, and intuitive concept explainers.
 
 ---
 
 ## 🎯 Project Vision & Intent
 
-When people argue online (whether on Reddit, X/Twitter, or public forums), the discussion often becomes polarized, jargon-heavy, and confusing to outside observers. The true value often lies not in declaring an arbitrary "winner", but in understanding:
-1. What the core disagreement actually is.
-2. What underlying concepts and terms mean in plain language.
-3. What verifiable data/evidence says versus what is opinion, interpretation, or conditional forecasting.
+When people argue online (whether on Reddit, X/Twitter, or public forums), discussions often become polarized, jargon-dense, and difficult for newcomers to follow. The true educational value is rarely about declaring an arbitrary "winner", but rather:
+1. **Understanding the real root of disagreement** (e.g., historical baselines vs. future risk scenarios).
+2. **De-mystifying jargon and concepts** using plain English and relatable analogies.
+3. **Establishing what credible evidence proves** versus what is projection, opinion, or conditional forecasting.
 
-Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (opposing debaters, testimony, cross-examination, "Objection!" moments, and a Court Record of evidence), this platform reconstructs discussions into an interactive courtroom drama. The **Jury / Judge** acts as an impartial topic explainer and evidence synthesizer rather than a biased ref.
-
----
-
-## 💡 Origin & Case Study
-
-The idea originated from a Reddit debate regarding Philippine GDP growth:
-- **Participant A (Melon / Optimistic baseline):** Emphasized historical macroeconomic growth patterns and consumer spending drivers.
-- **Participant B (OpenYon / Cautious risk analysis):** Emphasized structural headwinds, inflation pressures, and fiscal slowdown risks.
-
-Neither participant was purely "right" or "wrong"—they addressed different dimensions of the same reality (past patterns vs. future risk scenarios). This platform is designed to break down debates like this across economics, tech, science, public policy, and culture.
+Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (opposing debater podiums, dynamic expression changes, "OBJECTION!" / "HOLD IT!" stingers, an interactive Court Record dossier, and an impartial Jury explanation board), this platform recreates those learning moments across economics, technology, public policy, and science.
 
 ---
 
-## 🚀 Agile P0 (MVP) Scope
+## 💡 Motivating Case Study
 
-The goal of P0 is the smallest end-to-end prototype that is entertaining, educational, and factually grounded:
+The idea originated from a Reddit discussion regarding Philippine GDP growth:
+- **Participant A (Melon / Baseline Optimist):** Emphasized historical macroeconomic growth trends (2010–2019 averaging 6.0–6.5%), consumer spending resilience, and steady remittances exceeding $35B.
+- **Participant B (OpenYon / Structural Risk Analyst):** Emphasized 2023 growth slowing to 5.6%, policy interest rates at 6.50% constraining borrowing, and debt-to-GDP surpassing 60% post-pandemic.
 
-```
-[ Pasted Debate / Context ]
-             ↓
-[ AI Extraction & Live Research ]
-   ├── Stance & Claim Decomposition
-   ├── Fact vs Forecast vs Opinion Tagging
-   └── Live Web Verification & Source Gathering
-             ↓
-[ Interactive Courtroom Presentation ]
-   ├── Debater A (Defense) vs Debater B (Prosecution)
-   ├── Theatrical Dialogue & Contradiction Spotlights
-   └── Court Record (Evidence Dossier with Clickable Citations)
-             ↓
-[ The Jury's Educational Synthesis ]
-   ├── Jargon Buster / Concept Explainer
-   ├── Evidence Ledger (Verified / Contradicted / Unverified / Forecast)
-   └── Neutral Nuanced Takeaway & Summary Lesson
-```
-
-### P0 Core Features
-1. **Debate Ingestion:** Input box to paste raw discussion text (dialogue, thread comments, or claim pairs) plus optional topic tags.
-2. **Analysis Pipeline:**
-   - Extracts participants and their key arguments.
-   - Categorizes statements (verifiable claim, value judgment, projection/forecast).
-   - Queries live sources for checkable claims.
-3. **The Courtroom View:**
-   - Animated or staged speaker turns (Debater A vs Debater B).
-   - "Hold It!" / "Take That!" prompts presenting relevant evidence.
-   - Interactive Court Record showing evidence cards with direct links.
-4. **The Jury Explainer:**
-   - Breaks down technical terms in simple terms.
-   - Delivers a balanced, evidence-backed synthesis without forcing an artificial binary winner.
+Neither participant was purely wrong—they were examining different dimensions of economic reality (historical momentum vs. forward-looking structural risk). This platform breaks down debates like this with live search validation and beginner-accessible concept translations.
 
 ---
 
-## 🛡️ Core Editorial & Fact Principles
+## 🚀 Implemented Features (Agile P0)
 
-- **Traceable Sources:** Every factual claim must link to primary, credible sources with working URLs and publication dates.
-- **No Hallucinated Citations:** If a claim cannot be verified or live search fails, explicitly state that it remains unverified.
-- **Distinguish Facts from Forecasts:** Statistics and established historical data are distinct from predictive models and opinion.
-- **Fair Representation:** Accurately represent debaters' actual points without strawmanning or injecting ideological bias.
+### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`)
+- **Flexible Discussion Input:** Paste raw Reddit threads, tweet arguments, or forum exchanges.
+- **Quick Test Presets:**
+  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs OpenYon)*
+  - 💻 *AI Coding Assistants: Velocity Multiplier vs Architecture Debt (Alex vs Sam)*
+- **API Key Management:** Easily configure your Gemini API Key in the UI (stored securely in local browser session) or via `.env.local`.
+
+### 2. The Courtroom Stage (`src/components/CourtroomStage.tsx`)
+- **Split Debater Visual Novel View:** Defense on the left, Prosecution on the right with dynamic expression states (`neutral`, `confident`, `thinking`, `intense`, `surprised`).
+- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, and auto-play mode.
+- **Dramatic Callout Banners:** Animated comic-burst stingers for `"OBJECTION!"`, `"HOLD IT!"`, and `"TAKE THAT!"` paired with synthesized Web Audio sound effects.
+- **Real-Time Claim Highlight Overlay:** Highlights exactly what factual claim or prediction is under examination during each turn.
+- **Dialogue Transcript History:** Review previous turns at any time during the trial.
+
+### 3. Web Audio SFX Synthesizer (`src/lib/audio.ts`)
+- Zero external audio file dependencies. Built with browser Web Audio API:
+  - Typewriter text blips (pitch-tuned per character)
+  - Gavel strike & table slam impact
+  - "Objection!" dramatic stingers & C-major chord accents
+  - Evidence presented / "Take That!" chimes
+  - Persistent audio mute/unmute control.
+
+### 4. Interactive Court Record / Evidence Dossier (`src/components/CourtRecord.tsx`)
+- Modeled after the *Ace Attorney Court Record*.
+- Search and filter verified sources by reliability rating (`Primary Data`, `Official Report`, `Expert Analysis`, `News Media`).
+- Inspect primary source excerpts, publication dates, and direct links to live URLs gathered during the search grounding pipeline.
+- Cross-references which claims were verified, contradicted, or flagged as speculative.
+
+### 5. The Jury Chamber & Explainer Board (`src/components/JuryBoard.tsx`)
+- **The Jury Foreperson's Impartial Synthesis:** Clarifies the core disagreement and provides a qualified breakdown without forcing an artificial binary winner on predictive or mixed topics.
+- **Jargon Buster (Concept Guide):** Translates dense technical terms into plain English with everyday analogies.
+- **The Evidence Ledger:** Groups all claims by status (Verified Facts, Contradicted Claims, and Future Forecasts / Conditional Scenarios).
+- **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
 ---
 
-## 🎨 Aesthetic & Character Pipeline
+## 🛠️ Tech Stack & Architecture
 
-- **Inspiration:** Ace Attorney presentation (dual podiums, dramatic reveals, pixel/2D courtroom flair, evidence dossiers).
-- **Original Assets:** AI-assisted original 2D character sprites (Debater A, Debater B, Judge/Jury Foreperson, Courtroom background).
-- **Customization (Future):** Designed to support custom asset themes (e.g., custom character skins) in later releases.
-
----
-
-## 📚 References & Inspirations
-
-- *Ace Attorney* (Capcom) – Dialogue pacing, cross-examination flow, and evidence presentation mechanics.
-- Fact-Checking Frameworks – Distinction between verified facts, context-dependent nuances, and forward-looking opinions.
-- Motivating Reddit Case – Philippine GDP Growth Analysis (Melon vs OpenYon).
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
+- **Styling:** Tailwind CSS + Lucide React Icons
+- **Audio Engine:** Custom Web Audio API synthesizer
+- **AI Engine:** Google Gemini API (`gemini-2.5-flash`) with Google Search Grounding (`googleSearch` tool)
+- **Package Manager:** `pnpm` / `npm`
 
 ---
 
-## 🛠️ Stack & Implementation (Proposed / Pending Confirmation)
+## ⚡ Quick Start
 
-- **Frontend & App Framework:** Next.js (React + TypeScript) + Tailwind CSS + Lucide Icons + Canvas/Framer Motion animations.
-- **State & Audio:** Web Audio API for classic courtroom sound effects (gavel hits, blips, dramatic stingers).
-- **AI & Research Engine:** Multi-step LLM pipeline (Extractor -> Web Search / Grounding -> Script Writer -> Jury Explainer).
+### 1. Install Dependencies
+\`\`\`bash
+pnpm install
+# or
+npm install
+\`\`\`
+
+### 2. Configure Gemini API Key
+Create a `.env.local` file:
+\`\`\`bash
+cp .env.example .env.local
+\`\`\`
+Add your Gemini API key:
+\`\`\`env
+GEMINI_API_KEY=your_gemini_api_key_here
+\`\`\`
+*(Alternatively, enter your API key directly in the Court Docket header in the app).*
+
+### 3. Run the Development Server
+\`\`\`bash
+pnpm dev
+# or
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 📜 Development Guidelines & Skills
+
+- `!readme`: Maintained and synchronized with all implemented architectural components, case studies, and references.
+- `!git-m`: Strict one-line commit messages for all repository commits.
+- Single Source of Truth: All project requirements preserved from `llm.txt`.

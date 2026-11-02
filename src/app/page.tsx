@@ -1,69 +1,199 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useState, useRef } from 'react';
+import { DebateAnalysisResult } from '@/types/debate';
+import { DebateInputSection } from '@/components/DebateInputSection';
+import { CourtroomStage } from '@/components/CourtroomStage';
+import { JuryBoard } from '@/components/JuryBoard';
+import { CourtRecordModal } from '@/components/CourtRecord';
+import { Scale, RefreshCw, Sparkles, FolderOpen, BookOpen } from 'lucide-react';
+
+export default function CourtroomApp() {
+  const [debateResult, setDebateResult] = useState<DebateAnalysisResult | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Court Record Modal state
+  const [isCourtRecordOpen, setIsCourtRecordOpen] = useState(false);
+  const [highlightedEvidenceId, setHighlightedEvidenceId] = useState<string | undefined>(undefined);
+
+  // Section references for smooth scrolling
+  const courtroomRef = useRef<HTMLDivElement | null>(null);
+  const juryBoardRef = useRef<HTMLDivElement | null>(null);
+
+  const handleAnalyze = async (text: string, topicHint?: string, apiKey?: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          debateText: text,
+          topicHint,
+          apiKey,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to analyze debate.');
+      }
+
+      setDebateResult(data);
+
+      // Smooth scroll down to courtroom after generation
+      setTimeout(() => {
+        courtroomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    } catch (err) {
+      console.error('Debate breakdown error:', err);
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOpenCourtRecord = (evidenceId?: string) => {
+    setHighlightedEvidenceId(evidenceId);
+    setIsCourtRecordOpen(true);
+  };
+
+  const handleScrollToJuryBoard = () => {
+    juryBoardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleResetTrial = () => {
+    setDebateResult(null);
+    setError(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+      {/* Top Courtroom Navigation Header */}
+      <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-8 py-3.5">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+              ⚖️
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="font-black text-base sm:text-lg tracking-tight text-slate-100 flex items-center gap-2">
+                  Courtroom Breakdown
+                </h1>
+                <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+                  Ace Attorney AI Learner
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                Impartial debate deconstruction, live fact-checking, and beginner concept explainer
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Header Actions */}
+          <div className="flex items-center gap-2">
+            {debateResult && (
+              <>
+                <button
+                  onClick={() => handleOpenCourtRecord()}
+                  className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  <FolderOpen className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Court Record</span>
+                </button>
+
+                <button
+                  onClick={handleResetTrial}
+                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors flex items-center gap-1.5"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">New Case</span>
+                </button>
+              </>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </header>
+
+      {/* Main Container */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-8 space-y-10">
+        {/* Input Form Section */}
+        <section>
+          <DebateInputSection
+            onAnalyze={handleAnalyze}
+            isLoading={isLoading}
+            error={error}
+          />
+        </section>
+
+        {/* Courtroom Visual Novel Experience */}
+        {debateResult && (
+          <section ref={courtroomRef} className="space-y-10 scroll-mt-20">
+            {/* Visual Novel Courtroom Stage */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+                  <Sparkles className="w-4 h-4" />
+                  Phase 1: The Courtroom Examination
+                </div>
+                <button
+                  onClick={handleScrollToJuryBoard}
+                  className="text-xs text-purple-300 hover:text-purple-200 flex items-center gap-1 font-semibold"
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Skip to Jury Synthesis & Jargon Buster ↓</span>
+                </button>
+              </div>
+
+              <CourtroomStage
+                debate={debateResult}
+                onOpenCourtRecord={handleOpenCourtRecord}
+                onScrollToJuryBoard={handleScrollToJuryBoard}
+              />
+            </div>
+
+            {/* Jury Chamber & Explainer Board */}
+            <div ref={juryBoardRef} className="space-y-3 scroll-mt-20">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-400">
+                <Scale className="w-4 h-4" />
+                Phase 2: The Jury Deliberation & Concept Breakdown
+              </div>
+
+              <JuryBoard
+                verdict={debateResult.juryVerdict}
+                claims={debateResult.claims}
+                evidenceRecord={debateResult.evidenceRecord}
+                onOpenCourtRecord={handleOpenCourtRecord}
+              />
+            </div>
+          </section>
+        )}
       </main>
+
+      {/* Evidence Dossier / Court Record Modal */}
+      {debateResult && (
+        <CourtRecordModal
+          isOpen={isCourtRecordOpen}
+          onClose={() => setIsCourtRecordOpen(false)}
+          evidenceList={debateResult.evidenceRecord}
+          claims={debateResult.claims}
+          highlightedEvidenceId={highlightedEvidenceId}
+        />
+      )}
+
+      {/* Footer */}
+      <footer className="border-t border-slate-900 bg-slate-950 py-6 px-4 text-center text-xs text-slate-500">
+        <p className="max-w-xl mx-auto leading-relaxed">
+          Inspired by Ace Attorney courtroom mechanics. Built to foster genuine topic understanding through
+          fair debate reconstruction, verifiable citations, and beginner-accessible concept analogies.
+        </p>
+      </footer>
     </div>
   );
 }
