@@ -150,48 +150,49 @@ export function CourtroomStage({
   const isDebaterBActive = currentTurn?.speakerId === 'debater_b';
   const isJurySpeaking = currentTurn?.speakerId === 'jury';
 
+  // Authentic visual novel dialogue box frame asset matching character & assets
+  const activeDiaBoxSrc = isDebaterBActive ? '/DiaBox_1_frame.png' : '/DiaBox_2_frame.png';
+
   return (
     <div
-      className={`relative w-full rounded-3xl bg-slate-950 border-2 border-pink-500/30 shadow-2xl overflow-hidden flex flex-col justify-between min-h-[600px] sm:min-h-[660px] transition-transform select-none ${
-        isShaking ? 'animate-court-shake ring-4 ring-rose-500/50' : ''
+      className={`relative w-full rounded-3xl bg-[#FAF5EB] border-4 border-[#C58B58] shadow-2xl overflow-hidden flex flex-col justify-between min-h-[600px] sm:min-h-[660px] transition-transform select-none ${
+        isShaking ? 'animate-court-shake ring-4 ring-rose-400/70' : ''
       }`}
     >
-      {/* Courtroom Backdrop Image */}
+      {/* Courtroom Backdrop Image - Bright, Vibrant, and Pastel */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         <img
           src="/scenes_and_overlays/Backdrop_01_Main_Courtroom.png"
           alt="Courtroom Backdrop"
-          className="w-full h-full object-cover object-center opacity-75 filter contrast-105"
+          className="w-full h-full object-cover object-center"
         />
-        {/* Soft vignette overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-transparent to-slate-950/80" />
       </div>
 
       {/* Dramatic Callout Stinger Overlay */}
       <CalloutStingerBanner callout={activeCallout} />
 
-      {/* Top HUD: Session Title, Claim Ticker, and Controls */}
-      <div className="relative z-30 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/90 shadow-md">
+      {/* Top HUD: Session Title, Claim Ticker, and Controls - Solid Warm Cream */}
+      <div className="relative z-30 bg-[#FFFDF9] border-b-2 border-[#E5C9A6] shadow-sm">
         <div className="px-4 py-2.5 flex items-center justify-between text-xs gap-3">
           {/* Left: Case Docket Title */}
           <div className="flex items-center gap-2 min-w-0">
-            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold uppercase text-[10px] tracking-wider flex items-center gap-1 shrink-0">
+            <span className="px-3 py-0.5 rounded-full bg-[#FEF3C7] text-[#78350F] border-2 border-[#F59E0B] font-black uppercase text-[10px] tracking-wider flex items-center gap-1 shrink-0 shadow-xs">
               <span>⚖️</span>
               <span>Court Docket</span>
             </span>
-            <span className="text-slate-200 font-semibold truncate text-xs sm:text-sm">
+            <span className="text-[#381E2B] font-black truncate text-xs sm:text-sm">
               {debate.topic}
             </span>
           </div>
 
-          {/* Right: Audio and Court Record buttons */}
+          {/* Right: Audio, Cast & Court Record buttons */}
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={toggleSound}
-              className={`p-1.5 rounded-lg border transition-all ${
+              className={`p-1.5 rounded-xl border-2 transition-all ${
                 isMuted
-                  ? 'bg-slate-800 text-slate-500 border-slate-700'
-                  : 'bg-amber-950/60 text-amber-300 border-amber-500/40 shadow-sm'
+                  ? 'bg-[#FDF6ED] text-[#B07D62]/50 border-[#E5C9A6]/50'
+                  : 'bg-[#FDF6ED] text-[#8C5338] border-[#E5C9A6] shadow-xs hover:bg-[#F5EBE1]'
               }`}
               title={isMuted ? 'Unmute Court SFX' : 'Mute Court SFX'}
             >
@@ -200,39 +201,39 @@ export function CourtroomStage({
 
             <button
               onClick={() => setShowProfiles(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-500/40 text-purple-200 font-bold text-xs transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] font-black text-xs transition-all shadow-xs border-2 border-[#C084FC] active:scale-95"
               title="View Character Profiles & Personality Dossier"
             >
-              <Users className="w-3.5 h-3.5 text-purple-400" />
+              <Users className="w-3.5 h-3.5 text-[#581C87]" />
               <span className="hidden sm:inline">Cast & Bios</span>
             </button>
 
             <button
               onClick={() => onOpenCourtRecord()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs transition-all shadow-md shadow-amber-500/30"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] font-black text-xs transition-all shadow-xs border-2 border-[#F59E0B] active:scale-95"
             >
-              <FolderOpen className="w-3.5 h-3.5" />
+              <FolderOpen className="w-3.5 h-3.5 text-[#78350F]" />
               <span>Court Record</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-slate-950 text-amber-300 text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-[#78350F] text-[#FEF3C7] text-[10px] font-black">
                 {debate.evidenceRecord.length}
               </span>
             </button>
           </div>
         </div>
 
-        {/* Sleek Claim / Evidence Single-Line Ribbon */}
+        {/* Claim / Evidence Single-Line Ribbon - Solid Warm Honey */}
         {(activeClaim || presentedEvidence) && (
-          <div className="px-4 py-1.5 bg-slate-900/95 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] animate-in slide-in-from-top-1 duration-150">
+          <div className="px-4 py-1.5 bg-[#FFF9EB] border-t-2 border-[#E5C9A6] flex flex-wrap items-center justify-between gap-2 text-[11px] animate-in slide-in-from-top-1 duration-150">
             <div className="flex items-center gap-2 min-w-0">
               {activeClaim && (
                 <>
-                  <span className="text-amber-400 font-bold uppercase tracking-wider shrink-0 text-[10px]">
+                  <span className="text-[#92400E] font-black uppercase tracking-wider shrink-0 text-[10px]">
                     🎯 Claim:
                   </span>
-                  <span className="text-slate-300 italic truncate max-w-xs sm:max-w-md md:max-w-xl font-medium">
+                  <span className="text-[#451A03] italic truncate max-w-xs sm:max-w-md md:max-w-xl font-bold">
                     &ldquo;{activeClaim.text}&rdquo;
                   </span>
-                  <span className="px-2 py-0.2 rounded-full text-[9px] font-bold uppercase bg-slate-800 text-amber-300 border border-amber-500/30 shrink-0">
+                  <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase bg-[#FEF3C7] text-[#78350F] border border-[#F59E0B] shrink-0">
                     {activeClaim.verificationStatus.replace(/_/g, ' ')}
                   </span>
                 </>
@@ -241,12 +242,12 @@ export function CourtroomStage({
 
             {presentedEvidence && (
               <div className="flex items-center gap-2 shrink-0">
-                <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-600 text-white uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#E0F2FE] text-[#0369A1] border border-[#7DD3FC] uppercase">
                   Take That! Evidence
                 </span>
                 <button
                   onClick={() => onOpenCourtRecord(presentedEvidence.id)}
-                  className="text-amber-300 hover:underline font-bold text-[10px]"
+                  className="text-[#92400E] hover:text-[#451A03] font-black text-[10px] underline"
                 >
                   {presentedEvidence.title} →
                 </button>
@@ -283,7 +284,7 @@ export function CourtroomStage({
         {/* Floating Jury Intervention Badge if jury is speaking */}
         {isJurySpeaking && (
           <div className="absolute top-6 inset-x-0 mx-auto w-fit z-30 animate-in fade-in zoom-in-95 duration-200">
-            <div className="px-4 py-2 rounded-2xl bg-purple-950/95 border-2 border-purple-400 text-amber-300 font-bold text-xs shadow-2xl flex items-center gap-2 backdrop-blur-md">
+            <div className="px-4 py-2 rounded-2xl bg-[#FAF5FF] border-2 border-[#C084FC] text-[#581C87] font-black text-xs shadow-xl flex items-center gap-2">
               <span className="text-base">⚖️</span>
               <span>The Jury Foreperson Intervenes to Clarify the Record</span>
             </div>
@@ -291,26 +292,26 @@ export function CourtroomStage({
         )}
       </div>
 
-      {/* Bottom Visual Novel Dialogue Box */}
-      <div className="relative z-30 p-4 sm:p-5 bg-slate-950/95 backdrop-blur-md border-t-2 border-pink-500/30 shadow-2xl">
+      {/* Bottom Visual Novel Dialogue Box - Solid Opaque Anime Frame */}
+      <div className="relative z-30 p-4 sm:p-5 bg-[#FFFDF9] border-t-4 border-[#C58B58] shadow-2xl">
         <div className="max-w-4xl mx-auto space-y-3">
           {/* Header Row: Nameplate + Cinna Companion + Shortcuts */}
           <div className="flex items-center justify-between gap-3 flex-wrap">
             {/* Speaker Nameplate Badge */}
             <div className="flex items-center gap-2">
               <span
-                className={`px-3.5 py-1 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider shadow-lg transition-all ${
+                className={`px-4 py-1 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider shadow-sm transition-all border-2 ${
                   isJurySpeaking
-                    ? 'bg-purple-700 text-white shadow-purple-600/40 ring-2 ring-purple-400/50'
+                    ? 'bg-[#F3E8FF] text-[#581C87] border-[#C084FC]'
                     : isDebaterAActive
-                    ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-sky-500/40 ring-2 ring-sky-300/50'
-                    : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-500/40 ring-2 ring-rose-300/50'
+                    ? 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8]'
+                    : 'bg-[#FFE4E6] text-[#9F1239] border-[#FB7185]'
                 }`}
               >
                 {currentTurn?.speakerName || 'Speaker'}
               </span>
 
-              <span className="text-[11px] text-slate-500 font-medium">
+              <span className="text-[11px] text-[#8C5338] font-bold">
                 Turn {currentTurnIdx + 1} of {script.length}
               </span>
             </div>
@@ -326,36 +327,48 @@ export function CourtroomStage({
 
               <button
                 onClick={() => setShowHistory(!showHistory)}
-                className="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium border border-slate-800 flex items-center gap-1 transition-colors"
+                className="px-3 py-1.5 rounded-full bg-[#FFFDF9] hover:bg-[#FAF5EB] text-[#78350F] font-bold border-2 border-[#E5C9A6] text-xs transition-colors flex items-center gap-1 shadow-xs"
                 title="View Dialogue Log"
               >
-                <History className="w-3.5 h-3.5" />
+                <History className="w-3.5 h-3.5 text-[#B07D62]" />
                 <span className="hidden sm:inline">Log</span>
               </button>
 
               <button
                 onClick={onScrollToJuryBoard}
-                className="px-2.5 py-1 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-300 text-xs font-bold flex items-center gap-1 transition-colors"
+                className="px-3.5 py-1.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] font-black text-xs border-2 border-[#C084FC] transition-all flex items-center gap-1 shadow-xs active:scale-95"
               >
-                <BookOpen className="w-3.5 h-3.5" />
+                <BookOpen className="w-3.5 h-3.5 text-[#581C87]" />
                 <span className="hidden sm:inline">Jury Verdict</span>
               </button>
             </div>
           </div>
 
-          {/* Dialogue Text Box */}
+          {/* Authentic Visual Novel Dialogue Box using DiaBox Asset */}
           <div
             onClick={handleNext}
-            className="min-h-[85px] sm:min-h-[95px] p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 hover:border-slate-700 cursor-pointer transition-all shadow-inner relative"
+            className="relative rounded-2xl overflow-hidden cursor-pointer shadow-md transition-all min-h-[110px] sm:min-h-[130px] flex flex-col justify-between group border-2 border-[#D4A373]/80 hover:border-[#B07D62]"
           >
-            <p className="text-sm sm:text-base text-slate-50 font-medium leading-relaxed">
-              {displayedText}
-              {isTyping && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-pulse" />}
-            </p>
+            {/* Visual Novel Box Background Frame */}
+            <img
+              src={activeDiaBoxSrc}
+              alt="Dialogue Frame"
+              className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
+            />
 
-            {/* Click to advance prompt */}
-            <div className="absolute bottom-2.5 right-3 text-[10px] text-pink-300/70 font-bold flex items-center gap-1 select-none">
-              {isTyping ? 'Click to skip text' : 'Click to continue ▶'}
+            {/* Inner Content overlay positioned over the cream interior */}
+            <div className="relative z-10 p-4 sm:p-5 flex-1 flex flex-col justify-between">
+              <p className="text-sm sm:text-base md:text-lg text-[#2D1825] font-semibold leading-relaxed drop-shadow-2xs">
+                {displayedText}
+                {isTyping && <span className="inline-block w-2.5 h-4 bg-[#D97706] ml-1.5 animate-pulse align-middle" />}
+              </p>
+
+              {/* Advance prompt */}
+              <div className="flex justify-end pt-1">
+                <span className="text-[10px] text-[#78350F] font-black bg-[#FAF5EB]/95 px-2.5 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs select-none">
+                  {isTyping ? 'Click to skip text' : 'Click to continue ▶'}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -364,7 +377,7 @@ export function CourtroomStage({
             <button
               onClick={handlePrev}
               disabled={currentTurnIdx === 0}
-              className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 border border-slate-800 transition-colors flex items-center gap-1.5 text-xs font-semibold"
+              className="px-4 py-1.5 rounded-full bg-[#FFFDF9] hover:bg-[#FAF5EB] disabled:opacity-40 text-[#78350F] border-2 border-[#E5C9A6] transition-colors flex items-center gap-1.5 text-xs font-bold shadow-xs active:scale-95"
             >
               <SkipBack className="w-3.5 h-3.5" />
               <span>Previous</span>
@@ -372,10 +385,10 @@ export function CourtroomStage({
 
             <button
               onClick={() => setIsAutoPlay(!isAutoPlay)}
-              className={`px-5 py-1.5 rounded-xl text-xs font-black flex items-center gap-2 border transition-all ${
+              className={`px-5 py-1.5 rounded-full text-xs font-black flex items-center gap-2 border-2 transition-all shadow-xs active:scale-95 ${
                 isAutoPlay
-                  ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/30'
-                  : 'bg-slate-900 text-slate-200 border-slate-700 hover:bg-slate-800'
+                  ? 'bg-[#FBCFE8] text-[#831843] border-[#F472B6]'
+                  : 'bg-[#FFFDF9] text-[#78350F] border-[#E5C9A6] hover:bg-[#FAF5EB]'
               }`}
             >
               {isAutoPlay ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -385,7 +398,7 @@ export function CourtroomStage({
             <button
               onClick={handleNext}
               disabled={currentTurnIdx >= script.length - 1}
-              className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 border border-slate-800 transition-colors flex items-center gap-1.5 text-xs font-semibold"
+              className="px-5 py-1.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] disabled:opacity-40 text-[#78350F] border-2 border-[#F59E0B] transition-colors flex items-center gap-1.5 text-xs font-black shadow-xs active:scale-95"
             >
               <span>Next</span>
               <SkipForward className="w-3.5 h-3.5" />
@@ -394,32 +407,32 @@ export function CourtroomStage({
         </div>
       </div>
 
-      {/* History Log Drawer Modal */}
+      {/* History Log Drawer Modal - Solid Warm Cream */}
       {showHistory && (
-        <div className="absolute inset-0 z-40 bg-slate-950/95 p-6 overflow-y-auto animate-in fade-in duration-150">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="font-bold text-sm text-slate-200 uppercase tracking-wide flex items-center gap-2">
-                <History className="w-4 h-4 text-amber-400" />
+        <div className="absolute inset-0 z-40 bg-black/40 p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-150 flex items-center justify-center">
+          <div className="w-full max-w-2xl bg-[#FFFDF9] border-4 border-[#C58B58] rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b-2 border-[#E5C9A6] pb-3">
+              <h3 className="font-black text-sm text-[#78350F] uppercase tracking-wide flex items-center gap-2">
+                <History className="w-4 h-4 text-[#D97706]" />
                 Dialogue Transcript History
               </h3>
               <button
                 onClick={() => setShowHistory(false)}
-                className="text-xs px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:bg-slate-700 font-medium"
+                className="text-xs px-3 py-1 rounded-full bg-[#FCE7F3] text-[#831843] border border-[#F472B6] hover:bg-[#FBCFE8] font-bold"
               >
                 Close Log
               </button>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
               {script.slice(0, currentTurnIdx + 1).map((turn, i) => (
-                <div key={turn.id} className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 text-xs">
+                <div key={turn.id} className="p-3 rounded-2xl bg-[#FAF5EB] border-2 border-[#E5C9A6] text-xs">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-amber-300">
+                    <span className="font-black text-[#8C5338]">
                       {turn.speakerName} {turn.callout ? `[${turn.callout}]` : ''}
                     </span>
-                    <span className="text-[10px] text-slate-500">Step {i + 1}</span>
+                    <span className="text-[10px] text-[#B07D62] font-semibold">Step {i + 1}</span>
                   </div>
-                  <p className="text-slate-300">{turn.text}</p>
+                  <p className="text-[#2D1825] font-medium leading-relaxed">{turn.text}</p>
                 </div>
               ))}
             </div>

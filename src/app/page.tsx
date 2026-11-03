@@ -75,23 +75,23 @@ export default function CourtroomApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col justify-between selection:bg-pink-400 selection:text-slate-950">
-      {/* Top Courtroom Navigation Header */}
-      <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-pink-500/20 px-4 sm:px-8 py-3.5">
+    <div className="min-h-screen text-[#2d1825] flex flex-col justify-between selection:bg-pink-300 selection:text-pink-950">
+      {/* Top Courtroom Navigation Header - Solid Pastel Parchment */}
+      <header className="sticky top-0 z-30 bg-[#fffdfa] border-b-2 border-[#eddcd2] px-4 sm:px-8 py-3 shadow-sm">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src="/crosscheck logo.png"
               alt="CrossCheck!"
-              className="h-8 sm:h-10 w-auto object-contain filter drop-shadow-md select-none"
+              className="h-12 sm:h-16 md:h-20 w-auto object-contain filter drop-shadow select-none hover:scale-105 transition-transform"
             />
             <div className="hidden md:block">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/30 uppercase tracking-wider">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#fce7f3] text-[#831843] border border-[#f472b6] uppercase tracking-wider shadow-xs">
                   🌸 Ace Attorney Explainer
                 </span>
               </div>
-              <p className="text-[11px] text-pink-200/60 mt-0.5">
+              <p className="text-[11px] text-[#7c5e74] font-medium mt-0.5">
                 Playable debate court, live fact-checking, and beginner concept explainer
               </p>
             </div>
@@ -103,17 +103,17 @@ export default function CourtroomApp() {
               <>
                 <button
                   onClick={() => handleOpenCourtRecord()}
-                  className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1.5"
+                  className="px-4 py-1.5 rounded-full bg-[#fef3c7] hover:bg-[#fde68a] text-[#78350f] border-2 border-[#f59e0b] font-black text-xs transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
-                  <FolderOpen className="w-3.5 h-3.5" />
+                  <FolderOpen className="w-3.5 h-3.5 text-[#78350f]" />
                   <span className="hidden sm:inline">Court Record</span>
                 </button>
 
                 <button
                   onClick={handleResetTrial}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors flex items-center gap-1.5"
+                  className="px-4 py-1.5 rounded-full bg-[#fce7f3] hover:bg-[#fbcfe8] text-[#831843] border-2 border-[#f472b6] font-black text-xs transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-3.5 h-3.5 text-[#831843]" />
                   <span className="hidden sm:inline">New Case</span>
                 </button>
               </>
@@ -127,18 +127,18 @@ export default function CourtroomApp() {
         {/* Input Form Section (Collapsible when a trial is active) */}
         <section>
           {debateResult && !showInputSection ? (
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs shadow-lg backdrop-blur-md">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#fffdfa] border-2 border-[#eddcd2] text-xs shadow-sm">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 font-bold uppercase text-[10px]">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#e0f2fe] text-[#0369a1] border border-[#7dd3fc] font-black uppercase text-[10px]">
                   Current Trial
                 </span>
-                <span className="text-slate-200 font-semibold truncate text-xs sm:text-sm">
+                <span className="text-[#2d1825] font-bold truncate text-xs sm:text-sm">
                   {debateResult.topic}
                 </span>
               </div>
               <button
                 onClick={() => setShowInputSection(true)}
-                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-pink-300 border border-pink-500/30 font-bold text-xs flex items-center gap-1.5 transition-all shrink-0"
+                className="px-4 py-1.5 rounded-full bg-[#f3e8ff] hover:bg-[#e9d5ff] text-[#581c87] border-2 border-[#c084fc] font-black text-xs flex items-center gap-1.5 transition-all shadow-sm shrink-0 active:scale-95"
               >
                 <span>➕ Submit New Discussion</span>
               </button>
@@ -149,7 +149,7 @@ export default function CourtroomApp() {
                 <div className="flex justify-end">
                   <button
                     onClick={() => setShowInputSection(false)}
-                    className="text-xs text-slate-400 hover:text-slate-200 font-medium px-2 py-1"
+                    className="text-xs text-[#7c5e74] hover:text-[#2d1825] font-bold px-3 py-1 rounded-full bg-[#eddcd2]/50 hover:bg-[#eddcd2] transition-colors"
                   >
                     ✕ Close Input Drawer
                   </button>
@@ -180,15 +180,15 @@ export default function CourtroomApp() {
             {/* Visual Novel Courtroom Stage */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
-                  <Sparkles className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#78350f] bg-[#fef3c7] px-3 py-1 rounded-full border border-[#fde68a] shadow-xs">
+                  <Sparkles className="w-4 h-4 text-[#d97706]" />
                   Phase 1: The Courtroom Examination
                 </div>
                 <button
                   onClick={handleScrollToJuryBoard}
-                  className="text-xs text-purple-300 hover:text-purple-200 flex items-center gap-1 font-semibold"
+                  className="px-3.5 py-1 rounded-full bg-[#fffdfa] hover:bg-[#faf5ff] border-2 border-[#d8b4fe] text-[#581c87] text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
                 >
-                  <BookOpen className="w-3.5 h-3.5" />
+                  <BookOpen className="w-3.5 h-3.5 text-[#9333ea]" />
                   <span>Skip to Jury Synthesis & Jargon Buster ↓</span>
                 </button>
               </div>
@@ -202,8 +202,8 @@ export default function CourtroomApp() {
 
             {/* Jury Chamber & Explainer Board */}
             <div ref={juryBoardRef} className="space-y-3 scroll-mt-20">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-400">
-                <Scale className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#581c87] bg-[#f3e8ff] px-3 py-1 rounded-full border border-[#e9d5ff] shadow-xs w-fit">
+                <Scale className="w-4 h-4 text-[#7c3aed]" />
                 Phase 2: The Jury Deliberation & Concept Breakdown
               </div>
 
@@ -229,9 +229,9 @@ export default function CourtroomApp() {
         />
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-6 px-4 text-center text-xs text-slate-500">
-        <p className="max-w-xl mx-auto leading-relaxed">
+      {/* Footer - Pastel Parchment */}
+      <footer className="border-t-2 border-[#eddcd2] bg-[#f7efe7] py-6 px-4 text-center text-xs text-[#7c5e74]">
+        <p className="max-w-xl mx-auto leading-relaxed font-medium">
           Inspired by Ace Attorney courtroom mechanics. Built to foster genuine topic understanding through
           fair debate reconstruction, verifiable citations, and beginner-accessible concept analogies.
         </p>

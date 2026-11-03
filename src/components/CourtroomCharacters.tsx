@@ -51,19 +51,19 @@ export function DebaterPortrait({
       {/* Speaker Floating Nametag */}
       <div className="mb-2 flex flex-col items-center transition-all">
         <div
-          className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-lg border backdrop-blur-md transition-all ${
+          className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs border-2 transition-all ${
             isActive
               ? isA
-                ? 'bg-sky-950/90 text-sky-200 border-sky-400 ring-2 ring-sky-400/40 shadow-sky-500/30'
-                : 'bg-rose-950/90 text-rose-200 border-rose-400 ring-2 ring-rose-400/40 shadow-rose-500/30'
-              : 'bg-slate-900/80 text-slate-400 border-slate-700/60'
+                ? 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8] ring-2 ring-white/90 shadow-md'
+                : 'bg-[#FFE4E6] text-[#9F1239] border-[#FB7185] ring-2 ring-white/90 shadow-md'
+              : 'bg-[#FFFDF9] text-[#7C5E74] border-[#E5C9A6]'
           }`}
         >
           <span>{isA ? '⚖️ Defense' : '⚔️ Prosecution'}</span>
           <span>•</span>
           <span>{name}</span>
         </div>
-        <span className="text-[10px] text-slate-400 font-medium tracking-tight mt-0.5 truncate max-w-[180px]">
+        <span className="text-[10px] text-[#381E2B] font-bold tracking-tight mt-1 truncate max-w-[200px] bg-[#FAF5EB]/90 px-2.5 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs">
           {title}
         </span>
       </div>
@@ -103,12 +103,12 @@ export function DebaterPortrait({
         <div
           className={`absolute bottom-3 ${
             isA ? 'left-2' : 'right-2'
-          } px-2 py-0.5 rounded-full text-[9px] uppercase font-bold bg-slate-950/85 backdrop-blur-md border flex items-center gap-1 shadow-md ${
+          } px-2.5 py-0.5 rounded-full text-[9px] uppercase font-black border-2 flex items-center gap-1 shadow-xs ${
             isActive
               ? isA
-                ? 'text-sky-300 border-sky-400/50'
-                : 'text-rose-300 border-rose-400/50'
-              : 'text-slate-400 border-slate-700'
+                ? 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8]'
+                : 'bg-[#FFE4E6] text-[#9F1239] border-[#FB7185]'
+              : 'bg-[#FFFDF9] text-[#7C5E74] border-[#E5C9A6]'
           }`}
         >
           <span>{emotion === 'intense' ? '⚡' : emotion === 'thinking' ? '💭' : emotion === 'confident' ? '✨' : '🌸'}</span>
@@ -117,8 +117,8 @@ export function DebaterPortrait({
       </div>
 
       {/* Grounding Wooden Courtroom Bench */}
-      <div className="w-full h-5 sm:h-6 rounded-t-lg bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 border-t-2 border-amber-600/70 shadow-lg shadow-black/80 relative flex items-center justify-center">
-        <div className="w-16 h-1 bg-amber-500/40 rounded-full" />
+      <div className="w-full h-5 sm:h-6 rounded-t-lg bg-gradient-to-r from-[#7a4e27] via-[#946132] to-[#7a4e27] border-t-2 border-amber-300/80 shadow-md relative flex items-center justify-center">
+        <div className="w-16 h-1 bg-amber-200/50 rounded-full" />
       </div>
     </div>
   );
@@ -193,7 +193,7 @@ export function CalloutStingerBanner({ callout }: { callout: CalloutType }) {
   return (
     <div className="absolute inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">
       {/* Background Soft Glow Flash */}
-      <div className="absolute inset-0 bg-pink-950/40 backdrop-blur-xs animate-in fade-in duration-150" />
+      <div className="absolute inset-0 bg-rose-500/25 animate-in fade-in duration-150" />
 
       {/* Comic Burst Graphic */}
       <div className="relative animate-in zoom-in-75 duration-200 flex items-center justify-center max-w-[90%] max-h-[80%]">

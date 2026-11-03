@@ -27,44 +27,44 @@ export function JuryBoard({
   );
 
   return (
-    <div className="w-full bg-slate-900 border-2 border-purple-500/40 rounded-3xl shadow-2xl overflow-hidden mt-6">
-      {/* Top Header Banner with Deliberation Backdrop */}
-      <div className="relative bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 px-6 py-5 border-b border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
+    <div className="w-full bg-[#FFFDF9] border-4 border-[#C084FC] rounded-3xl shadow-xl overflow-hidden mt-6 select-none">
+      {/* Top Header Banner with Deliberation Chamber Backdrop - Pastel Tint */}
+      <div className="relative bg-[#FAF5FF] px-6 py-5 border-b-2 border-[#E9D5FF] flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
         {/* Subtle Deliberation Chamber Background */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none select-none">
+        <div className="absolute inset-0 opacity-25 pointer-events-none select-none">
           <img
             src="/scenes_and_overlays/Backdrop_02_Jury_Chamber.png"
             alt="Jury Chamber"
-            className="w-full h-full object-cover object-center filter blur-[1px]"
+            className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-950/85 via-slate-950/80 to-indigo-950/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF5FF]/90 via-[#FFFDF9]/75 to-[#FAF5FF]/90" />
         </div>
 
         <div className="relative z-10 flex items-center gap-4">
           <JuryForepersonPortrait emotion="synthesis" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold uppercase tracking-wider">
-                Impartial Educational Assessment
+              <span className="px-3 py-0.5 rounded-full bg-[#FEF3C7] text-[#78350F] border-2 border-[#F59E0B] text-[10px] font-black uppercase tracking-wider shadow-xs">
+                ⚖️ Impartial Educational Assessment
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-100 tracking-tight mt-1">
+            <h2 className="text-xl sm:text-2xl font-black text-[#581C87] tracking-tight mt-1">
               The Jury Chamber & Explainer Board
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-[#7C5E74] font-medium mt-0.5">
               Breaking down the real debate concepts and what verifiable evidence actually proves.
             </p>
           </div>
         </div>
 
-        {/* Tab Buttons */}
-        <div className="relative z-10 flex bg-slate-950/85 p-1 rounded-xl border border-slate-800 text-xs backdrop-blur-sm">
+        {/* Tab Buttons - Solid Pastel Pills */}
+        <div className="relative z-10 flex bg-[#F3E8FF] p-1.5 rounded-2xl border-2 border-[#E9D5FF] text-xs gap-1 shadow-xs">
           <button
             onClick={() => setActiveTab('synthesis')}
-            className={`px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
               activeTab === 'synthesis'
-                ? 'bg-purple-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
             }`}
           >
             <Scale className="w-3.5 h-3.5" />
@@ -72,10 +72,10 @@ export function JuryBoard({
           </button>
           <button
             onClick={() => setActiveTab('concepts')}
-            className={`px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
               activeTab === 'concepts'
-                ? 'bg-purple-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5" />
@@ -83,10 +83,10 @@ export function JuryBoard({
           </button>
           <button
             onClick={() => setActiveTab('ledger')}
-            className={`px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
               activeTab === 'ledger'
-                ? 'bg-purple-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
@@ -99,45 +99,45 @@ export function JuryBoard({
       <div className="p-6">
         {activeTab === 'synthesis' && (
           <div className="space-y-6">
-            {/* Core Disagreement Card */}
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 border border-purple-500/30">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-300 mb-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+            {/* Core Disagreement Card - Solid Pastel Lilac */}
+            <div className="p-5 rounded-2xl bg-[#FAF5FF] border-2 border-[#D8B4FE] shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#581C87] mb-2">
+                <Sparkles className="w-4 h-4 text-[#D97706]" />
                 The Core Disagreement Explained
               </div>
-              <p className="text-sm sm:text-base text-slate-200 font-medium leading-relaxed">
+              <p className="text-sm sm:text-base text-[#2D1825] font-semibold leading-relaxed">
                 {verdict.coreDisagreementSummary}
               </p>
             </div>
 
             {/* Split Findings: Verified Evidence vs Forecast Limits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* What Evidence Confirms */}
-              <div className="p-4 rounded-xl bg-slate-950/80 border border-emerald-500/30">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3">
-                  <CheckCircle2 className="w-4 h-4" />
+              {/* What Evidence Confirms - Solid Pastel Mint */}
+              <div className="p-5 rounded-2xl bg-[#ECFDF5] border-2 border-[#A7F3D0] shadow-xs">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#065F46] mb-3">
+                  <CheckCircle2 className="w-4 h-4 text-[#059669]" />
                   What the Credible Evidence Establishes
                 </div>
                 <ul className="space-y-2.5">
                   {verdict.whatTheEvidenceEstablishes.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                    <li key={idx} className="flex items-start gap-2.5 text-xs text-[#064E3B] font-medium leading-relaxed">
+                      <span className="w-2 h-2 rounded-full bg-[#10B981] mt-1 shrink-0" />
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* What Remains Uncertain / Forecast Limits */}
-              <div className="p-4 rounded-xl bg-slate-950/80 border border-amber-500/30">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">
-                  <AlertTriangle className="w-4 h-4" />
+              {/* What Remains Uncertain / Forecast Limits - Solid Pastel Amber */}
+              <div className="p-5 rounded-2xl bg-[#FFFBEB] border-2 border-[#FDE68A] shadow-xs">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#92400E] mb-3">
+                  <AlertTriangle className="w-4 h-4 text-[#D97706]" />
                   Key Uncertainties & Future Projections
                 </div>
                 <ul className="space-y-2.5">
                   {verdict.uncertaintiesAndForecastingLimits.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
+                    <li key={idx} className="flex items-start gap-2.5 text-xs text-[#78350F] font-medium leading-relaxed">
+                      <span className="w-2 h-2 rounded-full bg-[#F59E0B] mt-1 shrink-0" />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -145,22 +145,22 @@ export function JuryBoard({
               </div>
             </div>
 
-            {/* The Balanced Synthesis (No false binary winner) */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300 mb-2">
-                <Scale className="w-4 h-4" />
+            {/* The Balanced Synthesis (No false binary winner) - Solid Cream Parchment */}
+            <div className="p-5 rounded-2xl bg-[#FFFDF9] border-2 border-[#E5C9A6] shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#78350F] mb-2">
+                <Scale className="w-4 h-4 text-[#B45309]" />
                 The Jury's Qualified Synthesis
               </div>
-              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4">
+              <p className="text-xs sm:text-sm text-[#2D1825] font-medium leading-relaxed mb-4">
                 {verdict.balancedVerdict}
               </p>
 
-              {/* Educational Takeaway Box */}
-              <div className="p-4 rounded-xl bg-purple-950/40 border-l-4 border-purple-500 border-t border-r border-b border-purple-500/30">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-purple-300 mb-1">
+              {/* Educational Takeaway Box - Solid Pastel Rose Ribbon */}
+              <div className="p-4 rounded-xl bg-[#FDF2F8] border-l-4 border-[#F472B6] border-t-2 border-r-2 border-b-2 border-[#FBCFE8]">
+                <div className="text-[11px] font-black uppercase tracking-wider text-[#831843] mb-1">
                   🎓 Lesson For Readers New To This Topic:
                 </div>
-                <p className="text-xs sm:text-sm font-semibold text-purple-100 leading-relaxed">
+                <p className="text-xs sm:text-sm font-bold text-[#831843] leading-relaxed">
                   {verdict.educationalTakeaway}
                 </p>
               </div>
@@ -168,39 +168,39 @@ export function JuryBoard({
           </div>
         )}
 
-        {/* Tab 2: Concept Guide / Jargon Buster */}
+        {/* Tab 2: Concept Guide / Jargon Buster - Solid Pastel Cards */}
         {activeTab === 'concepts' && (
           <div className="space-y-4">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#7C5E74] font-medium">
               Complex concepts used in this debate translated into plain English and intuitive analogies:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {verdict.conceptGuide.map((concept, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-purple-500/50 transition-colors flex flex-col justify-between"
+                  className="p-5 rounded-2xl bg-[#FFFDF9] border-2 border-[#E9D5FF] hover:border-[#C084FC] transition-colors flex flex-col justify-between shadow-xs"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2">
-                      <span className="font-bold text-sm text-amber-300">{concept.term}</span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-400">
+                      <span className="font-black text-sm text-[#581C87]">{concept.term}</span>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#F3E8FF] text-[#581C87] border border-[#D8B4FE]">
                         Concept Explainer
                       </span>
                     </div>
-                    <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                    <p className="text-xs text-[#2D1825] font-medium leading-relaxed mb-3">
                       {concept.plainDefinition}
                     </p>
                   </div>
 
-                  <div className="space-y-2 pt-2 border-t border-slate-800/80">
-                    <div className="p-2.5 rounded-lg bg-purple-950/30 border border-purple-500/20 text-xs">
-                      <span className="font-bold text-purple-300 text-[11px] uppercase tracking-wide block mb-0.5">
+                  <div className="space-y-2 pt-3 border-t-2 border-[#F3E8FF]">
+                    <div className="p-3 rounded-xl bg-[#FEF3C7] border-2 border-[#FDE68A] text-xs">
+                      <span className="font-black text-[#92400E] text-[11px] uppercase tracking-wide block mb-0.5">
                         💡 Real-World Analogy:
                       </span>
-                      <span className="text-slate-300 italic">{concept.everydayAnalogy}</span>
+                      <span className="text-[#78350F] italic font-semibold">{concept.everydayAnalogy}</span>
                     </div>
-                    <div className="text-[11px] text-slate-400">
-                      <span className="font-semibold text-slate-300">Why it matters here: </span>
+                    <div className="text-[11px] text-[#7C5E74] font-medium">
+                      <span className="font-bold text-[#2D1825]">Why it matters here: </span>
                       {concept.contextInDebate}
                     </div>
                   </div>
@@ -210,26 +210,26 @@ export function JuryBoard({
           </div>
         )}
 
-        {/* Tab 3: Evidence Ledger */}
+        {/* Tab 3: Evidence Ledger - Solid Pastel Table */}
         {activeTab === 'ledger' && (
           <div className="space-y-4">
             {/* Quick stats pills */}
-            <div className="flex flex-wrap gap-2 text-xs">
-              <span className="px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-semibold">
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="px-3 py-1 rounded-full bg-[#ECFDF5] border-2 border-[#A7F3D0] text-[#065F46] font-black">
                 ✓ {verifiedClaims.length} Verified Facts
               </span>
-              <span className="px-3 py-1 rounded-full bg-rose-950/60 border border-rose-500/40 text-rose-300 font-semibold">
+              <span className="px-3 py-1 rounded-full bg-[#FFF1F2] border-2 border-[#FECDD3] text-[#9F1239] font-black">
                 ✗ {contradictedClaims.length} Contradicted / Corrected
               </span>
-              <span className="px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/40 text-amber-300 font-semibold">
+              <span className="px-3 py-1 rounded-full bg-[#FFFBEB] border-2 border-[#FDE68A] text-[#92400E] font-black">
                 ⚡ {forecastOrMixedClaims.length} Forecasts & Conditional Scenarios
               </span>
               <button
                 onClick={() => onOpenCourtRecord()}
-                className="ml-auto px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs transition-colors flex items-center gap-1.5"
+                className="ml-auto px-4 py-1.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-black text-xs transition-all flex items-center gap-1.5 shadow-xs active:scale-95"
               >
                 <span>Browse Full Court Record ({evidenceRecord.length})</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#78350F]" />
               </button>
             </div>
 
@@ -241,54 +241,54 @@ export function JuryBoard({
                 const isForecast = claim.claimType === 'forecast_prediction';
 
                 const borderCol = isVerified
-                  ? 'border-emerald-500/30 bg-emerald-950/10'
+                  ? 'border-2 border-[#A7F3D0] bg-[#F0FDF4]'
                   : isContradicted
-                  ? 'border-rose-500/30 bg-rose-950/10'
-                  : 'border-amber-500/30 bg-amber-950/10';
+                  ? 'border-2 border-[#FECDD3] bg-[#FFF1F2]'
+                  : 'border-2 border-[#FDE68A] bg-[#FFFBEB]';
 
                 return (
-                  <div key={claim.id} className={`p-4 rounded-xl border ${borderCol} space-y-2`}>
+                  <div key={claim.id} className={`p-4 sm:p-5 rounded-2xl ${borderCol} space-y-2 shadow-xs`}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-slate-200">
+                        <span className="text-xs font-black text-[#2D1825]">
                           {claim.speakerName}
                         </span>
-                        <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-                          {claim.claimType.replace('_', ' ')}
+                        <span className="text-[10px] uppercase font-bold px-2.5 py-0.5 rounded-full bg-[#FFFDF9] text-[#7C5E74] border border-[#E5C9A6]">
+                          {claim.claimType.replace(/_/g, ' ')}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         {isVerified ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40 flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3" />
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#ECFDF5] text-[#065F46] border border-[#10B981] flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-[#059669]" />
                             Verified by Data
                           </span>
                         ) : isContradicted ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-950 text-rose-400 border border-rose-500/40 flex items-center gap-1">
-                            <AlertTriangle className="w-3 h-3" />
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#FFF1F2] text-[#9F1239] border border-[#F43F5E] flex items-center gap-1">
+                            <AlertTriangle className="w-3 h-3 text-[#E11D48]" />
                             Contradicted
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-400 border border-amber-500/40 flex items-center gap-1">
-                            <HelpCircle className="w-3 h-3" />
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#FFFBEB] text-[#92400E] border border-[#F59E0B] flex items-center gap-1">
+                            <HelpCircle className="w-3 h-3 text-[#D97706]" />
                             {isForecast ? 'Future Projection' : 'Conditional / Nuanced'}
                           </span>
                         )}
                       </div>
                     </div>
 
-                    <blockquote className="text-xs italic text-slate-200 font-medium">
+                    <blockquote className="text-xs sm:text-sm italic text-[#2D1825] font-bold">
                       &ldquo;{claim.text}&rdquo;
                     </blockquote>
 
-                    <p className="text-xs text-slate-400 leading-relaxed">
+                    <p className="text-xs text-[#57414F] font-medium leading-relaxed">
                       {claim.explanation}
                     </p>
 
                     {/* Linked Evidence Buttons */}
                     {claim.linkedEvidenceIds.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-2 pt-1">
-                        <span className="text-[11px] text-slate-500 font-medium">Citations:</span>
+                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[#E5C9A6]/40">
+                        <span className="text-[11px] text-[#7C5E74] font-bold">Citations:</span>
                         {claim.linkedEvidenceIds.map(eid => {
                           const ev = evidenceRecord.find(e => e.id === eid);
                           if (!ev) return null;
@@ -296,10 +296,10 @@ export function JuryBoard({
                             <button
                               key={eid}
                               onClick={() => onOpenCourtRecord(eid)}
-                              className="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/20 font-medium flex items-center gap-1 transition-colors"
+                              className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#FFFDF9] hover:bg-[#FAF5EB] text-[#78350F] border border-[#E5C9A6] font-bold flex items-center gap-1 transition-colors shadow-2xs"
                             >
                               <span>{ev.sourceName}: {ev.title.slice(0, 32)}...</span>
-                              <ExternalLink className="w-2.5 h-2.5" />
+                              <ExternalLink className="w-2.5 h-2.5 text-[#B45309]" />
                             </button>
                           );
                         })}

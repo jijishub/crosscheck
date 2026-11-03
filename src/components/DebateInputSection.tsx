@@ -168,23 +168,23 @@ export function DebateInputSection({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-slate-900 border-2 border-slate-800 rounded-3xl shadow-2xl overflow-hidden mb-8">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 px-6 py-5 border-b border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="w-full max-w-4xl mx-auto bg-[#FFFDF9] border-4 border-[#F472B6] rounded-3xl shadow-xl overflow-hidden mb-8 select-none">
+      {/* Header Banner - Solid Pastel Rose */}
+      <div className="bg-[#FDF2F8] px-6 py-5 border-b-2 border-[#FBCFE8] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[11px] font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-3 py-0.5 rounded-full bg-[#FEF3C7] text-[#78350F] border-2 border-[#F59E0B] text-[10px] font-black uppercase tracking-wider shadow-xs">
               CrossCheck! Case Intake
             </span>
-            <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-semibold flex items-center gap-1">
-              <Server className="w-3 h-3 text-purple-400" />
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F3E8FF] text-[#581C87] border-2 border-[#C084FC] text-[10px] font-bold flex items-center gap-1 shadow-xs">
+              <Server className="w-3 h-3 text-[#7C3AED]" />
               Gateway: luna @ api.jizellecasia.site
             </span>
           </div>
-          <h2 className="text-xl font-black text-slate-100 tracking-tight">
+          <h2 className="text-xl font-black text-[#831843] tracking-tight">
             Submit a Debate or Context for Trial
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-[#7C5E74] font-medium mt-0.5">
             Submit dialogue via plain text or structured JSON. The AI court deconstructs stances, verifies claims via live research, and stages the visual novel duel.
           </p>
         </div>
@@ -193,26 +193,26 @@ export function DebateInputSection({
         <button
           type="button"
           onClick={() => setShowKeyInput(!showKeyInput)}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all shrink-0 ${
+          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border-2 text-xs font-black transition-all shrink-0 shadow-xs active:scale-95 ${
             apiKey
-              ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300'
-              : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
+              ? 'bg-[#ECFDF5] border-[#10B981] text-[#065F46]'
+              : 'bg-[#FFFDF9] border-[#E5C9A6] text-[#78350F] hover:bg-[#FAF5EB]'
           }`}
         >
-          <Key className="w-3.5 h-3.5 text-amber-400" />
+          <Key className="w-3.5 h-3.5 text-[#D97706]" />
           <span>{apiKey ? 'Custom Key Set ✓' : 'Gateway Settings'}</span>
         </button>
       </div>
 
       {/* API Key / Gateway Drawer */}
       {showKeyInput && (
-        <div className="p-4 bg-slate-950 border-b border-slate-800 text-xs space-y-2 animate-in slide-in-from-top-2">
+        <div className="p-4 bg-[#FAF5EB] border-b-2 border-[#E5C9A6] text-xs space-y-2 animate-in slide-in-from-top-2">
           <div className="flex items-center justify-between">
-            <label className="font-bold text-slate-300 flex items-center gap-1.5">
-              <Key className="w-3.5 h-3.5 text-amber-400" />
+            <label className="font-black text-[#78350F] flex items-center gap-1.5">
+              <Key className="w-3.5 h-3.5 text-[#D97706]" />
               AI Gateway Key / Token (Optional Override)
             </label>
-            <span className="text-[11px] text-emerald-400 font-semibold">
+            <span className="text-[11px] text-[#065F46] font-bold">
               Default gateway active: https://api.jizellecasia.site/v1 (model: luna)
             </span>
           </div>
@@ -221,40 +221,40 @@ export function DebateInputSection({
             placeholder="gds_live_... or custom API key"
             value={apiKey}
             onChange={e => handleSaveKey(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-400 font-mono text-xs"
+            className="w-full px-3 py-2 rounded-xl bg-[#FFFDF9] border-2 border-[#E5C9A6] text-[#2D1825] placeholder-[#B07D62]/60 focus:outline-none focus:border-[#C58B58] font-mono text-xs"
           />
-          <p className="text-[11px] text-slate-400">
-            Pre-configured with <code className="text-purple-300 font-bold">luna</code> via your AI gateway.
-            You can also configure <code className="text-blue-300">AI_GATEWAY_KEY</code> in <code className="text-slate-300">.env.local</code>.
+          <p className="text-[11px] text-[#7C5E74]">
+            Pre-configured with <code className="text-[#581C87] font-bold">luna</code> via your AI gateway.
+            You can also configure <code className="text-[#0369A1] font-bold">AI_GATEWAY_KEY</code> in <code className="text-[#831843] font-bold">.env.local</code>.
           </p>
         </div>
       )}
 
       {/* Mode Tabs: Plaintext vs JSON */}
-      <div className="flex items-center border-b border-slate-800 bg-slate-950/60 px-6 pt-3 gap-2">
+      <div className="flex items-center border-b-2 border-[#FBCFE8] bg-[#FCE7F3] px-6 pt-3 gap-2">
         <button
           type="button"
           onClick={() => setActiveTab('text')}
-          className={`px-4 py-2 rounded-t-xl text-xs font-bold transition-all flex items-center gap-2 border-t-2 ${
+          className={`px-4 py-2 rounded-t-xl text-xs font-black transition-all flex items-center gap-2 border-t-2 border-l-2 border-r-2 ${
             activeTab === 'text'
-              ? 'bg-slate-900 text-sky-300 border-sky-400 shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 border-transparent hover:bg-slate-900/40'
+              ? 'bg-[#FFFDF9] text-[#831843] border-[#F472B6] shadow-xs'
+              : 'text-[#7C5E74] hover:text-[#831843] border-transparent'
           }`}
         >
-          <FileText className="w-3.5 h-3.5" />
+          <FileText className="w-3.5 h-3.5 text-[#EC4899]" />
           <span>💬 Plaintext Discussion</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('json')}
-          className={`px-4 py-2 rounded-t-xl text-xs font-bold transition-all flex items-center gap-2 border-t-2 ${
+          className={`px-4 py-2 rounded-t-xl text-xs font-black transition-all flex items-center gap-2 border-t-2 border-l-2 border-r-2 ${
             activeTab === 'json'
-              ? 'bg-slate-900 text-pink-300 border-pink-400 shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 border-transparent hover:bg-slate-900/40'
+              ? 'bg-[#FFFDF9] text-[#581C87] border-[#C084FC] shadow-xs'
+              : 'text-[#7C5E74] hover:text-[#581C87] border-transparent'
           }`}
         >
-          <Code2 className="w-3.5 h-3.5" />
+          <Code2 className="w-3.5 h-3.5 text-[#A855F7]" />
           <span>{`{ }`} JSON Argument Context</span>
         </button>
       </div>
@@ -263,22 +263,22 @@ export function DebateInputSection({
       {activeTab === 'text' && (
         <div>
           {/* Preset Quick Loader */}
-          <div className="px-6 py-3 bg-slate-950/40 border-b border-slate-800/80 flex flex-wrap items-center gap-2.5 text-xs">
-            <span className="font-semibold text-slate-400 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <div className="px-6 py-3 bg-[#FAF5EB] border-b-2 border-[#E5C9A6] flex flex-wrap items-center gap-2.5 text-xs">
+            <span className="font-bold text-[#78350F] flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
               Quick Presets:
             </span>
             <button
               type="button"
               onClick={() => handleLoadTextPreset(PHILIPPINE_GDP_PRESET)}
-              className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors flex items-center gap-1.5"
+              className="px-3 py-1 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
             >
               <span>🇵🇭 Philippine GDP Forecast (Melon vs Yon)</span>
             </button>
             <button
               type="button"
               onClick={() => handleLoadTextPreset(AI_CODING_PRESET)}
-              className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors flex items-center gap-1.5"
+              className="px-3 py-1 rounded-xl bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] border-2 border-[#C084FC] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
             >
               <span>💻 AI Coding: Speed vs Architecture Debt</span>
             </button>
@@ -286,7 +286,7 @@ export function DebateInputSection({
 
           <form onSubmit={handleSubmitText} className="p-6 space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-black text-[#78350F] uppercase tracking-wider mb-1.5">
                 Topic Title or Subject Context (Optional)
               </label>
               <input
@@ -294,17 +294,17 @@ export function DebateInputSection({
                 placeholder="e.g. Philippine Economic Baseline, Nuclear vs Renewable Energy, Remote Work..."
                 value={topicHint}
                 onChange={e => setTopicHint(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 text-xs sm:text-sm font-medium"
+                className="w-full px-3.5 py-2 rounded-xl bg-[#FFFDF9] border-2 border-[#E5C9A6] text-[#2D1825] placeholder-[#B07D62]/60 focus:outline-none focus:border-[#C58B58] text-xs sm:text-sm font-semibold"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-blue-400" />
+                <label className="text-xs font-black text-[#78350F] uppercase tracking-wider flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-[#0284C7]" />
                   Pasted Debate / Discussion Dialogue
                 </label>
-                <span className="text-[11px] text-slate-500">
+                <span className="text-[11px] text-[#7C5E74] font-medium">
                   {debateText.length} characters
                 </span>
               </div>
@@ -314,13 +314,13 @@ export function DebateInputSection({
                 value={debateText}
                 onChange={e => setDebateText(e.target.value)}
                 required
-                className="w-full p-4 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 text-xs sm:text-sm font-sans leading-relaxed resize-y"
+                className="w-full p-4 rounded-xl bg-[#FFFDF9] border-2 border-[#E5C9A6] text-[#2D1825] placeholder-[#B07D62]/60 focus:outline-none focus:border-[#C58B58] text-xs sm:text-sm font-sans leading-relaxed resize-y font-medium"
               />
             </div>
 
             {error && (
-              <div className="p-3.5 rounded-xl bg-rose-950/70 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5 animate-in fade-in">
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+              <div className="p-3.5 rounded-xl bg-[#FFF1F2] border-2 border-[#FECDD3] text-[#9F1239] text-xs flex items-start gap-2.5 animate-in fade-in">
+                <AlertCircle className="w-4 h-4 text-[#E11D48] shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <div className="font-bold">Trial Initiation Stalled:</div>
                   <div>{error}</div>
@@ -329,23 +329,23 @@ export function DebateInputSection({
             )}
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-              <div className="text-[11px] text-slate-400">
+              <div className="text-[11px] text-[#7C5E74] font-medium">
                 ⚖️ Live AI analysis deconstructs claims and synthesizes impartial evidence before courtroom dramatization.
               </div>
 
               <button
                 type="submit"
                 disabled={isLoading || !debateText.trim()}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 disabled:opacity-50 text-white font-black text-sm tracking-wide shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#FBCFE8] hover:bg-[#F9A8D4] text-[#831843] border-2 border-[#F472B6] font-black text-sm tracking-wide shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#831843]" />
                     <span>Convening Courtroom & Researching Claims...</span>
                   </>
                 ) : (
                   <>
-                    <PlayCircle className="w-4 h-4" />
+                    <PlayCircle className="w-4 h-4 text-[#831843]" />
                     <span>Begin Courtroom Breakdown</span>
                   </>
                 )}
@@ -359,12 +359,12 @@ export function DebateInputSection({
       {activeTab === 'json' && (
         <form onSubmit={handleSubmitJson} className="p-6 space-y-4 animate-in fade-in duration-150">
           {/* JSON Helper Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#E5C9A6] pb-3">
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <button
                 type="button"
                 onClick={handleLoadSeedRedditJson}
-                className="px-3 py-1 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 text-pink-300 border border-pink-500/30 font-medium transition-colors"
+                className="px-3 py-1 rounded-xl bg-[#FCE7F3] hover:bg-[#FBCFE8] text-[#831843] border-2 border-[#F472B6] font-black transition-all shadow-2xs active:scale-95"
               >
                 📋 Load Reddit Thread JSON
               </button>
@@ -372,7 +372,7 @@ export function DebateInputSection({
               <button
                 type="button"
                 onClick={handleLoadFullTrialJson}
-                className="px-3 py-1 rounded-lg bg-purple-950/60 hover:bg-purple-900/80 text-purple-300 border border-purple-500/30 font-medium transition-colors"
+                className="px-3 py-1 rounded-xl bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] border-2 border-[#C084FC] font-black transition-all shadow-2xs active:scale-95"
               >
                 ⚖️ Load Full Case Schema JSON
               </button>
@@ -380,7 +380,7 @@ export function DebateInputSection({
               <button
                 type="button"
                 onClick={handleFormatJson}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors"
+                className="px-3 py-1 rounded-xl bg-[#FAF5EB] hover:bg-[#F5EBE1] text-[#78350F] border-2 border-[#E5C9A6] font-bold transition-all shadow-2xs active:scale-95"
               >
                 ✨ Format
               </button>
@@ -388,7 +388,7 @@ export function DebateInputSection({
               <button
                 type="button"
                 onClick={() => setJsonText('')}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-rose-300 font-medium transition-colors"
+                className="px-3 py-1 rounded-xl bg-[#FFF1F2] hover:bg-[#FFE4E6] text-[#9F1239] border-2 border-[#FECDD3] font-bold transition-all shadow-2xs active:scale-95"
               >
                 Clear
               </button>
@@ -397,8 +397,8 @@ export function DebateInputSection({
             {/* Live JSON Validation Status */}
             <div>
               {jsonStatus.isValid ? (
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-500/30">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1.5 text-xs text-[#065F46] font-black bg-[#ECFDF5] px-3 py-1 rounded-full border-2 border-[#A7F3D0]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#059669]" />
                   <span>
                     {jsonStatus.isFullCase
                       ? '⚡ Ready: Complete Court Trial Case'
@@ -406,8 +406,8 @@ export function DebateInputSection({
                   </span>
                 </div>
               ) : (
-                <div className="flex items-center gap-1.5 text-xs text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-500/30">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1.5 text-xs text-[#9F1239] font-black bg-[#FFF1F2] px-3 py-1 rounded-full border-2 border-[#FECDD3]">
+                  <AlertCircle className="w-3.5 h-3.5 text-[#E11D48]" />
                   <span className="truncate max-w-xs">{jsonStatus.errorMsg}</span>
                 </div>
               )}
@@ -421,13 +421,13 @@ export function DebateInputSection({
               value={jsonText}
               onChange={e => setJsonText(e.target.value)}
               placeholder="Paste JSON debate thread, comment objects, or full case schema..."
-              className="w-full p-4 rounded-xl bg-slate-950 border border-slate-800 text-pink-200 focus:outline-none focus:border-pink-500 font-mono text-xs leading-relaxed resize-y"
+              className="w-full p-4 rounded-xl bg-[#FAF5EB] border-2 border-[#E5C9A6] text-[#2D1825] focus:outline-none focus:border-[#C58B58] font-mono text-xs leading-relaxed resize-y font-medium"
             />
           </div>
 
           {error && (
-            <div className="p-3.5 rounded-xl bg-rose-950/70 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5 animate-in fade-in">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-[#FFF1F2] border-2 border-[#FECDD3] text-[#9F1239] text-xs flex items-start gap-2.5 animate-in fade-in">
+              <AlertCircle className="w-4 h-4 text-[#E11D48] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <div className="font-bold">JSON Trial Initiation Error:</div>
                 <div>{error}</div>
@@ -437,9 +437,9 @@ export function DebateInputSection({
 
           {/* Submit Action */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-            <div className="text-[11px] text-slate-400">
+            <div className="text-[11px] text-[#7C5E74] font-medium">
               {jsonStatus.isFullCase ? (
-                <span className="text-purple-300 font-medium">
+                <span className="text-[#581C87] font-bold">
                   ⚡ Pre-structured case detected: Can be loaded directly into the visual novel stage without API latency.
                 </span>
               ) : (
@@ -457,9 +457,9 @@ export function DebateInputSection({
                     const parsed = JSON.parse(jsonText);
                     onDirectLoadCase(parsed as DebateAnalysisResult);
                   }}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-black text-sm tracking-wide shadow-lg shadow-purple-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-black text-sm tracking-wide shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >
-                  <Zap className="w-4 h-4 text-amber-300" />
+                  <Zap className="w-4 h-4 text-[#D97706]" />
                   <span>⚡ Instant Preview Trial</span>
                 </button>
               )}
@@ -467,16 +467,16 @@ export function DebateInputSection({
               <button
                 type="submit"
                 disabled={isLoading || !jsonStatus.isValid}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 disabled:opacity-50 text-white font-black text-sm tracking-wide shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] border-2 border-[#C084FC] font-black text-sm tracking-wide shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#581C87]" />
                     <span>Analyzing JSON Context...</span>
                   </>
                 ) : (
                   <>
-                    <PlayCircle className="w-4 h-4" />
+                    <PlayCircle className="w-4 h-4 text-[#581C87]" />
                     <span>Commence Trial (Analyze JSON)</span>
                   </>
                 )}

@@ -65,9 +65,11 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **The Evidence Ledger:** Groups all claims by status (Verified Facts, Contradicted Claims, and Future Forecasts / Conditional Scenarios).
 - **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
 
-### 6. Visual Novel Assets & Backdrops (`public/characters/`, `public/scenes_and_overlays/`, `public/Cinna_*.png`)
+### 6. Visual Novel Assets & Backdrops (`public/characters/`, `public/scenes_and_overlays/`, `public/Cinna_*.png`, `public/DiaBox_*.png`)
 - **Active Sprites**: Integrated high-res character sprites in `public/characters/` for Debater A (Melon), Debater B (Yon), and Jury Foreperson.
-- **Brand Assets**: Custom `crosscheck logo.png` banner integrated into navigation, and `crosscheck favicon.png` / `icon.png` wired into Next.js App Router metadata.
+- **Brand Assets**: Custom enlarged `crosscheck logo.png` banner integrated into navigation, and `crosscheck favicon.png` / `icon.png` wired into Next.js App Router metadata.
+- **Authentic Visual Novel Dialogue Boxes (`DiaBox_1_frame.png` & `DiaBox_2_frame.png`)**: Integrated authentic visual novel dialogue box frames that dynamically adapt based on the speaker (warm gold/burgundy for Prosecution Yon, pastel lavender/lilac for Defense Melon).
+- **Solid Cute Pastel Theme (Phase 1 & Phase 2)**: Replaced dark glassmorphism and murky overlays with an authentic solid pastel parchment palette matching the courtroom backdrop, warm honey wood, cream stained-glass pillars, and ribbon badges.
 - **Cinna Mascot Narrator**: Integrated `CinnaNarrator` (`public/Cinna_1.png` - `Cinna_4.png`) as a cute courtroom bailiff/commentator who reacts to intense turns, objections, and explains core claims to beginners.
 - **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
 - **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.

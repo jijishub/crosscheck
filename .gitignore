@@ -26,6 +26,7 @@ asset_prompts.txt
 .DS_Store
 *.pem
 temp-scaffold/
+scratch/
 
 # debug
 npm-debug.log*
