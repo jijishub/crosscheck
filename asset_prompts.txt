@@ -1,98 +1,78 @@
 ================================================================================
-ACE ATTORNEY DEBATE PLATFORM — AI IMAGE GENERATION PROMPTS
+CROSSCHECK! — NEEDED ASSET GENERATION PROMPTS
 Art Style: Cute anime visual novel, clean cel-shaded lines, soft pastel accents,
-feminine-touched courtroom drama, expressive character portraits, high resolution.
+warm cream parchment, feminine-touched courtroom drama, transparent PNG cutouts.
 ================================================================================
 
-GLOBAL ART DIRECTION & CONSISTENCY NOTES:
-- Visual Style: Modern high-quality anime visual novel character art (soft cel-shading, clean vector lines, expressive facial features, subtle soft gradients).
-- Palette: Soft navy, pastel blush, lavender, cream, warm gold, rose-slate, and gentle lighting.
-- Composition: Half-body character portraits (waist-up), isolated on a plain clean white or transparent background for easy cutout into the UI.
-- Consistent lighting: Warm, soft courtroom lighting from top-left.
+GLOBAL ART DIRECTION & SPECS:
+- Style: Modern visual novel game assets matching the existing courtroom backdrop and DiaBox frames.
+- Palette: Soft lavender/lilac, warm honey-gold, cream parchment, strawberry blush, royal purple, and deep wine.
+- Format: Transparent background (isolated PNG cutout), crisp vector or high-resolution cel-shaded illustration.
 
 --------------------------------------------------------------------------------
-1. CHARACTER: DEBATER A — DEFENSE ADVOCATE ("MELON")
-Role: Baseline Growth Optimist, enthusiastic, energetic, charmingly determined.
-Gender: Female.
-Design: Young anime woman with shoulder-length bouncy brown hair, cute soft bangs, sparkling hazel eyes. Wears a tailored pastel-navy blazer with rolled cuffs, a crisp cream collared shirt, and a cute blush-rose ribbon bow tie. Professional yet charming and animated.
+1. THEATRICAL UI STINGERS & BANNER OVERLAYS
+Folder Target: public/scenes_and_overlays/
 --------------------------------------------------------------------------------
 
-[SPRITE A1: NEUTRAL / CONFIDENT SPEAKING]
+[ASSET 1: 'POINT OF ORDER!' JURY STINGER]
+File Name: Graphic_04_Point_Of_Order.png
+Dimensions: ~1200 × 500px (or similar banner ratio)
 Prompt:
-"Half-body visual novel anime character sprite, young female defense attorney, cute anime art style, soft cel-shaded, waist-up portrait. Shoulder-length bouncy warm brown hair with soft bangs, sparkling friendly hazel eyes, warm confident smile. Wearing a chic tailored pastel-navy blue blazer, white collared shirt, cute blush-pink ribbon tie, small gold balance-scales lapel pin. Standing at a polished wooden defense desk, one hand holding a neat case dossier, one hand resting on the desk. High quality, crisp line art, soft pastel color palette, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
+"2D vector anime visual novel comic dialogue burst, text graphic shouting 'POINT OF ORDER!' in bold theatrical, authoritative yet elegant typography. Royal lilac-purple and warm honey-gold gradient letters with crisp thick white outline, deep drop shadow, surrounded by a dramatic spiky anime courtroom speech explosion, golden sparkles and small balance-scale icon accents. Transparent background, crisp clean vector, isolated PNG cutout, high resolution"
 
-[SPRITE A2: OBJECTION! / DRAMATIC FINGER POINT]
+[ASSET 2: 'VERDICT REACHED!' / 'SYNTHESIS!' BANNER]
+File Name: Graphic_05_Verdict.png
+Dimensions: ~1400 × 600px
 Prompt:
-"Half-body visual novel anime character sprite, young female defense attorney in an intense dynamic Ace Attorney objection pose. Waist-up portrait, cute anime art style, determined fierce expression, wide sparkling eyes, open shouting mouth. Leaning forward energetically, right arm outstretched pointing directly forward with index finger at the camera, dynamic anime speed lines and subtle cute sparkle effects around the hand. Bouncy brown hair swept back by the motion, tailored pastel-navy blazer, blush-pink ribbon tie fluttering. Crisp clean line art, dramatic anime visual novel, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
+"2D anime visual novel dramatic courtroom conclusion banner, large bold lettering proclaiming 'VERDICT REACHED!' or 'SYNTHESIS!'. Ace Attorney verdict slam style with cute pastel anime flair: deep wine-purple and warm gold embossed typography, surrounded by an ornate cream parchment ribbon banner, golden laurel leaves, small scales of justice crest in the center, and dynamic anime impact speed lines. Transparent background, isolated PNG asset, high resolution"
 
-[SPRITE A3: THINKING / SWEAT-DROP]
+[ASSET 3: GAVEL STRIKE IMPACT]
+File Name: Graphic_06_Gavel_Strike.png
+Dimensions: ~800 × 800px (square)
 Prompt:
-"Half-body visual novel anime character sprite, young female defense attorney, cute thoughtful thinking pose, waist-up portrait. Cute anime art style, shoulder-length brown hair, one finger placed on her cheek in a cute puzzled expression, head slightly tilted, small comical anime sweat-drop near temple, mouth in a soft 'o' shape as she recalculates data. Tailored pastel-navy blazer, cream shirt, blush-pink ribbon tie. Crisp lines, soft cel-shading, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
-
-
---------------------------------------------------------------------------------
-2. CHARACTER: DEBATER B — PROSECUTOR ("YON")
-Role: Structural Risk Realist, cool, analytical, composed, elegant.
-Gender: Male.
-Design: Elegant young anime man with neat parted silver-tinted ash-brown hair, sharp intelligent blue-grey eyes, delicate round rose-gold wire glasses. Wears a fitted plum/burgundy tailored waistcoat over an ivory dress shirt, neat dark silver tie with a rose-gold tie clip. Calm, polite, yet devastatingly sharp.
---------------------------------------------------------------------------------
-
-[SPRITE B1: NEUTRAL / COMPOSED]
-Prompt:
-"Half-body visual novel anime character sprite, handsome young male prosecutor, cute and elegant anime art style, waist-up portrait. Sleek parted ash-brown hair with soft silver highlights, calm intelligent blue-grey eyes, stylish round rose-gold wire glasses. Wearing an elegant fitted plum-burgundy tailored vest, crisp ivory dress shirt with folded cuffs, dark silk tie with rose-gold tie pin. Standing composed at a prosecution podium, arms lightly folded, holding a thin statistical report sheet with a subtle calm smirk. Clean cel-shading, soft pastel accents, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
-
-[SPRITE B2: OBJECTION! / GLASSES GLINT & PAPER SLAM]
-Prompt:
-"Half-body visual novel anime character sprite, young male prosecutor in a dramatic Ace Attorney objection pose, waist-up portrait. Sharp dynamic anime visual novel style. One hand pushing up the bridge of his rose-gold round glasses which flash with a bright dramatic white anime glint lens flare. Other hand slammed flat on the polished prosecution desk with subtle shockwave lines. Confident sharp smirk, intense focused gaze, plum-burgundy vest, neat tie. Dramatic lighting, crisp lines, cute stylish anime aesthetic, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
-
-[SPRITE B3: SURPRISED / DAMAGE SHOCK]
-Prompt:
-"Half-body visual novel anime character sprite, young male prosecutor caught off-guard in comical shock, waist-up portrait. Cute anime art style. Wide startled eyes behind slightly askew rose-gold round glasses, mouth slightly open in disbelief, slight cute blush of embarrassment, small anime blue sweat-drop on cheek. Leaning backward slightly from an unexpected piece of counter-evidence, papers scattering slightly. Plum-burgundy vest, crisp shirt. Crisp clean line art, soft cel-shaded, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
+"2D anime visual novel icon graphic of a polished warm honey-oak wooden judge's gavel striking down upon a wooden sound block. Dynamic comic impact shockwave rings, cute little golden star particles exploding outward from the point of impact, clean cel-shaded anime line art, soft warm pastel lighting, transparent background, isolated PNG asset, high resolution"
 
 
 --------------------------------------------------------------------------------
-3. CHARACTER: THE JURY FOREPERSON / JUDGE
-Role: Impartial Topic Explainer, warm, reassuring, teacher-like jurist.
-Gender: Female.
-Design: Warm, dignified young-adult female jurist with soft wavy lilac-grey hair pinned in a loose elegant low bun, kind violet eyes, wearing soft reading spectacles. Dressed in soft lavender and cream judicial robes accented with golden embroidery, a pastel ribbon brooch, holding balance scales and a small polished gavel.
+2. COURT RECORD EVIDENCE DOSSIER RUBBER STAMPS
+Folder Target: public/scenes_and_overlays/ (or public/ui/)
+Design: Retro tilted ink stamp marks to stamp directly onto evidence dossier cards.
 --------------------------------------------------------------------------------
 
-[SPRITE J1: JURY EXPLAINER / WELCOMING LESSON]
+[ASSET 4: 'VERIFIED ✓' RUBBER STAMP]
+File Name: Stamp_01_Verified.png
+Dimensions: ~500 × 250px
 Prompt:
-"Half-body visual novel anime character sprite, cute and dignified female judge and jury foreperson, waist-up portrait. Soft wavy lavender-grey hair styled in an elegant loose bun with a small pastel floral hairpin, kind warm violet eyes behind stylish thin-rimmed oval spectacles, gentle reassuring smile. Dressed in modern lavender judicial robes with cream lapels and delicate gold trim, holding a small polished wooden gavel in one hand and balance scales resting on the bench. Warm teacher-like demeanor, cute dignified anime aesthetic, soft pastel colors, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
+"2D vector graphic of a retro rubber ink stamp mark, rectangular border with rounded corners, stamped at a subtle 8-degree tilt. Text reads 'VERIFIED ✓' in bold distressed sans-serif capital letters. Pastel emerald green and sage ink texture with authentic faint ink bleed and weathered stamp edges. Transparent background, isolated PNG cutout, high resolution"
 
-[SPRITE J2: IMPARTIAL VERDICT / UNROLLING SCROLL]
+[ASSET 5: 'CONTRADICTED ✗' RUBBER STAMP]
+File Name: Stamp_02_Contradicted.png
+Dimensions: ~500 × 250px
 Prompt:
-"Half-body visual novel anime character sprite, cute female jury foreperson delivering the educational synthesis, waist-up portrait. Lavender-grey hair in an elegant bun, kind focused expression behind reading glasses. Holding an unrolled ancient-modern golden parchment scroll titled 'Evidence Ledger' with neat infographics and charts. Soft glowing warm magical particles surrounding the document. Lavender and cream robes with golden ribbon brooch. High quality anime visual novel, clean cel-shading, transparent background, isolated PNG cutout, 8k resolution --ar 3:4"
+"2D vector graphic of a retro rubber ink stamp mark, rectangular double border, stamped at an angled 10-degree tilt. Text reads 'CONTRADICTED ✗' in bold distressed capital letters. Soft pastel strawberry-rose and crimson ink texture, weathered rubber stamp effect with vintage texture. Transparent background, isolated PNG cutout, high resolution"
 
-
---------------------------------------------------------------------------------
-4. COURTROOM BACKDROPS & STAGES
-Environment: Charming, bright, cute modern courtroom with feminine warmth and retro flair.
---------------------------------------------------------------------------------
-
-[BACKDROP 1: MAIN COURTROOM DUEL VIEW]
+[ASSET 6: 'CONDITIONAL / FORECAST' RUBBER STAMP]
+File Name: Stamp_03_Conditional.png
+Dimensions: ~500 × 250px
 Prompt:
-"Visual novel background scene, modern anime courtroom interior, wide angle view. Soft pastel color palette, warm honey-oak polished wooden panels, tall arched stained-glass windows in soft rose, lavender, and sky-blue hues casting gentle colorful light rays. In the foreground, two elegant wooden podiums (Defense on the left, Prosecution on the right) with polished brass microphones. Clean, airy, aesthetic anime background, soft warm atmospheric lighting, cozy and charming Ace Attorney courtroom, high detail, 16:9 aspect ratio, 8k resolution, no characters --ar 16:9"
-
-[BACKDROP 2: JURY CHAMBER / CONCEPT DELIBERATION ROOM]
-Prompt:
-"Visual novel background scene, cozy jury deliberation chamber and legal research library. Cute anime visual novel background, warm pastel tones. A polished oval mahogany table in the center with neatly stacked dossiers, reference books, and a miniature golden scale of justice. In the background, floor-to-ceiling cream bookshelves filled with colorful pastel books, a large arched window with sheer curtains showing a sunny sky. Warm ambient morning sunlight, gentle dust motes, clean and inviting study aesthetic, no characters, 16:9 aspect ratio, 8k resolution --ar 16:9"
+"2D vector graphic of a retro rubber ink stamp mark, oval badge border, stamped at a slight 6-degree tilt. Text reads 'CONDITIONAL / FORECAST ⚡' in bold distressed capital letters. Warm pastel amber and honey-gold ink texture, subtle stamp fade and stippled texture. Transparent background, isolated PNG cutout, high resolution"
 
 
 --------------------------------------------------------------------------------
-5. THEATRICAL UI STINGERS & COMIC BUBBLE OVERLAYS
+3. CINNA THE BAILIFF — FULL-BODY STAGE SPRITES
+Folder Target: public/
+Role: Court Bailiff & Companion standing on the courtroom desk.
 --------------------------------------------------------------------------------
 
-[GRAPHIC 1: 'OBJECTION!' STINGER]
+[ASSET 7: CINNA ATTENTIVE BAILIFF WITH CLIPBOARD]
+File Name: Cinna_FullBody_01.png
+Dimensions: ~600 × 800px (transparent cutout)
 Prompt:
-"2D vector anime visual novel comic dialogue burst, text graphic shouting 'OBJECTION!' in bold stylized dynamic typography. Japanese manga style with cute feminine twist, bright coral-pink and golden-yellow gradient letters with white inner stroke, surrounded by a dynamic spiky comic speech burst, cute pastel star bursts and dynamic action sparks. Transparent background, crisp clean vector, isolated PNG asset, high resolution"
+"Full-body cute anime visual novel mascot character sprite, charming fluffy white bunny-creature standing upright. Wearing a miniature tailored pastel-navy bailiff hat with tiny gold balance emblem, cute blush-pink ribbon bowtie. Holding a tiny wooden case clipboard with miniature papers and a small pencil, looking forward with bright curious friendly eyes and cute soft pink cheek blush. Crisp clean cel-shaded anime vector, warm soft pastel colors, transparent background, isolated PNG cutout, 8k resolution"
 
-[GRAPHIC 2: 'HOLD IT!' STINGER]
+[ASSET 8: CINNA CHEERFUL CELEBRATION WITH TOY GAVEL]
+File Name: Cinna_FullBody_02.png
+Dimensions: ~600 × 800px (transparent cutout)
 Prompt:
-"2D vector anime visual novel comic dialogue burst, text graphic shouting 'HOLD IT!' in bold stylized dynamic lettering. Warm amber-orange and pastel cream gradient with white outline, spiky dialogue explosion shape, small cute exclamation spark accents, transparent background, isolated PNG asset, high resolution"
-
-[GRAPHIC 3: 'TAKE THAT!' STINGER]
-Prompt:
-"2D vector anime visual novel comic dialogue burst, text graphic shouting 'TAKE THAT!' in bold celebratory anime typography. Sky-blue and bright lilac gradient with crisp white borders, dynamic speed star accents, transparent background, isolated PNG asset, high resolution"
+"Full-body cute anime visual novel mascot character sprite, adorable fluffy white creature celebrating. Jumping happily with tiny paws in the air, one paw holding a miniature wooden toy gavel, sparkling anime star eyes, open cheerful mouth, fluttering pink bowtie. Dynamic cute motion particles, soft pastel colors, transparent background, isolated PNG cutout, 8k resolution"
 ================================================================================
