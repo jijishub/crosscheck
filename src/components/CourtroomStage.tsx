@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { DebateAnalysisResult, DialogueTurn, CalloutType } from '@/types/debate';
 import { DebaterPortrait, CalloutStingerBanner } from './CourtroomCharacters';
 import { CinnaNarrator } from './CinnaNarrator';
@@ -12,12 +12,14 @@ interface CourtroomStageProps {
   debate: DebateAnalysisResult;
   onOpenCourtRecord: (evidenceId?: string) => void;
   onScrollToJuryBoard: () => void;
+  isPaused?: boolean;
 }
 
 export function CourtroomStage({
   debate,
   onOpenCourtRecord,
   onScrollToJuryBoard,
+  isPaused = false,
 }: CourtroomStageProps) {
   const [currentTurnIdx, setCurrentTurnIdx] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
@@ -41,61 +43,65 @@ export function CourtroomStage({
 
     if (typingTimerRef.current) clearInterval(typingTimerRef.current);
 
-    // Trigger callout animation and sound if present
-    if (currentTurn.callout) {
-      setActiveCallout(currentTurn.callout);
-      setIsShaking(true);
-      const shakeTimer = setTimeout(() => setIsShaking(false), 400);
+    let shakeTimer: ReturnType<typeof setTimeout> | undefined;
+    let calloutTimer: ReturnType<typeof setTimeout> | undefined;
 
-      if (currentTurn.callout === 'OBJECTION!') {
-        courtAudio.playObjectionStinger();
-      } else if (currentTurn.callout === 'HOLD IT!') {
-        courtAudio.playGavelThud();
-      } else if (currentTurn.callout === 'TAKE THAT!') {
-        courtAudio.playEvidenceChime();
-      }
+    // Callouts and dialogue run together, with one cleanup for all timers.
+    const startTurnTimer = setTimeout(() => {
+      if (currentTurn.callout) {
+        setActiveCallout(currentTurn.callout);
+        setIsShaking(true);
+        shakeTimer = setTimeout(() => setIsShaking(false), 400);
 
-      // Hide callout after 1.2s
-      const calloutTimer = setTimeout(() => {
-        setActiveCallout(null);
-      }, 1200);
-      return () => {
-        clearTimeout(calloutTimer);
-        clearTimeout(shakeTimer);
-      };
-    } else {
-      setActiveCallout(null);
-      setIsShaking(false);
-    }
-
-    setDisplayedText('');
-    setIsTyping(true);
-
-    let charIdx = 0;
-    const fullText = currentTurn.text;
-    const isJury = currentTurn.speakerId === 'jury';
-
-    typingTimerRef.current = setInterval(() => {
-      if (charIdx < fullText.length) {
-        setDisplayedText(fullText.slice(0, charIdx + 1));
-        if (charIdx % 3 === 0) {
-          courtAudio.playBlip(isJury ? 'low' : currentTurn.speakerId === 'debater_a' ? 'mid' : 'high');
+        if (currentTurn.callout === 'OBJECTION!') {
+          courtAudio.playObjectionStinger();
+        } else if (currentTurn.callout === 'HOLD IT!') {
+          courtAudio.playGavelThud();
+        } else if (currentTurn.callout === 'TAKE THAT!') {
+          courtAudio.playEvidenceChime();
         }
-        charIdx++;
+
+        // Hide callout after 1.2s
+        calloutTimer = setTimeout(() => {
+          setActiveCallout(null);
+        }, 1200);
       } else {
-        setIsTyping(false);
-        if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+        setActiveCallout(null);
+        setIsShaking(false);
       }
-    }, 22);
+
+      setDisplayedText('');
+      setIsTyping(true);
+
+      let charIdx = 0;
+      const fullText = currentTurn.text;
+      const isJury = currentTurn.speakerId === 'jury';
+
+      typingTimerRef.current = setInterval(() => {
+        if (charIdx < fullText.length) {
+          setDisplayedText(fullText.slice(0, charIdx + 1));
+          if (charIdx % 3 === 0) {
+            courtAudio.playBlip(isJury ? 'low' : currentTurn.speakerId === 'debater_a' ? 'mid' : 'high');
+          }
+          charIdx++;
+        } else {
+          setIsTyping(false);
+          if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+        }
+      }, 22);
+    }, 0);
 
     return () => {
+      clearTimeout(startTurnTimer);
+      clearTimeout(calloutTimer);
+      clearTimeout(shakeTimer);
       if (typingTimerRef.current) clearInterval(typingTimerRef.current);
     };
   }, [currentTurnIdx, currentTurn]);
 
   // Auto-play timer
   useEffect(() => {
-    if (!isAutoPlay || isTyping) {
+    if (!isAutoPlay || isTyping || isPaused || showHistory || showProfiles) {
       if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
       return;
     }
@@ -111,9 +117,9 @@ export function CourtroomStage({
     return () => {
       if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
     };
-  }, [isAutoPlay, isTyping, currentTurnIdx, script.length]);
+  }, [isAutoPlay, isTyping, currentTurnIdx, script.length, isPaused, showHistory, showProfiles]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isTyping && currentTurn) {
       // Instant reveal
       if (typingTimerRef.current) clearInterval(typingTimerRef.current);
@@ -124,13 +130,13 @@ export function CourtroomStage({
     if (currentTurnIdx < script.length - 1) {
       setCurrentTurnIdx(prev => prev + 1);
     }
-  };
+  }, [isTyping, currentTurn, currentTurnIdx, script.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (currentTurnIdx > 0) {
       setCurrentTurnIdx(prev => prev - 1);
     }
-  };
+  }, [currentTurnIdx]);
 
   const toggleSound = () => {
     const muted = courtAudio.toggleMute();
@@ -140,8 +146,9 @@ export function CourtroomStage({
   // Keyboard navigation (Space, ArrowRight, Enter to advance; ArrowLeft to go back)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || (e.target as HTMLElement)?.isContentEditable) {
+      const target = e.target as HTMLElement;
+      if (isPaused || showHistory || showProfiles || e.altKey || e.ctrlKey || e.metaKey ||
+          target?.closest('input, textarea, select, button, a, [role="dialog"], [contenteditable="true"]')) {
         return;
       }
 
@@ -156,7 +163,7 @@ export function CourtroomStage({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isTyping, currentTurn, currentTurnIdx, script.length]);
+  }, [handleNext, handlePrev, isPaused, showHistory, showProfiles]);
 
   // Active claim & evidence reference
   const activeClaim = currentTurn?.activeClaimId
@@ -194,7 +201,7 @@ export function CourtroomStage({
 
       {/* Top HUD: Session Title, Claim Ticker, and Controls - Solid Warm Cream */}
       <div className="relative z-30 bg-[#FFFDF9] border-b-2 border-[#E5C9A6] shadow-sm">
-        <div className="px-4 py-2.5 flex items-center justify-between text-xs gap-3">
+        <div className="px-4 py-2.5 flex flex-wrap items-center justify-between text-xs gap-3">
           {/* Left: Case Docket Title */}
           <div className="flex items-center gap-2 min-w-0">
             <span className="px-3 py-0.5 rounded-full bg-[#FEF3C7] text-[#78350F] border-2 border-[#F59E0B] font-black uppercase text-[10px] tracking-wider flex items-center gap-1 shrink-0 shadow-xs">
@@ -216,6 +223,7 @@ export function CourtroomStage({
                   : 'bg-[#FDF6ED] text-[#8C5338] border-[#E5C9A6] shadow-xs hover:bg-[#F5EBE1]'
               }`}
               title={isMuted ? 'Unmute Court SFX' : 'Mute Court SFX'}
+              aria-label={isMuted ? 'Unmute Court SFX' : 'Mute Court SFX'}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
             </button>
@@ -360,15 +368,25 @@ export function CourtroomStage({
                 className="px-3.5 py-1.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] font-black text-xs border-2 border-[#C084FC] transition-all flex items-center gap-1 shadow-xs active:scale-95"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#581C87]" />
-                <span className="hidden sm:inline">Jury Verdict</span>
+                <span className="hidden sm:inline">Jury Synthesis</span>
               </button>
             </div>
           </div>
 
           {/* Authentic Visual Novel Dialogue Box using DiaBox Asset */}
           <div
+            role="button"
+            tabIndex={0}
+            aria-label={isTyping ? 'Reveal dialogue' : 'Continue dialogue'}
             onClick={handleNext}
-            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-xl transition-all w-full h-[170px] sm:h-[200px] md:h-[230px] group border-4 border-[#C58B58] bg-[#FAF5EB]"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                event.stopPropagation();
+                handleNext();
+              }
+            }}
+            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-xl transition-all w-full h-[240px] sm:h-[240px] md:h-[260px] group border-4 border-[#C58B58] bg-[#FAF5EB]"
           >
             {/* Visual Novel Box Background Frame */}
             <img
@@ -377,9 +395,9 @@ export function CourtroomStage({
               className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
             />
 
-            {/* Inner Content overlay: Absolutely positioned strictly in the cream parchment writing zone (top: 32% to clear crest banner, bottom: 12% to clear bottom border) */}
-            <div className="absolute top-[30%] sm:top-[28%] bottom-[12%] sm:bottom-[10%] left-[6%] sm:left-[8%] right-[6%] sm:right-[8%] z-10 flex flex-col justify-between select-none">
-              <div className="flex-1 flex items-center overflow-y-auto pr-1">
+            {/* Inner Content overlay: Absolutely positioned strictly in the cream parchment writing zone (top: 38% to clear crest banner, right: 18% to clear right feather quill/courthouse art, bottom: 12% to clear bottom border) */}
+            <div className="absolute top-[38%] sm:top-[38%] md:top-[39%] bottom-[12%] sm:bottom-[11%] left-[8%] sm:left-[10%] right-[10%] sm:right-[15%] md:right-[18%] z-10 flex flex-col justify-between select-none">
+              <div className="flex-1 flex items-start overflow-y-auto pr-1 pt-1 sm:pt-2">
                 <p className="text-xs sm:text-base md:text-lg text-[#2D1825] font-bold leading-relaxed sm:leading-loose drop-shadow-2xs">
                   {displayedText}
                   {isTyping && <span className="inline-block w-2.5 h-4 bg-[#D97706] ml-1.5 animate-pulse align-middle" />}
@@ -389,7 +407,7 @@ export function CourtroomStage({
               {/* Advance prompt positioned in the clean bottom margin */}
               <div className="flex justify-end pt-0.5">
                 <span className="text-[10px] text-[#78350F] font-black bg-[#FAF5EB]/95 px-3 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs select-none">
-                  {isTyping ? 'Click to skip text' : 'Click / Space to continue ▶'}
+                  {isTyping ? 'Click to reveal' : 'Click / Space to continue ▶'}
                 </span>
               </div>
             </div>
@@ -420,10 +438,10 @@ export function CourtroomStage({
 
             <button
               onClick={handleNext}
-              disabled={currentTurnIdx >= script.length - 1}
+              disabled={!isTyping && currentTurnIdx >= script.length - 1}
               className="px-5 py-1.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] disabled:opacity-40 text-[#78350F] border-2 border-[#F59E0B] transition-colors flex items-center gap-1.5 text-xs font-black shadow-xs active:scale-95"
             >
-              <span>Next</span>
+              <span>{isTyping ? 'Reveal' : 'Next'}</span>
               <SkipForward className="w-3.5 h-3.5" />
             </button>
           </div>

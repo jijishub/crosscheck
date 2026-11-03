@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { DebateAnalysisResult } from '@/types/debate';
-import { PHILIPPINE_REDDIT_SEED_RESULT } from '@/lib/gemini';
+import { PHILIPPINE_REDDIT_SEED_RESULT } from '@/lib/presets';
 import { DebateInputSection } from '@/components/DebateInputSection';
 import { CourtroomStage } from '@/components/CourtroomStage';
 import { JuryBoard } from '@/components/JuryBoard';
@@ -198,6 +198,7 @@ export default function CourtroomApp() {
                 debate={debateResult}
                 onOpenCourtRecord={handleOpenCourtRecord}
                 onScrollToJuryBoard={handleScrollToJuryBoard}
+                isPaused={isCourtRecordOpen}
               />
             </div>
 

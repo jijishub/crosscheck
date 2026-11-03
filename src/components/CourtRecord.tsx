@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { EvidenceItem, Claim } from '@/types/debate';
 import { ExternalLink, ShieldCheck, FileText, Calendar, Filter, X, Search, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
 
@@ -21,19 +21,17 @@ export function CourtRecordModal({
 }: CourtRecordProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterReliability, setFilterReliability] = useState<string>('all');
-  const [selectedEvidence, setSelectedEvidence] = useState<EvidenceItem | null>(
-    evidenceList.find(e => e.id === highlightedEvidenceId) || evidenceList[0] || null
-  );
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [prevHighlightedId, setPrevHighlightedId] = useState(highlightedEvidenceId);
 
-  // Sync selected evidence when opened with a specific citation ID
-  useEffect(() => {
-    if (highlightedEvidenceId) {
-      const target = evidenceList.find(e => e.id === highlightedEvidenceId);
-      if (target) setSelectedEvidence(target);
-    } else if (!selectedEvidence && evidenceList.length > 0) {
-      setSelectedEvidence(evidenceList[0]);
-    }
-  }, [highlightedEvidenceId, isOpen, evidenceList]);
+  // Synchronize state during render when highlighted citation prop changes (no useEffect cascade)
+  if (highlightedEvidenceId !== prevHighlightedId) {
+    setPrevHighlightedId(highlightedEvidenceId);
+    setSelectedId(highlightedEvidenceId || null);
+  }
+
+  const activeEvidenceId = selectedId || highlightedEvidenceId || evidenceList[0]?.id;
+  const selectedEvidence = evidenceList.find(e => e.id === activeEvidenceId) || evidenceList[0] || null;
 
   if (!isOpen) return null;
 
@@ -129,7 +127,7 @@ export function CourtRecordModal({
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setSelectedEvidence(item)}
+                    onClick={() => setSelectedId(item.id)}
                     className={`w-full text-left p-3 rounded-2xl border-2 transition-all flex flex-col gap-1.5 ${
                       isSelected
                         ? 'bg-[#FFFDF9] border-[#F59E0B] shadow-sm ring-2 ring-[#FDE68A]'

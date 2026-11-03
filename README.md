@@ -28,10 +28,12 @@ Neither participant was purely wrong—they were examining different dimensions 
 
 ## 🚀 Implemented Features (Agile P0)
 
-### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`)
+### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`, `src/lib/presets.ts`, `src/lib/debate-validation.ts`)
 - **Dual Tab Intake System:**
   - **Tab 1: Plaintext Discussion:** Paste any raw Reddit comments, tweet threads, or dialogue transcripts.
   - **Tab 2: JSON Argument Context:** Direct JSON intake for raw comment threads (e.g. `philippines_reddit_debate_comments.json`) or full case schemas with live validation, formatting, and instant trial preview.
+- **Strict Case Validation (`src/lib/debate-validation.ts`):** Runtime boundary validation ensuring imported cases have valid IDs, cross-referenced citations, safe URLs, and proper debater structures.
+- **Dedicated Case Presets (`src/lib/presets.ts`):** Clean separation of debate transcripts and verified seeds from runtime API logic.
 - **Verified Case Intake:**
   - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs Yon)* — derived strictly from `verified_reddit_debate_transcript_2026.json`.
 - **API Key & Gateway Management:** Pre-configured with OpenAI-compatible gateway (`luna` at `https://api.jizellecasia.site/v1/chat/completions`) or custom override keys.
@@ -40,8 +42,8 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Visual Novel Duel View:** Defense (Melon) on the left, Prosecution (Yon) on the right, standing at polished mahogany courtroom benches with active speaker spotlight.
 - **Cinna Mascot Companion (`src/components/CinnaNarrator.tsx`):** Sits cutely right on the dialogue box banner, reacting with dynamic expressions (`Bailiff/Order`, `Cheerful`, `Pondering`, `Shocked!`) to guide beginners through complex points.
 - **Character Profiles & Cast Dossier (`src/components/CharacterProfilesModal.tsx`):** Inspect full personality traits, catchphrases, speech styles, and bios for Melon, Yon, Cinna, and the Jury Foreperson.
-- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, auto-play mode, and transcript log.
-- **Dramatic Callout Banners:** Animated comic-burst stingers for `"OBJECTION!"`, `"HOLD IT!"`, and `"TAKE THAT!"` paired with synthesized Web Audio sound effects.
+- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, auto-play mode, and transcript log. Includes pixel-aligned parchment padding that avoids crest banner and corner art overlap.
+- **Keyboard & Modal Navigation:** Full keyboard navigation (`Space`/`Enter`/`ArrowRight` to step, `ArrowLeft` for previous) that automatically ignores key events when typing into inputs or viewing modals (`isPaused`).
 - **Sleek Single-Line Dispute Ribbon:** Highlights the exact claim under examination or newly presented evidence without blocking characters.
 
 ### 3. Web Audio SFX Synthesizer (`src/lib/audio.ts`)

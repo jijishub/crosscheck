@@ -149,7 +149,7 @@ export function JuryBoard({
             <div className="p-5 rounded-2xl bg-[#FFFDF9] border-2 border-[#E5C9A6] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#78350F] mb-2">
                 <Scale className="w-4 h-4 text-[#B45309]" />
-                The Jury's Qualified Synthesis
+                The Jury&apos;s Qualified Synthesis
               </div>
               <p className="text-xs sm:text-sm text-[#2D1825] font-medium leading-relaxed mb-4">
                 {verdict.balancedVerdict}

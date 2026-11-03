@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { DebateAnalysisResult } from '@/types/debate';
+import { parseDebateAnalysis } from '@/lib/debate-validation';
 import {
   PHILIPPINE_GDP_PRESET,
   PHILIPPINE_REDDIT_JSON_SAMPLE,
   PHILIPPINE_REDDIT_SEED_RESULT,
-} from '@/lib/gemini';
+} from '@/lib/presets';
 import {
   Sparkles,
   Key,
@@ -41,30 +42,16 @@ export function DebateInputSection({
 
   // JSON Tab State
   const [jsonText, setJsonText] = useState(PHILIPPINE_REDDIT_JSON_SAMPLE);
-  const [jsonStatus, setJsonStatus] = useState<{
+
+  // Validate JSON synchronously with useMemo (avoids cascading effect renders)
+  const jsonStatus = useMemo<{
     isValid: boolean;
     errorMsg?: string;
     isFullCase?: boolean;
     itemCount?: number;
-  }>({ isValid: true, isFullCase: false, itemCount: 6 });
-
-  // Gateway key state
-  const [apiKey, setApiKey] = useState('');
-  const [showKeyInput, setShowKeyInput] = useState(false);
-
-  // Load saved API key from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('ai_gateway_key') || localStorage.getItem('gemini_api_key');
-    if (saved) {
-      setApiKey(saved);
-    }
-  }, []);
-
-  // Validate JSON on change
-  useEffect(() => {
+  }>(() => {
     if (!jsonText.trim()) {
-      setJsonStatus({ isValid: false, errorMsg: 'JSON field is empty' });
-      return;
+      return { isValid: false, errorMsg: 'JSON field is empty' };
     }
     try {
       const parsed = JSON.parse(jsonText);
@@ -79,22 +66,33 @@ export function DebateInputSection({
       );
       const count = Array.isArray(parsed)
         ? parsed.length
-        : Array.isArray(parsed.comments)
+        : Array.isArray(parsed?.comments)
         ? parsed.comments.length
-        : Object.keys(parsed).length;
+        : Object.keys(parsed || {}).length;
 
-      setJsonStatus({
+      return {
         isValid: true,
         isFullCase,
         itemCount: count,
-      });
+      };
     } catch (err) {
-      setJsonStatus({
+      return {
         isValid: false,
         errorMsg: err instanceof Error ? err.message : 'Invalid JSON format',
-      });
+      };
     }
   }, [jsonText]);
+
+  // Gateway key state with lazy initial state from localStorage (avoids setState in effect)
+  const [apiKey, setApiKey] = useState<string>(() => {
+    if (typeof window === 'undefined') return '';
+    try {
+      return localStorage.getItem('ai_gateway_key') || localStorage.getItem('gemini_api_key') || '';
+    } catch {
+      return '';
+    }
+  });
+  const [showKeyInput, setShowKeyInput] = useState(false);
 
   const handleSaveKey = (val: string) => {
     setApiKey(val);
@@ -138,7 +136,12 @@ export function DebateInputSection({
 
       // If it's a full pre-computed case result and handler provided, load instantly!
       if (jsonStatus.isFullCase && onDirectLoadCase) {
-        onDirectLoadCase(parsed as DebateAnalysisResult);
+        try {
+          const validated = parseDebateAnalysis(parsed);
+          onDirectLoadCase(validated);
+        } catch {
+          onDirectLoadCase(parsed as DebateAnalysisResult);
+        }
         return;
       }
 
@@ -446,8 +449,17 @@ export function DebateInputSection({
                 <button
                   type="button"
                   onClick={() => {
-                    const parsed = JSON.parse(jsonText);
-                    onDirectLoadCase(parsed as DebateAnalysisResult);
+                    try {
+                      const parsed = JSON.parse(jsonText);
+                      try {
+                        const validated = parseDebateAnalysis(parsed);
+                        onDirectLoadCase(validated);
+                      } catch {
+                        onDirectLoadCase(parsed as DebateAnalysisResult);
+                      }
+                    } catch (err) {
+                      console.error('Failed to parse full case:', err);
+                    }
                   }}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-black text-sm tracking-wide shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >

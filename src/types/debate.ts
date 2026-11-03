@@ -87,6 +87,12 @@ export interface JurySynthesis {
 }
 
 export interface DebateAnalysisResult {
+  research?: {
+    mode: 'demo' | 'unverified' | 'grounded' | 'imported';
+    summary: string;
+    searchedAt?: string;
+    sources?: { title: string; url: string }[];
+  };
   topic: string;
   contextSummary: string;
   debaterA: DebaterProfile;
