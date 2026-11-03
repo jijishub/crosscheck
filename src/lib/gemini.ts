@@ -1,30 +1,37 @@
 import { DebateAnalysisResult } from '@/types/debate';
 
 export const PHILIPPINE_GDP_PRESET = {
-  title: 'Philippines 2026-2035 GDP Growth: Baseline Projection vs Downside Exposure',
-  context: 'Authentic r/Philippines debate between Melon (MELONPANNNNN) and Yon (OpenYonQ_)',
+  title: 'Philippines projected to be second fastest-growing economy in SE Asia until 2035',
+  context: 'Authentic verified r/Philippines debate between Melon (MELONPANNNNN) and Yon (OpenYonQ_)',
   rawText: `Post: "Philippines projected to be second fastest-growing economy in SE Asia until 2035" (r/Philippines)
 
-Yon:
+Context comments from thread:
+ILikeFluffyThings: "If you are at the bottom, there is no other way but up."
+Ch1ld1shBambin0: "Is the 'growing economy' with us right now??"
+Bichobi_: "It's been growing for many years now. Problem is, hindi even ang distribution ng wealth."
+
+Core Debate:
+
+OpenYonQ_:
 the Philippine economy is projected to grow at an average annual rate of 5.8% from 2026 to 2035 under the baseline scenario.
 
 BASELINE SCENARIO
 
 Despite its relatively strong baseline forecast, the Philippines is also among the Southeast Asian economies facing the greatest downside exposure, according to the report.
 
-The report noted that Indonesia, the Philippines, and Thailand would be the most exposed under a downside scenario because of their “capital-flow sensitivities, energy dependency, political uncertainty, and weaker structural momentum.”
+The report noted that Indonesia, the Philippines, and Thailand would be the most exposed under a downside scenario because of their “capital-flow sensitivities, energy dependence, political uncertainty, and weaker structural momentum.”
 
 there we go.
 
-Melon:
+MELONPANNNNN:
 Only a Filipino will see good news and focus on the bad.
 
-Yon:
+OpenYonQ_:
 its contextualizing the headline. one's gotta be a fool (not self-hating) to think we'd be 2nd in ASEAN in terms of growth considering the economic conditions worldwide that's severely affecting us (as pointed out in that 3rd paragraph I quoted), we don't even get much investments like Malaysia, or even go hard on industrialization like Cambodia.
 
 it's okay to point out we're lacking, nothing self-hating in what I said if that's what you're trying to spin this to.
 
-Melon:
+MELONPANNNNN:
 An average growth of 6% since 2016 which only slowed down recently to 4% due to the Iran War (which affected all of ASEAN). This isnt a one-time observation, its a trend.
 
 https://www.oecd.org/en/publications/oecd-economic-surveys-philippines-2026_f0e0c581-en/full-report/sustaining-growth-and-stability-amid-headwinds_a8f57a2c.html
@@ -33,30 +40,20 @@ Exports even got an all-time high this year.
 
 https://tribune.net.ph/2026/10/04/phl-exports-hit-35-year-high-at-911b
 
-Yon:
+OpenYonQ_:
 didn't you read? that's not the economic reality now, the Iran War and its subsequent effects slashed our growth projections/trends. the baseline scenario didn't take this into account, hence my initial comment.
 
 exports carried by semiconductors, good. is it enough to be 2nd in terms of economic growth in the region? I don't know. the neighbors are investing heavy on their own semicon industry.
 
-Melon:
+MELONPANNNNN:
 You do know high percentage growth naturally happens when an economy is catching up, right? That’s basic convergence theory
 
 https://www.economicshelp.org/blog/143243/economics/the-catch-up-effect/
 
 That’s not downplaying Vietnam’s success, but if you can recognize how baseline catch-up potential works for them over a 10-year horizon, why refuse to see it here? Global shocks hit everyone, but the long-term structural potential remains.
 
-Yon:
-really didn't answer anything. I didn't even mention Vietnam. you're just waffling`,
-};
-
-export const AI_CODING_PRESET = {
-  title: 'AI Coding Assistants: Velocity Multiplier vs Architecture Quality Debt',
-  context: 'Hacker News / Tech Twitter debate on LLM code generation in engineering teams',
-  rawText: `SeniorDev_Alex:
-AI coding tools are the greatest developer productivity leap since IDE auto-complete. GitHub Copilot research shows developers complete tasks up to 55% faster and report higher job satisfaction. Boilerplate, unit tests, and API glue code that used to take days now take minutes. It frees engineers to think about high-level system architecture rather than syntax minutiae.
-
-StaffArchitect_Sam:
-Speed of producing lines of code is the wrong metric. GitClear's analysis of over 150 million lines of code found a significant increase in code churn (code replaced within two weeks) and a decline in code refactoring and reuse since AI tools surged. Junior developers are shipping hallucinations and security vulnerabilities because they don't understand the generated abstractions. Faster typing just means faster accumulation of technical debt unless rigorous review standards are strictly enforced.`,
+OpenYonQ_:
+really didn't answer anything. I didn't even mention Vietnam. you're just waffling a`,
 };
 
 const SYSTEM_PROMPT = `You are the Supreme Court Debate Analyst & Impartial Jury Research Clerk for CrossCheck!, an Ace Attorney-inspired educational debate platform.
@@ -587,42 +584,104 @@ export const PHILIPPINE_REDDIT_SEED_RESULT: DebateAnalysisResult = {
 
 export const PHILIPPINE_REDDIT_JSON_SAMPLE = JSON.stringify(
   {
-    source: 'r/Philippines Reddit Discussion',
-    subreddit: 'r/Philippines',
-    topic: 'Philippines projected to be second fastest-growing economy in SE Asia until 2035',
-    participants: ['Melon (MELONPANNNNN)', 'Yon (OpenYonQ_)'],
+    source: "Four screenshots re-uploaded for verification on November 3, 2026",
+    subreddit: "r/Philippines",
+    post_title: "Philippines projected to be second fastest-growing economy in SE Asia until 2035",
+    scope: "All readable comments in screenshots; not a complete Reddit thread export.",
+    transcription_notes: [
+      "All 10 fully or partially visible comments appear exactly once; overlapping screenshots have been deduplicated.",
+      "The three blockquoted article excerpts are embedded in the first OpenYonQ_ comment, not separate comments.",
+      "The final reply is visibly truncated and is marked incomplete.",
+      "Comment text is transcribed from screenshots without independently verifying claims or links."
+    ],
     comments: [
       {
-        id: 1,
-        author: 'Yon',
-        text: 'the Philippine economy is projected to grow at an average annual rate of 5.8% from 2026 to 2035 under the baseline scenario. BASELINE SCENARIO. Despite its relatively strong baseline forecast, the Philippines is also among the Southeast Asian economies facing the greatest downside exposure, according to the report.',
+        id: "other_01",
+        author: "ILikeFluffyThings",
+        text: "If you are at the bottom, there is no other way but up.",
+        thread: "Other top-level comments",
+        reply_to: null,
+        complete_in_screenshot: true
       },
       {
-        id: 2,
-        author: 'Melon',
-        text: 'Only a Filipino will see good news and focus on the bad.',
+        id: "other_02",
+        author: "Ch1ld1shBambin0",
+        text: "Is the \"growing economy\" with us right now??",
+        thread: "Other top-level comments",
+        reply_to: null,
+        complete_in_screenshot: true
       },
       {
-        id: 3,
-        author: 'Yon',
-        text: "its contextualizing the headline. one's gotta be a fool to think we'd be 2nd in ASEAN considering worldwide conditions. We don't get investments like Malaysia or industrialize like Cambodia.",
+        id: "other_03",
+        author: "Bichobi_",
+        text: "It's been growing for many years now. Problem is, hindi even ang distribution ng wealth.",
+        thread: "Other top-level comments",
+        reply_to: "other_02",
+        complete_in_screenshot: true
       },
       {
-        id: 4,
-        author: 'Melon',
-        text: 'An average growth of 6% since 2016 which only slowed to 4% due to the Iran War. Exports even got an all-time high this year at $91.1B. That is a trend, not a fluke.',
+        id: "debate_01",
+        author: "OpenYonQ_",
+        text: "the Philippine economy is projected to grow at an average annual rate of 5.8% from 2026 to 2035 under the baseline scenario.\n\nBASELINE SCENARIO\n\nDespite its relatively strong baseline forecast, the Philippines is also among the Southeast Asian economies facing the greatest downside exposure, according to the report.\n\nThe report noted that Indonesia, the Philippines, and Thailand would be the most exposed under a downside scenario because of their “capital-flow sensitivities, energy dependence, political uncertainty, and weaker structural momentum.”\n\nthere we go.",
+        quoted_passages: [
+          "the Philippine economy is projected to grow at an average annual rate of 5.8% from 2026 to 2035 under the baseline scenario.",
+          "Despite its relatively strong baseline forecast, the Philippines is also among the Southeast Asian economies facing the greatest downside exposure, according to the report.",
+          "The report noted that Indonesia, the Philippines, and Thailand would be the most exposed under a downside scenario because of their “capital-flow sensitivities, energy dependence, political uncertainty, and weaker structural momentum.”"
+        ],
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: null,
+        contains_quoted_article_excerpts: true
       },
       {
-        id: 5,
-        author: 'Yon',
-        text: "didn't you read? that's not the economic reality now, external shocks slashed trends. And exports carried by semiconductors—our neighbors are investing heavy on their own semicon too.",
+        id: "debate_02",
+        author: "MELONPANNNNN",
+        text: "Only a Filipino will see good news and focus on the bad.",
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_01"
       },
       {
-        id: 6,
-        author: 'Melon',
-        text: 'High percentage growth naturally happens when an economy is catching up. That is basic convergence theory. Global shocks hit everyone, but long-term structural potential remains.',
+        id: "debate_03",
+        author: "OpenYonQ_",
+        text: "its contextualizing the headline. one's gotta be a fool (not self-hating) to think we'd be 2nd in ASEAN in terms of growth considering the economic conditions worldwide that's severely affecting us (as pointed out in that 3rd paragraph I quoted), we don't even get much investments like Malaysia, or even go hard on industrialization like Cambodia.\n\nit's okay to point out we're lacking, nothing self-hating in what I said if that's what you're trying to spin this to.",
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_02"
       },
-    ],
+      {
+        id: "debate_04",
+        author: "MELONPANNNNN",
+        text: "An average growth of 6% since 2016 which only slowed down recently to 4% due to the Iran War (which affected all of ASEAN). This isnt a one-time observation, its a trend.\n\nhttps://www.oecd.org/en/publications/oecd-economic-surveys-philippines-2026_f0e0c581-en/full-report/sustaining-growth-and-stability-amid-headwinds_a8f57a2c.html\n\nExports even got an all-time high this year.\n\nhttps://tribune.net.ph/2026/10/04/phl-exports-hit-35-year-high-at-911b",
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_03"
+      },
+      {
+        id: "debate_05",
+        author: "OpenYonQ_",
+        text: "didn't you read? that's not the economic reality now, the Iran War and its subsequent effects slashed our growth projections/trends. the baseline scenario didn't take this into account, hence my initial comment.\n\nexports carried by semiconductors, good. is it enough to be 2nd in terms of economic growth in the region? I don't know. the neighbors are investing heavy on their own semicon industry.",
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_04"
+      },
+      {
+        id: "debate_06",
+        author: "MELONPANNNNN",
+        text: "You do know high percentage growth naturally happens when an economy is catching up, right? That’s basic convergence theory\n\nhttps://www.economicshelp.org/blog/143243/economics/the-catch-up-effect/\n\nThat’s not downplaying Vietnam’s success, but if you can recognize how baseline catch-up potential works for them over a 10-year horizon, why refuse to see it here? Global shocks hit everyone, but the long-term structural potential remains.",
+        complete_in_screenshot: true,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_05"
+      },
+      {
+        id: "debate_07",
+        author: "OpenYonQ_",
+        text: "really didn't answer anything. I didn't even mention Vietnam. you're just waffling a",
+        complete_in_screenshot: false,
+        thread: "OpenYonQ_ / MELONPANNNNN",
+        reply_to: "debate_06"
+      }
+    ]
   },
   null,
   2

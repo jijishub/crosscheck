@@ -368,7 +368,7 @@ export function CourtroomStage({
           {/* Authentic Visual Novel Dialogue Box using DiaBox Asset */}
           <div
             onClick={handleNext}
-            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-xl transition-all w-full min-h-[160px] sm:min-h-[190px] md:min-h-[220px] group border-4 border-[#C58B58] bg-[#FAF5EB]"
+            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-xl transition-all w-full h-[170px] sm:h-[200px] md:h-[230px] group border-4 border-[#C58B58] bg-[#FAF5EB]"
           >
             {/* Visual Novel Box Background Frame */}
             <img
@@ -377,17 +377,17 @@ export function CourtroomStage({
               className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
             />
 
-            {/* Inner Content overlay positioned strictly in the cream parchment writing zone (below the top arch banner) */}
-            <div className="absolute inset-0 pt-[28%] sm:pt-[25%] md:pt-[23%] pb-[9%] sm:pb-[7%] px-6 sm:px-12 md:px-18 flex flex-col justify-between z-10 select-none">
+            {/* Inner Content overlay: Absolutely positioned strictly in the cream parchment writing zone (top: 32% to clear crest banner, bottom: 12% to clear bottom border) */}
+            <div className="absolute top-[30%] sm:top-[28%] bottom-[12%] sm:bottom-[10%] left-[6%] sm:left-[8%] right-[6%] sm:right-[8%] z-10 flex flex-col justify-between select-none">
               <div className="flex-1 flex items-center overflow-y-auto pr-1">
-                <p className="text-xs sm:text-base md:text-lg text-[#2D1825] font-bold leading-relaxed sm:leading-loose">
+                <p className="text-xs sm:text-base md:text-lg text-[#2D1825] font-bold leading-relaxed sm:leading-loose drop-shadow-2xs">
                   {displayedText}
                   {isTyping && <span className="inline-block w-2.5 h-4 bg-[#D97706] ml-1.5 animate-pulse align-middle" />}
                 </p>
               </div>
 
               {/* Advance prompt positioned in the clean bottom margin */}
-              <div className="flex justify-end pt-1">
+              <div className="flex justify-end pt-0.5">
                 <span className="text-[10px] text-[#78350F] font-black bg-[#FAF5EB]/95 px-3 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs select-none">
                   {isTyping ? 'Click to skip text' : 'Click / Space to continue ▶'}
                 </span>

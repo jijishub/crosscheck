@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { DebateAnalysisResult } from '@/types/debate';
 import {
   PHILIPPINE_GDP_PRESET,
-  AI_CODING_PRESET,
   PHILIPPINE_REDDIT_JSON_SAMPLE,
   PHILIPPINE_REDDIT_SEED_RESULT,
 } from '@/lib/gemini';
@@ -262,25 +261,18 @@ export function DebateInputSection({
       {/* TAB 1: PLAINTEXT DISCUSSION */}
       {activeTab === 'text' && (
         <div>
-          {/* Preset Quick Loader */}
+          {/* Preset Quick Loader - Single Verified Debate Case */}
           <div className="px-6 py-3 bg-[#FAF5EB] border-b-2 border-[#E5C9A6] flex flex-wrap items-center gap-2.5 text-xs">
             <span className="font-bold text-[#78350F] flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-              Quick Presets:
+              Verified Case Example:
             </span>
             <button
               type="button"
               onClick={() => handleLoadTextPreset(PHILIPPINE_GDP_PRESET)}
-              className="px-3 py-1 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
+              className="px-3.5 py-1 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
             >
               <span>🇵🇭 Philippine GDP Forecast (Melon vs Yon)</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLoadTextPreset(AI_CODING_PRESET)}
-              className="px-3 py-1 rounded-xl bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] border-2 border-[#C084FC] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
-            >
-              <span>💻 AI Coding: Speed vs Architecture Debt</span>
             </button>
           </div>
 

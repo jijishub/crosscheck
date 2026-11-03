@@ -32,9 +32,8 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Dual Tab Intake System:**
   - **Tab 1: Plaintext Discussion:** Paste any raw Reddit comments, tweet threads, or dialogue transcripts.
   - **Tab 2: JSON Argument Context:** Direct JSON intake for raw comment threads (e.g. `philippines_reddit_debate_comments.json`) or full case schemas with live validation, formatting, and instant trial preview.
-- **Quick Test Presets:**
-  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs Yon)*
-  - 💻 *AI Coding Assistants: Velocity Multiplier vs Architecture Debt (Alex vs Sam)*
+- **Verified Case Intake:**
+  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs Yon)* — derived strictly from `verified_reddit_debate_transcript_2026.json`.
 - **API Key & Gateway Management:** Pre-configured with OpenAI-compatible gateway (`luna` at `https://api.jizellecasia.site/v1/chat/completions`) or custom override keys.
 
 ### 2. The Courtroom Stage (`src/components/CourtroomStage.tsx`)
