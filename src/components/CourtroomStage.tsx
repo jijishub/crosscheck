@@ -137,6 +137,27 @@ export function CourtroomStage({
     setIsMuted(muted);
   };
 
+  // Keyboard navigation (Space, ArrowRight, Enter to advance; ArrowLeft to go back)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || (e.target as HTMLElement)?.isContentEditable) {
+        return;
+      }
+
+      if (e.code === 'Space' || e.code === 'ArrowRight' || e.code === 'Enter') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrev();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isTyping, currentTurn, currentTurnIdx, script.length]);
+
   // Active claim & evidence reference
   const activeClaim = currentTurn?.activeClaimId
     ? debate.claims.find(c => c.id === currentTurn.activeClaimId)
@@ -247,7 +268,7 @@ export function CourtroomStage({
                 </span>
                 <button
                   onClick={() => onOpenCourtRecord(presentedEvidence.id)}
-                  className="text-[#92400E] hover:text-[#451A03] font-black text-[10px] underline"
+                  className="text-[#92400E] hover:text-[#451A03] font-black text-[10px] underline truncate max-w-[170px] sm:max-w-[320px]"
                 >
                   {presentedEvidence.title} →
                 </button>
@@ -347,7 +368,7 @@ export function CourtroomStage({
           {/* Authentic Visual Novel Dialogue Box using DiaBox Asset */}
           <div
             onClick={handleNext}
-            className="relative rounded-2xl overflow-hidden cursor-pointer shadow-md transition-all min-h-[110px] sm:min-h-[130px] flex flex-col justify-between group border-2 border-[#D4A373]/80 hover:border-[#B07D62]"
+            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-xl transition-all w-full min-h-[160px] sm:min-h-[190px] md:min-h-[220px] group border-4 border-[#C58B58] bg-[#FAF5EB]"
           >
             {/* Visual Novel Box Background Frame */}
             <img
@@ -356,17 +377,19 @@ export function CourtroomStage({
               className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
             />
 
-            {/* Inner Content overlay positioned over the cream interior */}
-            <div className="relative z-10 p-4 sm:p-5 flex-1 flex flex-col justify-between">
-              <p className="text-sm sm:text-base md:text-lg text-[#2D1825] font-semibold leading-relaxed drop-shadow-2xs">
-                {displayedText}
-                {isTyping && <span className="inline-block w-2.5 h-4 bg-[#D97706] ml-1.5 animate-pulse align-middle" />}
-              </p>
+            {/* Inner Content overlay positioned strictly in the cream parchment writing zone (below the top arch banner) */}
+            <div className="absolute inset-0 pt-[28%] sm:pt-[25%] md:pt-[23%] pb-[9%] sm:pb-[7%] px-6 sm:px-12 md:px-18 flex flex-col justify-between z-10 select-none">
+              <div className="flex-1 flex items-center overflow-y-auto pr-1">
+                <p className="text-xs sm:text-base md:text-lg text-[#2D1825] font-bold leading-relaxed sm:leading-loose">
+                  {displayedText}
+                  {isTyping && <span className="inline-block w-2.5 h-4 bg-[#D97706] ml-1.5 animate-pulse align-middle" />}
+                </p>
+              </div>
 
-              {/* Advance prompt */}
+              {/* Advance prompt positioned in the clean bottom margin */}
               <div className="flex justify-end pt-1">
-                <span className="text-[10px] text-[#78350F] font-black bg-[#FAF5EB]/95 px-2.5 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs select-none">
-                  {isTyping ? 'Click to skip text' : 'Click to continue ▶'}
+                <span className="text-[10px] text-[#78350F] font-black bg-[#FAF5EB]/95 px-3 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs select-none">
+                  {isTyping ? 'Click to skip text' : 'Click / Space to continue ▶'}
                 </span>
               </div>
             </div>

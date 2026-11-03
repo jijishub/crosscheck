@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EvidenceItem, Claim } from '@/types/debate';
 import { ExternalLink, ShieldCheck, FileText, Calendar, Filter, X, Search, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
 
@@ -24,6 +24,16 @@ export function CourtRecordModal({
   const [selectedEvidence, setSelectedEvidence] = useState<EvidenceItem | null>(
     evidenceList.find(e => e.id === highlightedEvidenceId) || evidenceList[0] || null
   );
+
+  // Sync selected evidence when opened with a specific citation ID
+  useEffect(() => {
+    if (highlightedEvidenceId) {
+      const target = evidenceList.find(e => e.id === highlightedEvidenceId);
+      if (target) setSelectedEvidence(target);
+    } else if (!selectedEvidence && evidenceList.length > 0) {
+      setSelectedEvidence(evidenceList[0]);
+    }
+  }, [highlightedEvidenceId, isOpen, evidenceList]);
 
   if (!isOpen) return null;
 

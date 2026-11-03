@@ -70,6 +70,7 @@ export default function CourtroomApp() {
 
   const handleResetTrial = () => {
     setDebateResult(null);
+    setShowInputSection(true);
     setError(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
