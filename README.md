@@ -74,7 +74,7 @@ Neither participant was purely wrong—they were examining different dimensions 
 - **Cinna Mascot Narrator**: Integrated `CinnaNarrator` (`public/Cinna_1.png` - `Cinna_4.png`) as a cute courtroom bailiff/commentator who reacts to intense turns, objections, and explains core claims to beginners.
 - **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
 - **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.
-- **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, and `TAKE THAT!` with screen-shake feedback.
+- **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, `TAKE THAT!`, and `POINT OF ORDER` with screen-shake feedback and synthesized courtroom sound effects.
 - **Seeded Authentic Debate**: Pre-seeded with authentic Philippine GDP discussion comments from `philippines_reddit_debate_comments.json` (5.8% baseline forecast vs OECD downside exposure).
 - **Prompts**: All generation briefs preserved in [asset_prompts.txt](asset_prompts.txt).
 

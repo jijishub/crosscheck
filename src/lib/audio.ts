@@ -166,6 +166,16 @@ class CourtAudio {
       osc.stop(t + idx * 0.08 + 0.45);
     });
   }
+
+  // Judicial "POINT OF ORDER" stinger (double gavel strike + resonant chime)
+  public playPointOfOrder() {
+    if (this.isMuted) return;
+    this.playGavelThud();
+    setTimeout(() => {
+      this.playGavelThud();
+      this.playEvidenceChime();
+    }, 140);
+  }
 }
 
 export const courtAudio = new CourtAudio();

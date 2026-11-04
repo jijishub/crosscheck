@@ -5,6 +5,14 @@ export const metadata: Metadata = {
   title: "CrossCheck! ⚖️ — Playable AI Debate Courtroom & Fact-Checking Explainer",
   description:
     "CrossCheck! is an Ace Attorney-inspired AI debate breakdown and learning platform. Transform polarizing discussions into entertaining courtroom dramas with live fact-checking, verifiable sources, and beginner concept explainers.",
+  icons: {
+    icon: [
+      { url: '/crosscheck favicon.png', type: 'image/png' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    shortcut: '/crosscheck favicon.png',
+    apple: '/crosscheck favicon.png',
+  },
 };
 
 export default function RootLayout({

@@ -179,6 +179,7 @@ function JurySVG() {
 // Theatrical Callout Overlay Graphic ("OBJECTION!", "HOLD IT!", "TAKE THAT!")
 export function CalloutStingerBanner({ callout }: { callout: CalloutType }) {
   const [imgError, setImgError] = useState(false);
+  const [useDirectFallback, setUseDirectFallback] = useState(false);
   if (!callout) return null;
 
   let graphicSrc = '';
@@ -188,12 +189,22 @@ export function CalloutStingerBanner({ callout }: { callout: CalloutType }) {
     graphicSrc = '/scenes_and_overlays/Graphic_02_Hold_It.png';
   } else if (callout === 'TAKE THAT!') {
     graphicSrc = '/scenes_and_overlays/Graphic_03_Take_That.png';
+  } else if (callout === 'POINT OF ORDER') {
+    graphicSrc = useDirectFallback
+      ? '/Point of Order Courtroom Stinger.png'
+      : '/scenes_and_overlays/Graphic_04_Point_Of_Order.png';
   }
+
+  const isPointOfOrder = callout === 'POINT OF ORDER';
 
   return (
     <div className="absolute inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">
       {/* Background Soft Glow Flash */}
-      <div className="absolute inset-0 bg-rose-500/25 animate-in fade-in duration-150" />
+      <div
+        className={`absolute inset-0 animate-in fade-in duration-150 ${
+          isPointOfOrder ? 'bg-purple-600/30' : 'bg-rose-500/25'
+        }`}
+      />
 
       {/* Comic Burst Graphic */}
       <div className="relative animate-in zoom-in-75 duration-200 flex items-center justify-center max-w-[90%] max-h-[80%]">
@@ -201,16 +212,26 @@ export function CalloutStingerBanner({ callout }: { callout: CalloutType }) {
           <img
             src={graphicSrc}
             alt={callout}
-            onError={() => setImgError(true)}
-            className="w-auto h-auto max-w-[420px] sm:max-w-[540px] max-h-[220px] object-contain drop-shadow-[0_15px_30px_rgba(244,63,94,0.6)] select-none transform -rotate-2"
+            onError={() => {
+              if (callout === 'POINT OF ORDER' && !useDirectFallback) {
+                setUseDirectFallback(true);
+              } else {
+                setImgError(true);
+              }
+            }}
+            className={`w-auto h-auto max-w-[420px] sm:max-w-[540px] max-h-[220px] object-contain select-none transform -rotate-2 ${
+              isPointOfOrder
+                ? 'drop-shadow-[0_15px_35px_rgba(168,85,247,0.7)]'
+                : 'drop-shadow-[0_15px_30px_rgba(244,63,94,0.6)]'
+            }`}
           />
         ) : (
           <div
-            className="px-8 py-4 sm:px-14 sm:py-6 rounded-3xl bg-gradient-to-r from-rose-600 via-pink-500 to-amber-400 text-white font-black italic tracking-widest text-3xl sm:text-5xl md:text-6xl uppercase shadow-2xl border-4 border-white drop-shadow-[0_10px_25px_rgba(244,63,94,0.5)] transform -rotate-2 select-none flex items-center gap-3"
+            className="px-8 py-4 sm:px-14 sm:py-6 rounded-3xl bg-gradient-to-r from-purple-700 via-indigo-600 to-amber-400 text-white font-black italic tracking-widest text-3xl sm:text-5xl md:text-6xl uppercase shadow-2xl border-4 border-white drop-shadow-[0_10px_25px_rgba(168,85,247,0.5)] transform -rotate-2 select-none flex items-center gap-3"
           >
-            <span className="text-yellow-200 animate-spin">✨</span>
+            <span className="text-yellow-200 animate-spin">⚖️</span>
             <span>{callout}</span>
-            <span className="text-yellow-200 animate-spin">✨</span>
+            <span className="text-yellow-200 animate-spin">⚖️</span>
           </div>
         )}
       </div>

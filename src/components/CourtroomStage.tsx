@@ -59,6 +59,8 @@ export function CourtroomStage({
           courtAudio.playGavelThud();
         } else if (currentTurn.callout === 'TAKE THAT!') {
           courtAudio.playEvidenceChime();
+        } else if (currentTurn.callout === 'POINT OF ORDER') {
+          courtAudio.playPointOfOrder();
         }
 
         // Hide callout after 1.2s

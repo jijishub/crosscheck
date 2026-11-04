@@ -14,19 +14,13 @@ GLOBAL ART DIRECTION & SPECS:
 Folder Target: public/scenes_and_overlays/
 --------------------------------------------------------------------------------
 
-[ASSET 1: 'POINT OF ORDER!' JURY STINGER]
-File Name: Graphic_04_Point_Of_Order.png
-Dimensions: ~1200 × 500px (or similar banner ratio)
-Prompt:
-"2D vector anime visual novel comic dialogue burst, text graphic shouting 'POINT OF ORDER!' in bold theatrical, authoritative yet elegant typography. Royal lilac-purple and warm honey-gold gradient letters with crisp thick white outline, deep drop shadow, surrounded by a dramatic spiky anime courtroom speech explosion, golden sparkles and small balance-scale icon accents. Transparent background, crisp clean vector, isolated PNG cutout, high resolution"
-
-[ASSET 2: 'VERDICT REACHED!' / 'SYNTHESIS!' BANNER]
+[ASSET 1: 'VERDICT REACHED!' / 'SYNTHESIS!' BANNER]
 File Name: Graphic_05_Verdict.png
 Dimensions: ~1400 × 600px
 Prompt:
 "2D anime visual novel dramatic courtroom conclusion banner, large bold lettering proclaiming 'VERDICT REACHED!' or 'SYNTHESIS!'. Ace Attorney verdict slam style with cute pastel anime flair: deep wine-purple and warm gold embossed typography, surrounded by an ornate cream parchment ribbon banner, golden laurel leaves, small scales of justice crest in the center, and dynamic anime impact speed lines. Transparent background, isolated PNG asset, high resolution"
 
-[ASSET 3: GAVEL STRIKE IMPACT]
+[ASSET 2: GAVEL STRIKE IMPACT]
 File Name: Graphic_06_Gavel_Strike.png
 Dimensions: ~800 × 800px (square)
 Prompt:
