@@ -20,7 +20,7 @@ export function CharacterProfilesModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-in fade-in duration-200 select-none">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 animate-in fade-in duration-200 select-none">
       <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#FFFDF9] border-4 border-[#F472B6] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header - Solid Pastel Pink/Purple */}
         <div className="px-6 py-4 bg-[#FDF2F8] border-b-2 border-[#FBCFE8] flex items-center justify-between">

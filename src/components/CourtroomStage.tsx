@@ -325,54 +325,32 @@ export function CourtroomStage({
 
       {/* Bottom Visual Novel Dialogue Box - Solid Opaque Anime Frame */}
       <div className="relative z-30 p-4 sm:p-5 bg-[#FFFDF9] border-t-4 border-[#C58B58] shadow-2xl">
-        <div className="max-w-4xl mx-auto space-y-3">
-          {/* Header Row: Nameplate + Cinna Companion + Shortcuts */}
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            {/* Speaker Nameplate Badge */}
-            <div className="flex items-center gap-2">
-              <span
-                className={`px-4 py-1 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider shadow-sm transition-all border-2 ${
-                  isJurySpeaking
-                    ? 'bg-[#F3E8FF] text-[#581C87] border-[#C084FC]'
-                    : isDebaterAActive
-                    ? 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8]'
-                    : 'bg-[#FFE4E6] text-[#9F1239] border-[#FB7185]'
-                }`}
-              >
-                {currentTurn?.speakerName || 'Speaker'}
-              </span>
+        <div className="max-w-4xl mx-auto space-y-1.5 sm:space-y-2">
+          {/* Header Row: Compact Companion & Utility Actions (Tightened spacing above bubble) */}
+          <div className="flex items-center justify-end gap-2 pb-0.5">
+            <CinnaNarrator
+              emotion={currentTurn?.emotion}
+              callout={currentTurn?.callout}
+              speakerName={currentTurn?.speakerName}
+              activeClaimText={activeClaim?.text}
+            />
 
-              <span className="text-[11px] text-[#8C5338] font-bold">
-                Turn {currentTurnIdx + 1} of {script.length}
-              </span>
-            </div>
+            <button
+              onClick={() => setShowHistory(!showHistory)}
+              className="px-3 py-1.5 rounded-full bg-[#FFFDF9] hover:bg-[#FAF5EB] text-[#78350F] font-bold border-2 border-[#E5C9A6] text-xs transition-colors flex items-center gap-1 shadow-xs"
+              title="View Dialogue Log"
+            >
+              <History className="w-3.5 h-3.5 text-[#B07D62]" />
+              <span className="hidden sm:inline">Log</span>
+            </button>
 
-            {/* Right: Cinna Narrator & Log Buttons */}
-            <div className="flex items-center gap-2">
-              <CinnaNarrator
-                emotion={currentTurn?.emotion}
-                callout={currentTurn?.callout}
-                speakerName={currentTurn?.speakerName}
-                activeClaimText={activeClaim?.text}
-              />
-
-              <button
-                onClick={() => setShowHistory(!showHistory)}
-                className="px-3 py-1.5 rounded-full bg-[#FFFDF9] hover:bg-[#FAF5EB] text-[#78350F] font-bold border-2 border-[#E5C9A6] text-xs transition-colors flex items-center gap-1 shadow-xs"
-                title="View Dialogue Log"
-              >
-                <History className="w-3.5 h-3.5 text-[#B07D62]" />
-                <span className="hidden sm:inline">Log</span>
-              </button>
-
-              <button
-                onClick={onScrollToJuryBoard}
-                className="px-3.5 py-1.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] font-black text-xs border-2 border-[#C084FC] transition-all flex items-center gap-1 shadow-xs active:scale-95"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-[#581C87]" />
-                <span className="hidden sm:inline">Jury Synthesis</span>
-              </button>
-            </div>
+            <button
+              onClick={onScrollToJuryBoard}
+              className="px-3.5 py-1.5 rounded-full bg-[#F3E8FF] hover:bg-[#E9D5FF] text-[#581C87] font-black text-xs border-2 border-[#C084FC] transition-all flex items-center gap-1 shadow-xs active:scale-95"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#581C87]" />
+              <span className="hidden sm:inline">Jury Synthesis</span>
+            </button>
           </div>
 
           {/* Authentic Visual Novel Dialogue Box using DiaBox Asset */}
@@ -396,6 +374,29 @@ export function CourtroomStage({
               alt="Dialogue Frame"
               className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none"
             />
+
+            {/* Speaker Nameplate in the DiaBox Bubble */}
+            <div className="absolute top-[3%] sm:top-[4%] left-[3%] sm:left-[5%] w-[32%] sm:w-[26%] md:w-[22%] h-[28%] sm:h-[26%] z-20 flex flex-col items-center justify-center pointer-events-none select-none px-2 text-center">
+              <div className="flex items-center gap-1 min-w-0 max-w-full">
+                <span className="text-[11px] sm:text-xs">
+                  {isJurySpeaking ? '⚖️' : isDebaterAActive ? '🛡️' : '⚔️'}
+                </span>
+                <span
+                  className={`font-black text-xs sm:text-sm md:text-base uppercase tracking-wider truncate drop-shadow-2xs ${
+                    isJurySpeaking
+                      ? 'text-[#581C87]'
+                      : isDebaterAActive
+                      ? 'text-[#0369A1]'
+                      : 'text-[#9F1239]'
+                  }`}
+                >
+                  {currentTurn?.speakerName || 'Speaker'}
+                </span>
+              </div>
+              <span className="text-[9px] sm:text-[10px] text-[#78350F] font-black tracking-tight opacity-80 leading-none mt-0.5">
+                Turn {currentTurnIdx + 1} of {script.length}
+              </span>
+            </div>
 
             {/* Inner Content overlay: Absolutely positioned strictly in the cream parchment writing zone (top: 38% to clear crest banner, right: 18% to clear right feather quill/courthouse art, bottom: 12% to clear bottom border) */}
             <div className="absolute top-[38%] sm:top-[38%] md:top-[39%] bottom-[12%] sm:bottom-[11%] left-[8%] sm:left-[10%] right-[10%] sm:right-[15%] md:right-[18%] z-10 flex flex-col justify-between select-none">

@@ -58,7 +58,7 @@ export function CourtRecordModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 select-none">
+    <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 select-none">
       <div className="bg-[#FFFDF9] border-4 border-[#F59E0B] w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header - Solid Pastel Amber */}
         <div className="bg-[#FEF3C7] px-6 py-4 border-b-2 border-[#FDE68A] flex items-center justify-between">

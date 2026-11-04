@@ -78,7 +78,7 @@ export default function CourtroomApp() {
   return (
     <div className="min-h-screen text-[#2d1825] flex flex-col justify-between selection:bg-pink-300 selection:text-pink-950">
       {/* Top Courtroom Navigation Header - Solid Pastel Parchment */}
-      <header className="sticky top-0 z-30 bg-[#fffdfa] border-b-2 border-[#eddcd2] px-4 sm:px-8 py-3 shadow-sm">
+      <header className="sticky top-0 z-50 bg-[#fffdfa] border-b-2 border-[#eddcd2] px-4 sm:px-8 py-3 shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
@@ -124,7 +124,7 @@ export default function CourtroomApp() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 space-y-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 space-y-8 relative z-0">
         {/* Input Form Section (Collapsible when a trial is active) */}
         <section>
           {debateResult && !showInputSection ? (
@@ -177,7 +177,7 @@ export default function CourtroomApp() {
 
         {/* Courtroom Visual Novel Experience */}
         {debateResult && (
-          <section ref={courtroomRef} className="space-y-10 scroll-mt-20">
+          <section ref={courtroomRef} className="space-y-10 scroll-mt-28 sm:scroll-mt-32">
             {/* Visual Novel Courtroom Stage */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -203,7 +203,7 @@ export default function CourtroomApp() {
             </div>
 
             {/* Jury Chamber & Explainer Board */}
-            <div ref={juryBoardRef} className="space-y-3 scroll-mt-20">
+            <div ref={juryBoardRef} className="space-y-3 scroll-mt-28 sm:scroll-mt-32">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#581c87] bg-[#f3e8ff] px-3 py-1 rounded-full border border-[#e9d5ff] shadow-xs w-fit">
                 <Scale className="w-4 h-4 text-[#7c3aed]" />
                 Phase 2: The Jury Deliberation & Concept Breakdown
