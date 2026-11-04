@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CrossCheck! ⚖️ — Playable AI Debate Courtroom & Fact-Checking Explainer",
+  title: "CrossCheck!",
   description:
     "CrossCheck! is an Ace Attorney-inspired AI debate breakdown and learning platform. Transform polarizing discussions into entertaining courtroom dramas with live fact-checking, verifiable sources, and beginner concept explainers.",
   icons: {

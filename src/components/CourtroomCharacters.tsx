@@ -44,14 +44,14 @@ export function DebaterPortrait({
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-end w-full max-w-[280px] sm:max-w-[340px] transition-all duration-300 select-none ${
+      className={`relative flex flex-col items-center justify-end w-full max-w-[240px] sm:max-w-[280px] md:max-w-[310px] transition-all duration-300 select-none ${
         isActive ? 'z-20 scale-100 opacity-100' : 'z-10 scale-95 opacity-60 hover:opacity-80'
       }`}
     >
       {/* Speaker Floating Nametag */}
-      <div className="mb-2 flex flex-col items-center transition-all">
+      <div className="mb-1 sm:mb-1.5 flex flex-col items-center transition-all shrink-0">
         <div
-          className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs border-2 transition-all ${
+          className={`px-3 sm:px-4 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-xs border-2 transition-all ${
             isActive
               ? isA
                 ? 'bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8] ring-2 ring-white/90 shadow-md'
@@ -63,17 +63,17 @@ export function DebaterPortrait({
           <span>•</span>
           <span>{name}</span>
         </div>
-        <span className="text-[10px] text-[#381E2B] font-bold tracking-tight mt-1 truncate max-w-[200px] bg-[#FAF5EB]/90 px-2.5 py-0.5 rounded-full border border-[#E5C9A6] shadow-2xs">
+        <span className="text-[9px] sm:text-[10px] text-[#381E2B] font-bold tracking-tight mt-0.5 truncate max-w-[180px] sm:max-w-[200px] bg-[#FAF5EB]/90 px-2 py-0.2 rounded-full border border-[#E5C9A6] shadow-2xs">
           {title}
         </span>
       </div>
 
       {/* Main Character Sprite Area */}
-      <div className="relative w-full h-[280px] sm:h-[360px] md:h-[400px] flex items-end justify-center overflow-visible">
+      <div className="relative w-full h-[225px] sm:h-[270px] md:h-[310px] flex items-end justify-center overflow-visible">
         {/* Active Character Glow Aura */}
         {isActive && (
           <div
-            className={`absolute bottom-6 w-48 h-48 rounded-full blur-2xl opacity-40 pointer-events-none ${
+            className={`absolute bottom-6 w-40 h-40 sm:w-44 sm:h-44 rounded-full blur-2xl opacity-40 pointer-events-none ${
               isA ? 'bg-sky-400' : 'bg-rose-400'
             }`}
           />
@@ -240,7 +240,7 @@ export function CalloutStingerBanner({ callout }: { callout: CalloutType }) {
 }
 
 // Fallback SVGs
-function DebaterAFemaleSVG({ emotion, isActive }: { emotion: DialogueEmotion; isActive: boolean }) {
+function DebaterAFemaleSVG({ emotion, isActive: _isActive }: { emotion: DialogueEmotion; isActive: boolean }) {
   const isObjection = emotion === 'intense';
   return (
     <svg viewBox="0 0 200 240" className="w-full h-full object-contain filter drop-shadow-md select-none">
@@ -270,7 +270,7 @@ function DebaterAFemaleSVG({ emotion, isActive }: { emotion: DialogueEmotion; is
   );
 }
 
-function DebaterBMaleSVG({ emotion, isActive }: { emotion: DialogueEmotion; isActive: boolean }) {
+function DebaterBMaleSVG({ emotion, isActive: _isActive }: { emotion: DialogueEmotion; isActive: boolean }) {
   const isObjection = emotion === 'intense';
   return (
     <svg viewBox="0 0 200 240" className="w-full h-full object-contain filter drop-shadow-md select-none">

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EvidenceItem, Claim } from '@/types/debate';
-import { ExternalLink, ShieldCheck, FileText, Calendar, Filter, X, Search, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
+import { ExternalLink, ShieldCheck, FileText, Calendar, Filter, X, Search, CheckCircle2, AlertCircle, HelpCircle, Download } from 'lucide-react';
 
 interface CourtRecordProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ interface CourtRecordProps {
   evidenceList: EvidenceItem[];
   claims: Claim[];
   highlightedEvidenceId?: string;
+  onExportPDF?: () => void;
 }
 
 export function CourtRecordModal({
@@ -18,6 +19,7 @@ export function CourtRecordModal({
   evidenceList,
   claims,
   highlightedEvidenceId,
+  onExportPDF,
 }: CourtRecordProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterReliability, setFilterReliability] = useState<string>('all');
@@ -58,10 +60,10 @@ export function CourtRecordModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 select-none">
-      <div className="bg-[#FFFDF9] border-4 border-[#F59E0B] w-full max-w-4xl h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-3 sm:p-5 overflow-y-auto animate-in fade-in duration-200 select-none">
+      <div className="bg-[#FFFDF9] border-4 border-[#F59E0B] w-full max-w-4xl max-h-[82vh] sm:max-h-[85vh] my-auto rounded-3xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header - Solid Pastel Amber */}
-        <div className="bg-[#FEF3C7] px-6 py-4 border-b-2 border-[#FDE68A] flex items-center justify-between">
+        <div className="bg-[#FEF3C7] px-4 sm:px-6 py-2.5 sm:py-3.5 border-b-2 border-[#FDE68A] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <span className="text-2xl">📁</span>
             <div>
@@ -76,12 +78,24 @@ export function CourtRecordModal({
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full bg-[#FFFDF9] text-[#78350F] hover:bg-[#FDE68A] border-2 border-[#F59E0B] transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {onExportPDF && (
+              <button
+                onClick={onExportPDF}
+                className="px-3 py-1 rounded-full bg-[#ECFDF5] hover:bg-[#D1FAE5] text-[#065F46] border-2 border-[#10B981] font-black text-xs transition-all flex items-center gap-1.5 shadow-xs active:scale-95"
+                title="Export complete Court Record and trial transcript as PDF"
+              >
+                <Download className="w-3.5 h-3.5 text-[#059669]" />
+                <span>Export PDF</span>
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-full bg-[#FFFDF9] text-[#78350F] hover:bg-[#FDE68A] border-2 border-[#F59E0B] transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Toolbar */}
@@ -178,6 +192,14 @@ export function CourtRecordModal({
                   </div>
                 </div>
 
+                {/* Target Metric / Scope */}
+                {selectedEvidence.targetMetricOrUnit && (
+                  <div className="flex items-center gap-2 text-xs text-[#92400E] bg-[#FEF3C7] px-3 py-1.5 rounded-xl border border-[#FDE68A]">
+                    <span className="font-bold">Metric / Scope:</span>
+                    <span>{selectedEvidence.targetMetricOrUnit}</span>
+                  </div>
+                )}
+
                 {/* Summary Box */}
                 <div className="p-4 rounded-2xl bg-[#FAF5EB] border-2 border-[#E5C9A6]">
                   <div className="text-[11px] uppercase tracking-wider text-[#92400E] font-black mb-1 flex items-center gap-1.5">
@@ -189,14 +211,15 @@ export function CourtRecordModal({
                   </p>
                 </div>
 
-                {/* Quote Snippet if present */}
-                {selectedEvidence.quoteSnippet && (
+                {/* Exact Supporting Passage */}
+                {(selectedEvidence.exactSupportingPassage || selectedEvidence.quoteSnippet) && (
                   <div className="p-4 rounded-2xl bg-[#FEF3C7] border-l-4 border-[#F59E0B] border-t-2 border-r-2 border-b-2 border-[#FDE68A]">
-                    <div className="text-[11px] uppercase tracking-wider text-[#92400E] font-black mb-1">
-                      Direct Citation Excerpt
+                    <div className="text-[11px] uppercase tracking-wider text-[#92400E] font-black mb-1 flex items-center justify-between">
+                      <span>Exact Verbatim Passage From Source</span>
+                      <span className="text-[10px] bg-[#F59E0B] text-white px-2 py-0.5 rounded-full font-bold">Audited</span>
                     </div>
                     <blockquote className="text-xs italic text-[#78350F] leading-relaxed font-semibold">
-                      &ldquo;{selectedEvidence.quoteSnippet}&rdquo;
+                      &ldquo;{selectedEvidence.exactSupportingPassage || selectedEvidence.quoteSnippet}&rdquo;
                     </blockquote>
                   </div>
                 )}
@@ -213,25 +236,58 @@ export function CourtRecordModal({
 
                 {/* Linked Claim preview */}
                 {claims.filter(c => c.linkedEvidenceIds.includes(selectedEvidence.id)).length > 0 && (
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <div className="text-[11px] uppercase tracking-wider text-[#78350F] font-black">
-                      Claim Connected to this Evidence:
+                      Claims Connected to this Evidence:
                     </div>
                     {claims
                       .filter(c => c.linkedEvidenceIds.includes(selectedEvidence.id))
                       .map(c => (
-                        <div key={c.id} className="p-3 rounded-xl bg-[#FAF5EB] border-2 border-[#E5C9A6] text-xs text-[#2D1825] flex items-start gap-2">
-                          {c.verificationStatus === 'verified' ? (
-                            <CheckCircle2 className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
-                          ) : c.verificationStatus === 'contradicted' ? (
-                            <AlertCircle className="w-4 h-4 text-[#E11D48] shrink-0 mt-0.5" />
-                          ) : (
-                            <HelpCircle className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
-                          )}
-                          <div>
-                            <span className="font-bold text-[#78350F]">{c.speakerName}:</span> &ldquo;{c.text}&rdquo;
-                            <div className="text-[11px] text-[#7C5E74] mt-1 font-medium">{c.explanation}</div>
+                        <div key={c.id} className="p-3.5 rounded-xl bg-[#FAF5EB] border-2 border-[#E5C9A6] text-xs text-[#2D1825] space-y-2">
+                          <div className="flex items-start gap-2">
+                            {c.verificationStatus === 'verified' ? (
+                              <CheckCircle2 className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
+                            ) : c.verificationStatus === 'contradicted' ? (
+                              <AlertCircle className="w-4 h-4 text-[#E11D48] shrink-0 mt-0.5" />
+                            ) : (
+                              <HelpCircle className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-[#78350F]">{c.speakerName}:</span> &ldquo;{c.text}&rdquo;
+                              <div className="text-[11px] text-[#7C5E74] mt-1 font-medium">{c.explanation}</div>
+                            </div>
                           </div>
+
+                          {/* Original Comment Quote Trace */}
+                          {c.originalArgument && (
+                            <div className="p-2 rounded-lg bg-[#FFFDF9] border border-[#E5C9A6] text-[11px] text-[#78350F] italic">
+                              <span className="font-bold not-italic text-[#92400E]">Original Debater Quote: </span>
+                              &ldquo;{c.originalArgument}&rdquo;
+                            </div>
+                          )}
+
+                          {/* Numerical Verification Audit Box */}
+                          {c.numericalVerification && (
+                            <div className={`p-2.5 rounded-xl border ${c.numericalVerification.isAccurate ? 'bg-[#ECFDF5] border-[#A7F3D0]' : 'bg-[#FEF2F2] border-[#FECACA]'}`}>
+                              <div className="flex items-center justify-between text-[11px] font-black mb-1">
+                                <span className={c.numericalVerification.isAccurate ? 'text-[#065F46]' : 'text-[#991B1B]'}>
+                                  Numerical Audit: {c.numericalVerification.unitOrScope}
+                                </span>
+                                <span className={`px-2 py-0.5 rounded-full text-[9px] uppercase ${c.numericalVerification.isAccurate ? 'bg-[#D1FAE5] text-[#065F46]' : 'bg-[#FEE2E2] text-[#991B1B]'}`}>
+                                  {c.numericalVerification.isAccurate ? 'Verified Accurate' : 'Numerical Error / Exaggeration'}
+                                </span>
+                              </div>
+                              <div className="text-[11px] space-y-0.5">
+                                <div><span className="font-bold">Claimed:</span> {c.numericalVerification.claimedValue}</div>
+                                <div><span className="font-bold">Verified in Source:</span> {c.numericalVerification.verifiedValue}</div>
+                                {c.numericalVerification.notes && (
+                                  <div className="text-[#7F1D1D] font-medium pt-1 border-t border-red-100 mt-1">
+                                    {c.numericalVerification.notes}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                   </div>

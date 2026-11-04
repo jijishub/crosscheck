@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { DebaterProfile } from '@/types/debate';
-import { Sparkles, X, Heart, Shield, Award, MessageCircle } from 'lucide-react';
+import { Sparkles, X, Heart, Award } from 'lucide-react';
 
 interface CharacterProfilesModalProps {
   isOpen: boolean;
@@ -20,10 +20,10 @@ export function CharacterProfilesModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 animate-in fade-in duration-200 select-none">
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#FFFDF9] border-4 border-[#F472B6] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/50 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200 select-none">
+      <div className="relative w-full max-w-4xl max-h-[82vh] sm:max-h-[85vh] my-auto bg-[#FFFDF9] border-4 border-[#F472B6] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header - Solid Pastel Pink/Purple */}
-        <div className="px-6 py-4 bg-[#FDF2F8] border-b-2 border-[#FBCFE8] flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3.5 bg-[#FDF2F8] border-b-2 border-[#FBCFE8] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
             <span className="p-2 rounded-2xl bg-[#FFFDF9] text-[#831843] border-2 border-[#F472B6]">
               <Sparkles className="w-5 h-5" />

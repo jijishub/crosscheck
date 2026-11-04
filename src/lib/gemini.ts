@@ -62,9 +62,19 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
       "speakerId": "debater_a" | "debater_b",
       "speakerName": string,
       "text": string,
+      "originalArgument": string,
+      "originalCommentRef": string,
       "claimType": "verifiable_statistic" | "historical_fact" | "forecast_prediction" | "value_judgment" | "interpretation",
       "verificationStatus": "verified" | "contradicted" | "unverified" | "mixed_or_conditional" | "opinion_not_testable",
+      "numericalVerification": {
+        "claimedValue": string,
+        "verifiedValue": string,
+        "unitOrScope": string,
+        "isAccurate": boolean,
+        "notes": string
+      },
       "explanation": string,
+      "exactSupportingPassage": string,
       "linkedEvidenceIds": ["ev_1"]
     }
   ],
@@ -73,12 +83,15 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
       "id": "ev_1",
       "title": string,
       "sourceName": string,
+      "publisher": string,
       "url": string,
       "publicationDate": string,
       "summary": string,
       "reliability": "primary_source" | "official_report" | "news_media" | "expert_analysis",
       "relevanceToClaim": string,
-      "quoteSnippet": string
+      "quoteSnippet": string,
+      "exactSupportingPassage": string,
+      "targetMetricOrUnit": string
     }
   ],
   "script": [
@@ -90,13 +103,22 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
       "emotion": "neutral" | "confident" | "thinking" | "intense" | "surprised" | "synthesis",
       "callout": "OBJECTION!" | "HOLD IT!" | "TAKE THAT!" | "POINT OF ORDER" | null,
       "activeClaimId": "claim_1",
-      "presentedEvidenceId": "ev_1"
+      "presentedEvidenceId": "ev_1",
+      "originalCommentQuote": string,
+      "isDramatized": boolean,
+      "cinnaTeachingNote": {
+        "concept": string,
+        "explanation": string,
+        "fallacyOrAssumption": string | null,
+        "educationalTip": string
+      }
     }
   ],
   "juryVerdict": {
     "topicTitle": string,
     "coreDisagreementSummary": string,
     "whatTheEvidenceEstablishes": [string, string],
+    "unsupportedOrMisleadingClaims": [string, string],
     "uncertaintiesAndForecastingLimits": [string, string],
     "conceptGuide": [
       {
@@ -107,9 +129,9 @@ You MUST respond strictly with a valid JSON object matching this TypeScript stru
       }
     ],
     "educationalTakeaway": string,
-    "balancedVerdict": string
+    "balancedVerdict": string,
+    "practicalCitizenTakeaways": [string, string]
   }
-}
 }
 
 Do not wrap in markdown or backticks if possible, or wrap cleanly in \`\`\`json ... \`\`\`. Output valid parseable JSON only.`;

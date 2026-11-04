@@ -1,133 +1,103 @@
-# CrossCheck! ⚖️🔍
+# CrossCheck! ⚖️
 
 > **An Ace Attorney-inspired AI debate breakdown and learning platform.**  
 > Transforming online debates, comment threads, and complex disagreements into entertaining, beginner-friendly courtroom dramas with live fact-checking, verifiable sources, and intuitive concept explainers.
 
 ---
 
-## 🎯 Project Vision & Intent
+## Overview
 
-When people argue online (whether on Reddit, X/Twitter, or public forums), discussions often become polarized, jargon-dense, and difficult for newcomers to follow. The true educational value is rarely about declaring an arbitrary "winner", but rather:
-1. **Understanding the real root of disagreement** (e.g., historical baselines vs. future risk scenarios).
-2. **De-mystifying jargon and concepts** using plain English and relatable analogies.
-3. **Establishing what credible evidence proves** versus what is projection, opinion, or conditional forecasting.
+When people argue online, discussions often become polarized, jargon-dense, and difficult for newcomers to follow. The purpose of CrossCheck! is not to declare an arbitrary winner, but to:
+1. **Uncover the root of disagreement** (e.g. historical baseline momentum vs. forward-looking exposure risks).
+2. **Translate complex jargon** into plain English using relatable everyday analogies.
+3. **Ground discussions in verifiable evidence** to distinguish established facts from speculative projections.
 
-Inspired by the theatrical, point-counterpoint mechanics of *Ace Attorney* (opposing debater podiums, dynamic expression changes, "OBJECTION!" / "HOLD IT!" stingers, an interactive Court Record dossier, and an impartial Jury explanation board), CrossCheck! recreates those learning moments across economics, technology, public policy, and science.
-
----
-
-## 💡 Motivating Case Study
-
-The idea originated from an authentic Reddit discussion regarding Philippine GDP growth:
-- **Participant A (Melon / Baseline Optimist):** Emphasized historical macroeconomic growth trends (2010–2019 averaging 6.0–6.5%), consumer spending resilience, and steady remittances exceeding $35B.
-- **Participant B (Yon / Structural Risk Analyst):** Emphasized 2023 growth slowing to 5.6%, policy interest rates at 6.50% constraining borrowing, and debt-to-GDP surpassing 60% post-pandemic.
-
-Neither participant was purely wrong—they were examining different dimensions of economic reality (historical momentum vs. forward-looking structural risk). This platform breaks down debates like this with live search validation and beginner-accessible concept translations.
+Inspired by *Ace Attorney*, CrossCheck! stages these disputes as a dramatic courtroom showdown complete with opposing debaters, dynamic expressions, theatrical callouts (`OBJECTION!`, `HOLD IT!`, `TAKE THAT!`, `POINT OF ORDER`), an interactive Court Record, and an impartial Jury synthesis board.
 
 ---
 
-## 🚀 Implemented Features (Agile P0)
+## Core Features
 
-### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`, `src/lib/presets.ts`, `src/lib/debate-validation.ts`)
-- **Dual Tab Intake System:**
-  - **Tab 1: Plaintext Discussion:** Paste any raw Reddit comments, tweet threads, or dialogue transcripts.
-  - **Tab 2: JSON Argument Context:** Direct JSON intake for raw comment threads (e.g. `philippines_reddit_debate_comments.json`) or full case schemas with live validation, formatting, and instant trial preview.
-- **Strict Case Validation (`src/lib/debate-validation.ts`):** Runtime boundary validation ensuring imported cases have valid IDs, cross-referenced citations, safe URLs, and proper debater structures.
-- **Dedicated Case Presets (`src/lib/presets.ts`):** Clean separation of debate transcripts and verified seeds from runtime API logic.
-- **Verified Case Intake:**
-  - 🇵🇭 *Philippine GDP Growth Forecast (Melon vs Yon)* — derived strictly from `verified_reddit_debate_transcript_2026.json`.
-- **API Key & Gateway Management:** Pre-configured with OpenAI-compatible gateway (`luna` at `https://api.jizellecasia.site/v1/chat/completions`) or custom override keys.
+### 1. Docket & Case Intake (`src/components/DebateInputSection.tsx`, `src/lib/topic-utils.ts`)
+- **Dual Tab Intake System:** Plaintext discussion and JSON argument contexts with real-time schema validation and instant trial previews.
+- **Dynamic Topic Detection & Synchronization (`src/lib/topic-utils.ts`):** Automatically extracts the real discussion subject from post headers (`Post: "..."`, `Title: ...`, markdown headers, or leading premises) when pasting new debates, preventing stale default titles during AI deliberation.
+- **Form Controls:** Quick 1-click "Clear Form" action for testing brand-new cases, alongside verified presets.
 
-### 2. The Courtroom Stage (`src/components/CourtroomStage.tsx`)
-- **Visual Novel Duel View:** Defense (Melon) on the left, Prosecution (Yon) on the right, standing at polished mahogany courtroom benches with active speaker spotlight.
-- **Cinna Mascot Companion (`src/components/CinnaNarrator.tsx`):** Sits cutely right on the dialogue box banner, reacting with dynamic expressions (`Bailiff/Order`, `Cheerful`, `Pondering`, `Shocked!`) to guide beginners through complex points.
-- **Character Profiles & Cast Dossier (`src/components/CharacterProfilesModal.tsx`):** Inspect full personality traits, catchphrases, speech styles, and bios for Melon, Yon, Cinna, and the Jury Foreperson.
-- **Interactive Dialogue Box:** Typewriter text with character blips, turn-by-turn stepping, instant text reveal, auto-play mode, and transcript log. Includes pixel-aligned parchment padding that avoids crest banner and corner art overlap.
-- **Keyboard & Modal Navigation:** Full keyboard navigation (`Space`/`Enter`/`ArrowRight` to step, `ArrowLeft` for previous) that automatically ignores key events when typing into inputs or viewing modals (`isPaused`).
-- **Sleek Single-Line Dispute Ribbon:** Highlights the exact claim under examination or newly presented evidence without blocking characters.
+### 2. Visual Novel Courtroom Stage ⚖️
+- **Opposing Debater Dual:** Defense Counsel (Melon) champions baseline trends, while Prosecution Analyst (Yon) stress-tests downside exposure.
+- **Cinna Pre-Trial Briefing:** Before proceedings begin, Cinna introduces the case origin (authentic thread context), real-world background, participant positions, central disagreement, and learning objectives.
+- **Cinna Educational Guide:** Explains concepts dynamically on first appearance, identifies unproven assumptions, and spot-checks numerical errors.
+- **Interactive Dialogue Console:** Typewriter pacing, character audio blips, turn-by-turn stepping, instant reveal, authentic source comment inspector, and auto-play mode.
+- **Cast Dossier:** Inspect full personality traits, speech styles, and bios for all court participants.
 
-### 3. Web Audio SFX Synthesizer (`src/lib/audio.ts`)
-- Zero external audio file dependencies. Built with browser Web Audio API:
-  - Typewriter text blips (pitch-tuned per character)
-  - Gavel strike & table slam impact
-  - "Objection!" dramatic stingers & C-major chord accents
-  - Evidence presented / "Take That!" chimes
-  - Persistent audio mute/unmute control.
+### 3. LangGraph Agentic Debate Pipeline
+- **Multi-Node StateGraph Architecture:** Powered by `@langchain/langgraph` and `@langchain/core`:
+  - `deconstructDebatersNode`: Analyzes submitted arguments and extracts opposing debater personas and stances.
+  - `extractAndVerifyClaimsNode`: Audits factual and predictive claims with strict numerical unit checks (e.g. monthly records vs. annual totals) and primary source proof.
+  - `buildPreTrialContextNode`: Dedicated context builder establishing grounded debate origin, real-world context, participant profiles, and learning objectives.
+  - `scriptCourtroomDramaNode`: Dramatizes the conflict into theatrical visual novel turns linked with authentic forum quotes and Cinna's teaching notes.
+  - `synthesizeJuryVerdictNode`: Produces an impartial jury synthesis, lists exposed misleading claims, Jargon Buster analogies, and actionable indicators for citizens.
+- **Live Deliberation Screen (`ThinkingDeliberationScreen.tsx`):** Displays real-time case topics and stage-by-stage progress with Cinna's pondering animation throughout the 5-node deliberation sequence.
+- **AI Provisioning Modes & Model Orchestration:**
+  - **Primary AI (Gemini Flash / Luna):** High-speed claim extraction, research organization, and theatrical dialogue dramatization.
+  - **Reasoning Specialist (Gemini Pro):** Deep evaluation of contradictory arguments, logical fallacies, and empirical evidence quality.
+  - **Independent Evaluator (ChatGPT / GPT-6 Sol):** Cross-checks conclusions, detects unsupported assertions, and audits jury verdict.
+  - **Lightweight / Token-Efficient (Flash-Lite / GPT-4o-Mini):** Fast classification and JSON schema formatting.
+  - **Seed Test Mode:** Instantly loads verified discussion data for rapid UI and animation testing without API latency.
+  - **Live LangGraph Mode:** Runs the full 5-stage agentic workflow via OpenAI-compatible gateway or direct Gemini fallback.
 
-### 4. Interactive Court Record / Evidence Dossier (`src/components/CourtRecord.tsx`)
+### 4. Court Record & Evidence Dossier ⚖️
 - Modeled after the *Ace Attorney Court Record*.
+- **Numerical & Scope Auditing:** Cross-checks claimed values against verified primary source data to spot unit conflation (e.g. monthly records vs. annual totals).
+- **Authentic Quote Traceability:** Inspect the exact original forum comment and supporting source passage behind each claim.
 - Search and filter verified sources by reliability rating (`Primary Data`, `Official Report`, `Expert Analysis`, `News Media`).
-- Inspect primary source excerpts, publication dates, and direct links to live URLs gathered during the search grounding pipeline.
-- Cross-references which claims were verified, contradicted, or flagged as speculative.
+- Read primary source excerpts and follow live URLs gathered during research grounding.
 
-### 5. The Jury Chamber & Explainer Board (`src/components/JuryBoard.tsx`)
-- **The Jury Foreperson's Impartial Synthesis:** Clarifies the core disagreement and provides a qualified breakdown without forcing an artificial binary winner on predictive or mixed topics.
-- **Jargon Buster (Concept Guide):** Translates dense technical terms into plain English with everyday analogies.
-- **The Evidence Ledger:** Groups all claims by status (Verified Facts, Contradicted Claims, and Future Forecasts / Conditional Scenarios).
-- **Educational Takeaway:** Delivers the essential lesson readers should understand after viewing the debate.
+### 5. Jury Chamber & Explainer Board ⚖️
+- **Impartial Jury Synthesis:** Clarifies the core disagreement without forcing artificial binary outcomes on nuanced topics.
+- **Misleading Claims Exposed:** Transparently highlights claims with numerical exaggerations or misattributions.
+- **Jargon Buster:** Translates technical concepts into plain language with real-world analogies.
+- **Evidence Ledger:** Categorizes all claims into Verified Facts, Contradicted Points, and Predictive Scenarios.
+- **Citizen Takeaways:** Actionable economic indicators for ordinary readers to monitor.
 
-### 6. Visual Novel Assets & Backdrops (`public/characters/`, `public/scenes_and_overlays/`, `public/Cinna_*.png`, `public/DiaBox_*.png`)
-- **Active Sprites**: Integrated high-res character sprites in `public/characters/` for Debater A (Melon), Debater B (Yon), and Jury Foreperson.
-- **Brand Assets**: Custom enlarged `crosscheck logo.png` banner integrated into navigation, and `crosscheck favicon.png` / `icon.png` wired into Next.js App Router metadata.
-- **Authentic Visual Novel Dialogue Boxes (`DiaBox_1_frame.png` & `DiaBox_2_frame.png`)**: Integrated authentic visual novel dialogue box frames that dynamically adapt based on the speaker (warm gold/burgundy for Prosecution Yon, pastel lavender/lilac for Defense Melon).
-- **Solid Cute Pastel Theme (Phase 1 & Phase 2)**: Replaced dark glassmorphism and murky overlays with an authentic solid pastel parchment palette matching the courtroom backdrop, warm honey wood, cream stained-glass pillars, and ribbon badges.
-- **Cinna Mascot Narrator**: Integrated `CinnaNarrator` (`public/Cinna_1.png` - `Cinna_4.png`) as a cute courtroom bailiff/commentator who reacts to intense turns, objections, and explains core claims to beginners.
-- **Courtroom Stage**: Features `Backdrop_01_Main_Courtroom.png` as the cinematic courtroom backdrop with ambient lighting.
-- **Jury Deliberation Chamber**: Features `Backdrop_02_Jury_Chamber.png` in the jury explanation header.
-- **Theatrical Overlays**: Graphic comic bursts for `OBJECTION!`, `HOLD IT!`, `TAKE THAT!`, and `POINT OF ORDER` with screen-shake feedback and synthesized courtroom sound effects.
-- **Seeded Authentic Debate**: Pre-seeded with authentic Philippine GDP discussion comments from `philippines_reddit_debate_comments.json` (5.8% baseline forecast vs OECD downside exposure).
-- **Prompts**: All generation briefs preserved in [asset_prompts.txt](asset_prompts.txt).
+### 6. Exportable Courtroom Dossier PDF ⚖️
+- Generates an official, publication-quality multi-page legal dossier using `jspdf`.
+- Includes official CrossCheck! header branding, Cinna's Pre-Trial Briefing, turn-by-turn trial transcript with original forum quotes, dedicated Verified Claims Dossier Matrix, complete Jury Verdict with citizen takeaways, and clickable source URLs.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack
 
 - **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
 - **Styling:** Tailwind CSS + Lucide React Icons
+- **Document Engine:** `jspdf` (client-side multi-page PDF generation with native hyperlink annotations)
 - **Audio Engine:** Custom Web Audio API synthesizer
-- **AI Engine:** AI Gateway (`https://api.jizellecasia.site/v1/chat/completions`) powering model `luna` (OpenAI-compatible) with optional Google Gemini fallback
-- **Package Manager:** `pnpm` / `npm`
+- **AI Engine & Workflow:** LangGraph (`@langchain/langgraph` + `@langchain/core`) with OpenAI-compatible AI Gateway (`https://api.jizellecasia.site/v1/chat/completions`) and Google Gemini fallback
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
-### 1. Install Dependencies & Run Dev Server
+### 1. Install Dependencies
 ```bash
-# If pnpm is already recognized in your terminal:
-pnpm dev
-
-# If pnpm command is not yet in your terminal session PATH:
-npx pnpm dev
-# or
-npm run dev
+npm install
 ```
 
-### 2. Configure AI Gateway / Keys
-Create or check `.env.local`:
-\`\`\`env
+### 2. Environment Configuration
+Create a `.env.local` file:
+```env
 AI_GATEWAY_URL=https://api.jizellecasia.site/v1/chat/completions
 AI_GATEWAY_KEY=your_gateway_key_here
 AI_MODEL=luna
 
 # Optional Gemini Fallback
 GEMINI_API_KEY=
-\`\`\`
-*(Alternatively, enter or override your gateway key directly in the Court Docket header in the app).*
+```
+*(You can also configure or override your gateway key directly in the AI Settings modal in the app).*
 
-### 3. Run the Development Server
-\`\`\`bash
-pnpm dev
-# or
+### 3. Run Development Server
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 📜 Development Guidelines & Skills
-
-- `!readme`: Maintained and synchronized with all implemented architectural components, case studies, and references.
-- `!git-m`: Strict one-line commit messages for all repository commits.
-- Single Source of Truth: All project requirements preserved from `llm.txt`.

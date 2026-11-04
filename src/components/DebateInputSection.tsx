@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { DebateAnalysisResult } from '@/types/debate';
 import { parseDebateAnalysis } from '@/lib/debate-validation';
+import { extractTopicFromText, resolveDebateTopic } from '@/lib/topic-utils';
 import {
   PHILIPPINE_GDP_PRESET,
   PHILIPPINE_REDDIT_JSON_SAMPLE,
@@ -104,6 +105,28 @@ export function DebateInputSection({
     setTopicHint(preset.title);
   };
 
+  const handleClearText = () => {
+    setDebateText('');
+    setTopicHint('');
+  };
+
+  const handleDebateTextChange = (val: string) => {
+    setDebateText(val);
+    // If the topic hint was still the default preset title and the user changed the debate text
+    if (topicHint === PHILIPPINE_GDP_PRESET.title && val.trim() !== PHILIPPINE_GDP_PRESET.rawText.trim()) {
+      const extracted = extractTopicFromText(val);
+      if (extracted && extracted !== 'Submitted Debate Context') {
+        setTopicHint(extracted);
+      } else {
+        setTopicHint('');
+      }
+    }
+  };
+
+  const handleClearJson = () => {
+    setJsonText('');
+  };
+
   const handleFormatJson = () => {
     try {
       const parsed = JSON.parse(jsonText);
@@ -124,7 +147,8 @@ export function DebateInputSection({
   const handleSubmitText = (e: React.FormEvent) => {
     e.preventDefault();
     if (!debateText.trim()) return;
-    onAnalyze(debateText, topicHint, apiKey);
+    const effectiveTopic = resolveDebateTopic(debateText, topicHint);
+    onAnalyze(debateText, effectiveTopic, apiKey);
   };
 
   const handleSubmitJson = (e: React.FormEvent) => {
@@ -147,10 +171,6 @@ export function DebateInputSection({
 
       // Otherwise convert comments or structured context into formatted debate text for AI
       let serialized = '';
-      let derivedTopic = topicHint;
-
-      if (parsed.topic) derivedTopic = parsed.topic;
-
       if (Array.isArray(parsed.comments)) {
         serialized = parsed.comments
           .map((c: { author?: string; text?: string }) => `${c.author || 'Debater'}:\n${c.text || ''}`)
@@ -163,7 +183,20 @@ export function DebateInputSection({
         serialized = JSON.stringify(parsed, null, 2);
       }
 
-      onAnalyze(serialized, derivedTopic, apiKey);
+      // Extract explicit JSON topic if present
+      let explicitTopic = '';
+      if (typeof parsed?.topic === 'string' && parsed.topic.trim()) {
+        explicitTopic = parsed.topic.trim();
+      } else if (typeof parsed?.title === 'string' && parsed.title.trim()) {
+        explicitTopic = parsed.title.trim();
+      } else if (typeof parsed?.postTitle === 'string' && parsed.postTitle.trim()) {
+        explicitTopic = parsed.postTitle.trim();
+      } else if (typeof parsed?.subject === 'string' && parsed.subject.trim()) {
+        explicitTopic = parsed.subject.trim();
+      }
+
+      const effectiveTopic = resolveDebateTopic(serialized, explicitTopic || topicHint);
+      onAnalyze(serialized, effectiveTopic, apiKey);
     } catch (err) {
       console.error('JSON submit error:', err);
     }
@@ -265,17 +298,28 @@ export function DebateInputSection({
       {activeTab === 'text' && (
         <div>
           {/* Preset Quick Loader - Single Verified Debate Case */}
-          <div className="px-6 py-3 bg-[#FAF5EB] border-b-2 border-[#E5C9A6] flex flex-wrap items-center gap-2.5 text-xs">
-            <span className="font-bold text-[#78350F] flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-              Verified Case Example:
-            </span>
+          <div className="px-6 py-3 bg-[#FAF5EB] border-b-2 border-[#E5C9A6] flex flex-wrap items-center justify-between gap-2.5 text-xs">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-bold text-[#78350F] flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
+                Case Preset:
+              </span>
+              <button
+                type="button"
+                onClick={() => handleLoadTextPreset(PHILIPPINE_GDP_PRESET)}
+                className="px-3.5 py-1 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
+              >
+                <span>🇵🇭 Philippine GDP Forecast (Melon vs Yon)</span>
+              </button>
+            </div>
+
             <button
               type="button"
-              onClick={() => handleLoadTextPreset(PHILIPPINE_GDP_PRESET)}
-              className="px-3.5 py-1 rounded-xl bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-2 border-[#F59E0B] font-bold transition-all flex items-center gap-1.5 shadow-2xs active:scale-95"
+              onClick={handleClearText}
+              className="px-3 py-1 rounded-xl bg-[#FFFDF9] hover:bg-[#FAF5EB] text-[#78350F] border border-[#E5C9A6] font-bold transition-all shadow-2xs active:scale-95 text-[11px]"
+              title="Clear form to paste a brand new case"
             >
-              <span>🇵🇭 Philippine GDP Forecast (Melon vs Yon)</span>
+              🧹 Clear Form
             </button>
           </div>
 
@@ -307,7 +351,7 @@ export function DebateInputSection({
                 rows={7}
                 placeholder="Paste discussion comments, Reddit arguments, tweet exchanges, or transcripts here..."
                 value={debateText}
-                onChange={e => setDebateText(e.target.value)}
+                onChange={e => handleDebateTextChange(e.target.value)}
                 required
                 className="w-full p-4 rounded-xl bg-[#FFFDF9] border-2 border-[#E5C9A6] text-[#2D1825] placeholder-[#B07D62]/60 focus:outline-none focus:border-[#C58B58] text-xs sm:text-sm font-sans leading-relaxed resize-y font-medium"
               />

@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import { JurySynthesis, Claim, EvidenceItem } from '@/types/debate';
 import { JuryForepersonPortrait } from './CourtroomCharacters';
-import { BookOpen, CheckCircle2, AlertTriangle, HelpCircle, Sparkles, Scale, ExternalLink } from 'lucide-react';
+import { BookOpen, CheckCircle2, AlertTriangle, HelpCircle, Sparkles, Scale, ExternalLink, Download, AlertCircle, Compass } from 'lucide-react';
 
 interface JuryBoardProps {
   verdict: JurySynthesis;
   claims: Claim[];
   evidenceRecord: EvidenceItem[];
   onOpenCourtRecord: (evidenceId?: string) => void;
+  onExportPDF?: () => void;
 }
 
 export function JuryBoard({
@@ -17,6 +18,7 @@ export function JuryBoard({
   claims,
   evidenceRecord,
   onOpenCourtRecord,
+  onExportPDF,
 }: JuryBoardProps) {
   const [activeTab, setActiveTab] = useState<'synthesis' | 'concepts' | 'ledger'>('synthesis');
 
@@ -57,41 +59,54 @@ export function JuryBoard({
           </div>
         </div>
 
-        {/* Tab Buttons - Solid Pastel Pills */}
-        <div className="relative z-10 flex bg-[#F3E8FF] p-1.5 rounded-2xl border-2 border-[#E9D5FF] text-xs gap-1 shadow-xs">
-          <button
-            onClick={() => setActiveTab('synthesis')}
-            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
-              activeTab === 'synthesis'
-                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
-                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
-            }`}
-          >
-            <Scale className="w-3.5 h-3.5" />
-            <span>Verdict & Takeaways</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('concepts')}
-            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
-              activeTab === 'concepts'
-                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
-                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
-            }`}
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Jargon Buster ({verdict.conceptGuide.length})</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('ledger')}
-            className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
-              activeTab === 'ledger'
-                ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
-                : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
-            }`}
-          >
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Evidence Ledger ({claims.length})</span>
-          </button>
+        {/* Tab Buttons & Export PDF - Solid Pastel Pills */}
+        <div className="relative z-10 flex flex-wrap items-center gap-2">
+          <div className="flex bg-[#F3E8FF] p-1.5 rounded-2xl border-2 border-[#E9D5FF] text-xs gap-1 shadow-xs">
+            <button
+              onClick={() => setActiveTab('synthesis')}
+              className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
+                activeTab === 'synthesis'
+                  ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                  : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
+              }`}
+            >
+              <Scale className="w-3.5 h-3.5" />
+              <span>Verdict & Takeaways</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('concepts')}
+              className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
+                activeTab === 'concepts'
+                  ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                  : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Jargon Buster ({verdict.conceptGuide.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('ledger')}
+              className={`px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 ${
+                activeTab === 'ledger'
+                  ? 'bg-[#FFFDF9] text-[#581C87] border-2 border-[#C084FC] shadow-xs'
+                  : 'text-[#7C5E74] hover:text-[#581C87] border-2 border-transparent'
+              }`}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Evidence Ledger ({claims.length})</span>
+            </button>
+          </div>
+
+          {onExportPDF && (
+            <button
+              onClick={onExportPDF}
+              className="px-3.5 py-2 rounded-2xl font-black text-xs bg-[#ECFDF5] hover:bg-[#D1FAE5] text-[#065F46] border-2 border-[#10B981] shadow-xs flex items-center gap-1.5 transition-all active:scale-95"
+              title="Export complete trial dossier (Phase 1 + Phase 2 + Evidence links) as PDF"
+            >
+              <Download className="w-3.5 h-3.5 text-[#059669]" />
+              <span>Export PDF</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -110,7 +125,7 @@ export function JuryBoard({
               </p>
             </div>
 
-            {/* Split Findings: Verified Evidence vs Forecast Limits */}
+            {/* Split Findings: Verified Evidence vs Unsupported Claims vs Forecast Limits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* What Evidence Confirms - Solid Pastel Mint */}
               <div className="p-5 rounded-2xl bg-[#ECFDF5] border-2 border-[#A7F3D0] shadow-xs">
@@ -128,6 +143,24 @@ export function JuryBoard({
                 </ul>
               </div>
 
+              {/* Unsupported or Misleading Claims Exposed */}
+              {verdict.unsupportedOrMisleadingClaims && verdict.unsupportedOrMisleadingClaims.length > 0 && (
+                <div className="p-5 rounded-2xl bg-[#FEF2F2] border-2 border-[#FECACA] shadow-xs">
+                  <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#991B1B] mb-3">
+                    <AlertCircle className="w-4 h-4 text-[#DC2626]" />
+                    Unsupported or Misleading Claims Exposed
+                  </div>
+                  <ul className="space-y-2.5">
+                    {verdict.unsupportedOrMisleadingClaims.map((point, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-[#7F1D1D] font-medium leading-relaxed">
+                        <span className="w-2 h-2 rounded-full bg-[#EF4444] mt-1 shrink-0" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* What Remains Uncertain / Forecast Limits - Solid Pastel Amber */}
               <div className="p-5 rounded-2xl bg-[#FFFBEB] border-2 border-[#FDE68A] shadow-xs">
                 <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#92400E] mb-3">
@@ -143,13 +176,31 @@ export function JuryBoard({
                   ))}
                 </ul>
               </div>
+
+              {/* Practical Indicators for Citizens */}
+              {verdict.practicalCitizenTakeaways && verdict.practicalCitizenTakeaways.length > 0 && (
+                <div className="p-5 rounded-2xl bg-[#F0FDF4] border-2 border-[#BBF7D0] shadow-xs">
+                  <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#166534] mb-3">
+                    <Compass className="w-4 h-4 text-[#16A34A]" />
+                    Practical Indicators Ordinary Citizens Should Monitor
+                  </div>
+                  <ul className="space-y-2.5">
+                    {verdict.practicalCitizenTakeaways.map((point, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-[#14532D] font-medium leading-relaxed">
+                        <span className="w-2 h-2 rounded-full bg-[#22C55E] mt-1 shrink-0" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
-            {/* The Balanced Synthesis (No false binary winner) - Solid Cream Parchment */}
+            {/* The Balanced Synthesis (Rigorous evaluation distinguishing truth from errors) - Solid Cream Parchment */}
             <div className="p-5 rounded-2xl bg-[#FFFDF9] border-2 border-[#E5C9A6] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#78350F] mb-2">
                 <Scale className="w-4 h-4 text-[#B45309]" />
-                The Jury&apos;s Qualified Synthesis
+                The Jury&apos;s Rigorous Synthesis
               </div>
               <p className="text-xs sm:text-sm text-[#2D1825] font-medium leading-relaxed mb-4">
                 {verdict.balancedVerdict}
@@ -158,7 +209,7 @@ export function JuryBoard({
               {/* Educational Takeaway Box - Solid Pastel Rose Ribbon */}
               <div className="p-4 rounded-xl bg-[#FDF2F8] border-l-4 border-[#F472B6] border-t-2 border-r-2 border-b-2 border-[#FBCFE8]">
                 <div className="text-[11px] font-black uppercase tracking-wider text-[#831843] mb-1">
-                  🎓 Lesson For Readers New To This Topic:
+                  🎓 Core Educational Takeaway:
                 </div>
                 <p className="text-xs sm:text-sm font-bold text-[#831843] leading-relaxed">
                   {verdict.educationalTakeaway}

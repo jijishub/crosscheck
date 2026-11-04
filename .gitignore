@@ -1,6 +1,7 @@
 feedback.txt
 llm.txt
 asset_prompts.txt
+verified_reddit_debate_transcript_2026.json
 
 # dependencies
 /node_modules
